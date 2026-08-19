@@ -28,25 +28,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
+/* Committed to a single light appearance: this is a document, and it should look
+   the same for every reader regardless of their system setting. color-scheme
+   keeps the browser from darkening scrollbars and form controls around it. */
 :root{
-  --paper:#FCFCFC; --ink:#191C1F; --ink-soft:#3E454C; --ink-mute:#6C737A;
-  --rule:#DEE1E4; --rule-strong:#B8BDC2;
-  --pos:#1B6B54; --neg:#9B3226; --nul:#8A9096;
-  --link:#2A4E7C;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#14171A; --ink:#E6E9EC; --ink-soft:#B7BEC5; --ink-mute:#878F97;
-    --rule:#2C3237; --rule-strong:#454C53;
-    --pos:#63BFA2; --neg:#DE8474; --nul:#79818A;
-    --link:#8FB2DC;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#14171A; --ink:#E6E9EC; --ink-soft:#B7BEC5; --ink-mute:#878F97;
-  --rule:#2C3237; --rule-strong:#454C53;
-  --pos:#63BFA2; --neg:#DE8474; --nul:#79818A;
-  --link:#8FB2DC;
+  color-scheme: light;
+  --paper:#FFFFFF; --ink:#000000; --ink-soft:#262626; --ink-mute:#5C5C5C;
+  --rule:#E2E2E2; --rule-strong:#ADADAD;
+  --pos:#16624C; --neg:#8E2C21; --nul:#7E7E7E;
+  --link:#134A94;
 }
 
 *{box-sizing:border-box}
@@ -145,7 +135,7 @@ dd{margin:0; color:var(--ink-soft); font-size:16.5px;}
 
 math{font-size:1.02em;}
 math[display="block"]{
-  display:block; margin:1.35em 0; text-align:center;
+  display:block; margin:1.5em 0; text-align:center;
   overflow-x:auto; overflow-y:hidden;
 }
 .eqnote{font-family:"IBM Plex Sans",sans-serif; font-size:13px; color:var(--ink-mute);
