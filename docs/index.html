@@ -147,6 +147,16 @@ math{font-size:1.02em;}
 h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   letter-spacing:.08em; text-transform:uppercase; color:var(--ink-mute);
   margin:1.8em 0 .8em;}
+table{border-collapse:collapse; width:100%; font-size:15px; min-width:460px;
+  font-family:"IBM Plex Sans",sans-serif; margin:.6em 0 0;}
+th{text-align:left; font-weight:600; font-size:12px; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--ink-mute);
+  border-bottom:1px solid var(--rule-strong); padding:0 16px 7px 0;}
+td{padding:8px 16px 8px 0; border-bottom:1px solid var(--rule); color:var(--ink-soft);}
+td:first-child{color:var(--ink);}
+th.n,td.n{text-align:right; font-family:"IBM Plex Mono",monospace;
+  font-variant-numeric:tabular-nums; padding-right:0; white-space:nowrap;}
+tr:last-child td{border-bottom:none;}
 .eqnote{font-family:"IBM Plex Sans",sans-serif; font-size:13px; color:var(--ink-mute);
   text-align:center; margin:-0.7em 0 1.3em;}
 
@@ -676,8 +686,9 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
     764 games. Points sit on the diagonal when forecast probability matches observed frequency;
     bars are two standard errors. The model tracks the diagonal closely from about 0.25 upward.
     Below that it is mildly overconfident: events it assigns 16% occur about 18% of the time, and
-    the lowest bin is further out still, though it holds only 88 contracts. Averaged across the range, forecast
-    probability and observed frequency differ by 0.0078, against the market's 0.0082. That gap is the expected calibration error.</figcaption>
+    the lowest bin is further out still, though it holds only 88 contracts. The binning here is for
+    display only; the calibration figures quoted in section&nbsp;4 come from a binning-free
+    decomposition.</figcaption>
   </figure>
 
 
@@ -932,8 +943,37 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
     between about 1.3 and 2.5 and would overstate the precision of every estimate.</figcaption>
   </figure>
 
-  <p>One family, game totals, is significantly worse; the other six are indistinguishable from
-  the market. The weakness in totals concentrates at high lines rather than spreading evenly,
+  <p>A Brier score splits into three parts: how miscalibrated the forecasts are, how well they
+  discriminate between events that happen and events that do not, and the irreducible uncertainty
+  of the events themselves. Doing that split by binning is unstable, since the answer moves with
+  the choice of bins. Doing it by isotonic regression is not<span class="c">[<a href="#ref-24">24</a>]</span>. Applied to all seven
+  families:</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th></th><th class="n">model</th><th class="n">market</th><th class="n">difference [95% CI]</th></tr></thead>
+    <tbody>
+      <tr><td>miscalibration</td><td class="n">0.22</td><td class="n">0.24</td><td class="n">&minus;0.01 [&minus;0.16, +0.16]</td></tr>
+      <tr><td>discrimination</td><td class="n">59.04</td><td class="n">59.91</td><td class="n">&minus;0.87 [&minus;2.51, +0.76]</td></tr>
+      <tr><td>uncertainty</td><td class="n">248.98</td><td class="n">248.98</td><td class="n">&mdash;</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="eqnote">All figures &times;10&#8315;&#179;. Brier score = miscalibration &minus;
+  discrimination + uncertainty, so better discrimination lowers the score.</p>
+
+  <p>That settles which of the two questions the model loses on. The calibration difference is a
+  hundredth of a point with a third of a point of interval around it, so the two are calibrated
+  equally well, and that is now a tight statement rather than a noisy one. Nearly the whole 0.95
+  gap is discrimination. The interval on that gap contains zero, so its direction is clear and its
+  size is not established.</p>
+
+  <p>Both are well calibrated in absolute terms. Miscalibration costs the model 0.22 against an
+  irreducible 249, under a tenth of a percent of its score. Whatever either forecaster loses here,
+  it is not lost to badly calibrated probabilities.</p>
+
+  <p>One family, game totals, is significantly worse on the Brier score; the other six are
+  indistinguishable from the market. The weakness in totals concentrates at high lines rather than spreading evenly,
   which locates it as a specific modeling defect rather than as evidence that the family is
   efficiently priced. It is also the family whose probability integral transform in
   Figure&nbsp;4 departs furthest from flat.</p>
@@ -1009,9 +1049,9 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   preferentially when the quoted price is wrong, so conditioning on fills selects for the
   model's errors and reports worse calibration than the model exhibits. An internal write-up had
   already published a self-critical finding drawn from that sample. Recomputed on the full
-  quoted tape, expected calibration error is 0.0078 against the market's 0.0082. If anything the
-  model is marginally the better calibrated of the two, and calibration is certainly not where
-  it loses. What it lacks is discrimination, as Figure&nbsp;3
+  quoted tape, the miscalibration components are 0.22 and 0.24 &times;10&#8315;&#179;, a
+  difference of &minus;0.01 with an interval of [&minus;0.16, +0.16]. The two are calibrated
+  equally well, and neither loses anything worth measuring to calibration. What it lacks is discrimination, as Figure&nbsp;3
   and the head-to-head comparison both indicate.</p>
 
   <p>Unfavorable results deserve the same scrutiny as favorable ones. A finding that flatters
@@ -1114,6 +1154,9 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
       Royal Statistical Society B</i> 72(1), 71&ndash;91. Any non-trivial average of distinct
       calibrated forecasts is itself uncalibrated, which constrains how a model forecast and a
       market price can be blended.</li>
+    <li id="ref-24"><span class="refnum">[24]</span> Dimitriadis, T., Gneiting, T. and Jordan,
+      A. I. (2021). Stable reliability diagrams for probabilistic classifiers. <i>PNAS</i>
+      118(8), e2016191118. The isotonic score decomposition used in section&nbsp;4.</li>
     <li id="ref-23"><span class="refnum">[23]</span> Bailey, D. H., Borwein, J., L&oacute;pez de Prado, M. and Zhu, Q. J. (2017). The
       probability of backtest overfitting. <i>Journal of Computational Finance</i> 20(4).</li>
   </ul>

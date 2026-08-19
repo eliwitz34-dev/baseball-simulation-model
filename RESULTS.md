@@ -35,8 +35,8 @@ A separate question from whether it beats the market, and the one to ask first.
 **Calibration.** Grouping every forecast by the probability it assigned, observed
 frequencies track predicted ones closely from about 0.25 upward. Below that the
 model is mildly overconfident: events it assigns 16% occur about 18% of the time.
-Expected calibration error over the full range is 0.0078, against the market's
-0.0082.
+Binned calibration error is a poor way to put a number on this, because the answer
+moves with the choice of bins. The decomposition below does it without binning.
 
 **Distribution shape.** A forecaster that quotes the base rate every time is
 perfectly calibrated and useless, so the sharper test is whether the whole
@@ -89,10 +89,10 @@ report worse calibration than the model has, whether or not the model is any
 good. The resulting estimate is biased rather than merely imprecise, so
 collecting more data does not correct it.
 
-Measured on everything quoted, expected calibration error is 0.0078 against the
-market's 0.0082. If anything the model is marginally the better calibrated of the
-two, and calibration certainly isn't where it loses. What it lacks is
-*discrimination*.
+Measured on everything quoted, the miscalibration components are 0.22 and 0.24
+×10⁻³, a difference of −0.01 with an interval of [−0.16, +0.16]. The two are
+calibrated equally well, and neither loses anything worth measuring to
+calibration. What the model lacks is *discrimination*.
 
 This was the most common failure mode in the project, and it warrants more
 attention than any single result, because a conclusion drawn from a badly chosen
