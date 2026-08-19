@@ -143,6 +143,14 @@ dt{font-family:"IBM Plex Sans",sans-serif; font-size:14.5px; font-weight:600;
   color:var(--ink); margin:20px 0 .3em;}
 dd{margin:0; color:var(--ink-soft); font-size:16.5px;}
 
+math{font-size:1.02em;}
+math[display="block"]{
+  display:block; margin:1.35em 0; text-align:center;
+  overflow-x:auto; overflow-y:hidden;
+}
+.eqnote{font-family:"IBM Plex Sans",sans-serif; font-size:13px; color:var(--ink-mute);
+  text-align:center; margin:-0.7em 0 1.3em;}
+
 .foot{margin-top:44px; padding-top:20px; border-top:1px solid var(--rule);
   font-family:"IBM Plex Sans",sans-serif; font-size:13.5px; line-height:1.55; color:var(--ink-mute);}
 .foot p{margin:0 0 .8em;}
@@ -154,7 +162,6 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 <div class="doc">
 
 <header class="head">
-  <p class="doctype">Technical memo</p>
   <h1>A base-out simulation model for baseball outcomes, and its out-of-sample validation</h1>
   <p class="meta">
     <span>Eli Witz</span>
@@ -242,11 +249,39 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 
   <p>Instead, each player's rate is pulled toward what a model of his observable characteristics
   predicts for a player like him, by an amount that depends on how much is actually known about
-  him. The weight on his own record is his playing time divided by playing time plus a variance
-  ratio. That ratio compares how much players genuinely differ from one another against how
-  noisy each individual estimate is: when the noise is large relative to the real spread,
-  everyone gets pulled harder. In practice a hitter with a handful of games moves most of the
-  way to the prediction, and one with a full season barely moves at all.</p>
+  him. The estimate is a weighted average of the two:</p>
+
+  <math display="block">
+    <mrow>
+      <msub><mover accent="true"><mi>&#952;</mi><mo>^</mo></mover><mi>i</mi></msub>
+      <mo>=</mo>
+      <msub><mi>Z</mi><mi>i</mi></msub><mo>&#8290;</mo><msub><mi>y</mi><mi>i</mi></msub>
+      <mo>+</mo>
+      <mrow><mo>(</mo><mn>1</mn><mo>&#8722;</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>)</mo></mrow>
+      <mo>&#8290;</mo><msub><mi>m</mi><mi>i</mi></msub>
+      <mo>,</mo><mspace width="2em"/>
+      <msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo>
+      <mfrac>
+        <msub><mi>n</mi><mi>i</mi></msub>
+        <mrow><msub><mi>n</mi><mi>i</mi></msub><mo>+</mo><mi>k</mi></mrow>
+      </mfrac>
+      <mo>,</mo><mspace width="2em"/>
+      <mi>k</mi><mo>=</mo>
+      <mfrac>
+        <msubsup><mi>&#963;</mi><mn>within</mn><mn>2</mn></msubsup>
+        <msubsup><mi>&#963;</mi><mn>between</mn><mn>2</mn></msubsup>
+      </mfrac>
+    </mrow>
+  </math>
+  <p class="eqnote">y<sub>i</sub> is the player's own rate, m<sub>i</sub> what the covariate model
+  predicts for him, n<sub>i</sub> his playing time.</p>
+
+  <p>The weight on his own record is his playing time over playing time plus a variance ratio,
+  and that ratio is what makes the whole thing work: it compares how much players genuinely
+  differ from one another against how noisy each individual estimate is. When the noise is large
+  relative to the real spread, everyone gets pulled harder. In practice a hitter with a handful
+  of games moves most of the way to the prediction, and one with a full season barely moves at
+  all.</p>
 
   <p>Those variance terms are estimated alongside the rates rather than fixed beforehand, so how
   much to shrink is part of the answer instead of an assumption. Fitting everything at once
@@ -256,10 +291,21 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   samplers get stuck.</p>
 
   <p>The simulation can then run on the average of those parameter estimates or on draws from
-  their full distribution. Using draws costs time, and it matters: the model's output is a tail
-  probability, and the tail probability computed at the average parameter value is not the same
-  as the average tail probability across parameter values. Treating them as equal makes the
-  forecasts look more certain than they are.</p>
+  their full distribution. Using draws costs time, and it matters, because the model's output is a
+  non-linear function of the parameters. For a tail probability <i>g</i> and parameters
+  <i>θ</i>,</p>
+
+  <math display="block">
+    <mrow>
+      <mi>E</mi><mo>&#8290;</mo><mo>[</mo><mi>g</mi><mo>&#8289;</mo><mo>(</mo><mi>&#952;</mi><mo>)</mo><mo>]</mo>
+      <mo>&#8800;</mo>
+      <mi>g</mi><mo>&#8289;</mo><mo>(</mo><mi>E</mi><mo>&#8290;</mo><mo>[</mo><mi>&#952;</mi><mo>]</mo><mo>)</mo>
+    </mrow>
+  </math>
+
+  <p>so the tail probability computed at the average parameter value is not the average tail
+  probability across parameter values. Treating them as equal makes the forecasts look more
+  certain than they are.</p>
 </section>
 
 <section>
@@ -414,7 +460,27 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 <section>
   <h2><span class="num">4.</span>Comparison against the market</h2>
   <p>Forecasts are scored with the Brier score: the squared distance between the probability
-  quoted and what actually happened, averaged over every contract, so lower is better. It has
+  quoted and what actually happened, averaged over every contract, so lower is better.</p>
+
+  <math display="block">
+    <mrow>
+      <mtext>BS</mtext><mo>=</mo>
+      <mfrac><mn>1</mn><mi>N</mi></mfrac>
+      <munderover>
+        <mo movablelimits="false">&#8721;</mo>
+        <mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow>
+        <mi>N</mi>
+      </munderover>
+      <msup>
+        <mrow><mo>(</mo><msub><mi>p</mi><mi>i</mi></msub><mo>&#8722;</mo><msub><mi>y</mi><mi>i</mi></msub><mo>)</mo></mrow>
+        <mn>2</mn>
+      </msup>
+    </mrow>
+  </math>
+  <p class="eqnote">p<sub>i</sub> is the quoted probability, y<sub>i</sub> is 1 if the event
+  happened and 0 otherwise.</p>
+
+  <p>It has
   the property of being <i>proper</i>, meaning a forecaster gets its best expected score only by
   reporting what it genuinely believes. That matters when comparing two forecasters, because an
   improper measure &mdash; accuracy, or a hit rate &mdash; can be improved by shading your
