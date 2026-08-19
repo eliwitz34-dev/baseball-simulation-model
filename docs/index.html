@@ -110,23 +110,11 @@ svg{display:block; width:100%; min-width:600px; height:auto;}
 .ci.neg{stroke:var(--neg);} .pt.neg{fill:var(--neg);}
 .ci.nul{stroke:var(--nul);} .pt.nul{fill:var(--nul);}
 
-figcaption, .tcap{
+figcaption{
   font-family:"IBM Plex Sans",sans-serif; font-size:13px; line-height:1.5;
   color:var(--ink-mute); margin-top:14px;
 }
-figcaption b, .tcap b{color:var(--ink-soft); font-weight:600;}
-.tcap{margin:0 0 12px;}
-
-table{border-collapse:collapse; width:100%; font-size:15px; min-width:480px;
-  font-family:"IBM Plex Sans",sans-serif;}
-th{text-align:left; font-weight:600; font-size:12px; letter-spacing:.05em;
-  text-transform:uppercase; color:var(--ink-mute);
-  border-bottom:1px solid var(--rule-strong); padding:0 16px 7px 0;}
-td{padding:8px 16px 8px 0; border-bottom:1px solid var(--rule); color:var(--ink-soft);}
-td:first-child{color:var(--ink);}
-th.n,td.n{text-align:right; font-family:"IBM Plex Mono",monospace;
-  font-variant-numeric:tabular-nums; padding-right:0; white-space:nowrap;}
-tr:last-child td{border-bottom:none;}
+figcaption b{color:var(--ink-soft); font-weight:600;}
 
 dl{margin:0;}
 dt{font-family:"IBM Plex Sans",sans-serif; font-size:14.5px; font-weight:600;
@@ -557,39 +545,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 </section>
 
 <section>
-  <h2><span class="num">5.</span>Sensitivity to the base-running assumption</h2>
-  <p>How base runners advance is the largest single lever on simulated scoring. The published
-  code builds those transition tables three ways and measures each against real league scoring,
-  rather than assuming the simpler version is good enough.</p>
-
-  <p class="tcap"><b>Table 1.</b> Simulated scoring under three treatments of base-running,
-  league-average lineups, 100,000 simulations each.</p>
-  <div class="frame">
-  <table>
-    <thead><tr><th>Treatment</th><th class="n">Mean total runs</th><th>Basis</th></tr></thead>
-    <tbody>
-      <tr><td>Deterministic</td><td class="n">6.98</td><td>Textbook advancement, one outcome per cell</td></tr>
-      <tr><td>Parameterized</td><td class="n">8.28</td><td>Eight published rates, conditioned on out count</td></tr>
-      <tr><td>Empirical</td><td class="n">8.88</td><td>All 216 state-outcome cells estimated from play-by-play</td></tr>
-      <tr><td>Observed league average</td><td class="n">8.8</td><td>&mdash;</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <p>The deterministic treatment understates scoring by 21%, being unable to represent a double
-  play, a sacrifice fly, or a runner scoring from second on a single. Eight sourced constants
-  recover 68% of the shortfall; the residual 6% consists of rare events that no compact
-  parameterization represents.</p>
-
-  <p>Most of the recovered difference comes from conditioning these rates on the out count. A
-  runner scores from second on a single 39% of the time with none out and 80% with two out,
-  since with two out he advances on contact. The commonly cited single figure of 63% is an
-  average over out states, and applying it uniformly &mdash; as an earlier version of this code
-  did &mdash; biases the run distribution in opposite directions depending on the state.</p>
-</section>
-
-<section>
-  <h2><span class="num">6.</span>Rejected model changes</h2>
+  <h2><span class="num">5.</span>Rejected model changes</h2>
   <p>A list of changes that worked says little, because it was selected on having worked. Each
   of the following was built into the simulation, measured against a criterion fixed before the
   test ran, and then abandoned.</p>
@@ -642,7 +598,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 </section>
 
 <section>
-  <h2><span class="num">7.</span>Measurement basis</h2>
+  <h2><span class="num">6.</span>Measurement basis</h2>
   <p>The most frequent error in this project was never in a model. It was in the choice of
   sample used to judge one. If you evaluate a model only on cases selected by something that
   correlates with the answer, the result is biased rather than merely noisy, and collecting more
@@ -663,7 +619,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 </section>
 
 <section>
-  <h2><span class="num">8.</span>Scope and limitations</h2>
+  <h2><span class="num">7.</span>Scope and limitations</h2>
   <p>The evaluation window covers one partial season, roughly two months of operation and 760
   games, and establishes nothing about stability across seasons, rule changes, or roster
   turnover. The benchmark incorporates information the model does not receive, including late
