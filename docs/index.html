@@ -122,19 +122,13 @@ dt{font-family:"IBM Plex Sans",sans-serif; font-size:14.5px; font-weight:600;
 dd{margin:0; color:var(--ink-soft); font-size:16.5px;}
 
 math{font-size:1.02em;}
-/* Centering block MathML: Chrome's MathML Core does not apply text-align to
-   math layout, so the <math> box itself must be centered. fit-content plus auto
-   inline margins does that; max-width and overflow keep a wide equation from
-   pushing the page sideways on a narrow screen. */
-math[display="block"]{
-  display:block;
-  width:fit-content;
-  max-width:100%;
-  margin:1.5em auto;
-  text-align:center;
-  overflow-x:auto;
-  overflow-y:hidden;
-}
+/* Chrome's MathML Core treats display="block" as block-level and does not apply
+   text-align to math layout, while width:fit-content collapses the box to zero.
+   An inline-level <math displaystyle="true"> inside a centered wrapper avoids
+   both: displaystyle keeps the large operators and limits above and below, and
+   being inline-level means the wrapper's text-align actually centers it. */
+.eq{ text-align:center; margin:1.5em 0; overflow-x:auto; overflow-y:hidden; }
+.eq math{ display:inline-block; }
 .eqnote{font-family:"IBM Plex Sans",sans-serif; font-size:13px; color:var(--ink-mute);
   text-align:center; margin:-0.7em 0 1.3em;}
 
@@ -238,7 +232,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   predicts for a player like him, by an amount that depends on how much is actually known about
   him. The estimate is a weighted average of the two:</p>
 
-  <math display="block">
+  <div class="eq"><math displaystyle="true">
     <mrow>
       <msub><mover accent="true"><mi>&#952;</mi><mo>^</mo></mover><mi>i</mi></msub>
       <mo>=</mo>
@@ -259,7 +253,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
         <msubsup><mi>&#963;</mi><mn>between</mn><mn>2</mn></msubsup>
       </mfrac>
     </mrow>
-  </math>
+  </math></div>
   <p class="eqnote">y<sub>i</sub> is the player's own rate, m<sub>i</sub> what the covariate model
   predicts for him, n<sub>i</sub> his playing time.</p>
 
@@ -282,13 +276,13 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   non-linear function of the parameters. For a tail probability <i>g</i> and parameters
   <i>θ</i>,</p>
 
-  <math display="block">
+  <div class="eq"><math displaystyle="true">
     <mrow>
       <mi>E</mi><mo>&#8290;</mo><mo>[</mo><mi>g</mi><mo>&#8289;</mo><mo>(</mo><mi>&#952;</mi><mo>)</mo><mo>]</mo>
       <mo>&#8800;</mo>
       <mi>g</mi><mo>&#8289;</mo><mo>(</mo><mi>E</mi><mo>&#8290;</mo><mo>[</mo><mi>&#952;</mi><mo>]</mo><mo>)</mo>
     </mrow>
-  </math>
+  </math></div>
 
   <p>so the tail probability computed at the average parameter value is not the average tail
   probability across parameter values. Treating them as equal makes the forecasts look more
@@ -449,7 +443,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   <p>Forecasts are scored with the Brier score: the squared distance between the probability
   quoted and what actually happened, averaged over every contract, so lower is better.</p>
 
-  <math display="block">
+  <div class="eq"><math displaystyle="true">
     <mrow>
       <mtext>BS</mtext><mo>=</mo>
       <mfrac><mn>1</mn><mi>N</mi></mfrac>
@@ -463,7 +457,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
         <mn>2</mn>
       </msup>
     </mrow>
-  </math>
+  </math></div>
   <p class="eqnote">p<sub>i</sub> is the quoted probability, y<sub>i</sub> is 1 if the event
   happened and 0 otherwise.</p>
 
