@@ -11,7 +11,7 @@ ways to get it, and this script implements the middle one:
       installed, and understates scoring by about 21% because it cannot
       represent a runner taking an extra base, a sacrifice fly, or a double play.
 
-  LITERATURE-PARAMETERISED (this script)
+  LITERATURE-PARAMETERIZED (this script)
       The same state machine, with the branch probabilities set to published
       empirical rates: how often a runner scores from second on a single, how
       often a ground ball with a runner on first becomes a double play, and so
