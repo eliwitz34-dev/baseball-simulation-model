@@ -164,16 +164,16 @@ math{font-size:1.02em;}
 <section>
   <h2><span class="num">1.</span>Model structure</h2>
   <p>Every contract the model priced asks about a tail, not an average. Whether two teams
-  combine for more than 8.5 runs is a question about the probability of crossing a threshold;
-  a margin contract asks for the distribution of the difference between two correlated
-  quantities. A regression predicting expected runs answers neither, because getting from an
-  average to the probability of exceeding a threshold requires the shape of the distribution
-  around that average, and a regression never estimates it.</p>
+  combine for more than 8.5 runs is a question about crossing a threshold. A margin contract
+  wants the distribution of the difference between two correlated quantities. A regression
+  predicting expected runs gives you neither, because getting from an average to the chance of
+  exceeding a threshold needs the shape of the distribution around that average, and the
+  regression never estimated it.</p>
 
   <p>So the model simulates games instead. It plays a half-inning one plate appearance at a
   time, tracking two things only: which bases are occupied and how many are out. Eight
   arrangements of runners and three out counts give 24 states, and those 24 describe the
-  situation completely &mdash; what happens next depends on the current state and the batter,
+  situation completely. What happens next depends on the current state and the batter,
   not on how the inning got there. That is what makes the approach practical. The consequences
   of every outcome in every state can be worked out once and stored in a table, so a game runs
   to completion in microseconds rather than being re-derived from scratch.</p>
@@ -185,9 +185,9 @@ math{font-size:1.02em;}
   read off that one distribution. That is what keeps the prices consistent with each other: the
   total and the margin cannot end up implying different things about the same game.</p>
 
-  <p>The alternative is to derive the distribution algebraically rather than by simulation. That
-  is not available here, because the plate appearances are neither independent nor identical
-  &mdash; the base-out state carries from one to the next, and the batter changes every time.</p>
+  <p>You could try to derive the distribution algebraically instead. That is not available
+  here. The plate appearances are neither independent nor identical: the base-out state carries
+  from one to the next, and the batter changes every time.</p>
 
   <p>Two components layered on top of that core matter enough to describe. The first is
   <b>when the starting pitcher is removed</b>, which drives a large share of scoring, because
@@ -218,9 +218,9 @@ math{font-size:1.02em;}
   <p>The model needs nine outcome probabilities for every batter against every pitcher. The
   obvious way to get them is to count what each player has actually done, and it does not work.
   A hitter with 150 plate appearances has a strikeout rate with a standard error of about 3.5
-  percentage points, which is larger than most of the differences the model is trying to
-  detect. Take those rates at face value and the simulation will faithfully reproduce a great
-  deal of noise.</p>
+  percentage points, bigger than most of the differences the model is trying to detect. Take
+  those numbers at face value and the simulation will reproduce a lot of noise very
+  faithfully.</p>
 
   <p>Instead, each player's rate is pulled toward what a model of his observable characteristics
   predicts for a player like him, by an amount that depends on how much is actually known about
@@ -260,10 +260,10 @@ math{font-size:1.02em;}
 
   <p>Those variance terms are estimated alongside the rates rather than fixed beforehand, so how
   much to shrink is part of the answer instead of an assumption. Fitting everything at once
-  means sampling from a distribution over many correlated parameters, which is done with
-  Hamiltonian Monte Carlo &mdash; a method that uses the slope of the distribution to decide
-  where to step next, and so keeps exploring efficiently in high dimensions where simpler
-  samplers get stuck.</p>
+  means sampling from a distribution over many correlated parameters. That is done with
+  Hamiltonian Monte Carlo, which uses the slope of the distribution to decide where to step
+  next and so keeps exploring efficiently in high dimensions where simpler samplers get
+  stuck.</p>
 
   <p>The simulation can then run on the average of those parameter estimates or on draws from
   their full distribution. Using draws costs time, and it matters, because the model's output is a
@@ -353,22 +353,21 @@ math{font-size:1.02em;}
     bars are two standard errors. The model tracks the diagonal closely from about 0.25 upward.
     Below that it is mildly overconfident: events it assigns 16% occur about 18% of the time, and
     the lowest bin is further out still, though it holds only 88 contracts. Averaged across the range, forecast
-    probability and observed frequency differ by 0.0078, against the market's 0.0082 &mdash; the
-    expected calibration error.</figcaption>
+    probability and observed frequency differ by 0.0078, against the market's 0.0082. That gap is the expected calibration error.</figcaption>
   </figure>
 
 
-  <p>That test can be passed by a forecaster that is useless. Quote the base rate on every game
-  and the probabilities will be perfectly calibrated while carrying no information about any
-  particular game. The sharper question is whether the whole predicted distribution has the right
-  shape, and for that the test is the probability integral transform.</p>
+  <p>A useless forecaster can pass that test. Quote the base rate on every game and your
+  probabilities come out perfectly calibrated while telling you nothing about any particular
+  game. The sharper question is whether the whole predicted distribution has the right shape.
+  For that the test is the probability integral transform.</p>
 
-  <p>The idea is simple. For each game, take the model's predicted distribution over the outcome
-  &mdash; total runs, a team's runs, the margin &mdash; and ask what fraction of that distribution
-  sits below what actually happened. If the model is right, that fraction is equally likely to be
-  anything between 0 and 1, so collecting it across hundreds of games should give a flat
-  histogram. A predicted distribution that is too narrow puts too many outcomes in the extreme
-  tails and the histogram develops a U shape; one that is too wide bulges in the middle.</p>
+  <p>The idea is simple. For each game, take the model's predicted distribution over the
+  outcome, whether that is total runs, a team's runs or the margin, and ask what fraction of it
+  sits below what actually happened. If the model is right, that fraction is equally likely to
+  be anything between 0 and 1. Collect it across hundreds of games and you should get a flat
+  histogram. A distribution that is too narrow pushes too many outcomes into the extreme tails
+  and the histogram develops a U shape. One that is too wide bulges in the middle.</p>
 
   <figure>
     <div class="frame"><svg viewBox="0 0 690 332" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Probability integral transform histograms for each contract family">
@@ -499,9 +498,9 @@ math{font-size:1.02em;}
   </figure>
 
 
-  <p>All seven are close to flat, which says the model's uncertainty is about the right width and
-  not just centered in the right place. The largest departures are in game totals and the
-  first-five markets, and they are modest.</p>
+  <p>All seven come out close to flat. That says the model's uncertainty is about the right
+  width, not just centred in the right place. The largest departures are in game totals and the
+  first-five markets, and both are modest.</p>
 </section>
 
 <section>
@@ -529,14 +528,13 @@ math{font-size:1.02em;}
 
   <p>It has
   the property of being <i>proper</i>, meaning a forecaster gets its best expected score only by
-  reporting what it genuinely believes. That matters when comparing two forecasters, because an
-  improper measure &mdash; accuracy, or a hit rate &mdash; can be improved by shading your
+  reporting what it genuinely believes. That matters when comparing two forecasters, because an improper measure like accuracy or a hit rate can be improved by shading your
   answers, and would reward the wrong thing.</p>
 
   <p>A forecaster that ignores the specific game and always quotes the base rate scores 0.2490.
   The model at 0.1905 and the market at 0.1896 are both far better than that, so both carry real
   information. The difference between the two is 0.0010 in the market's favor, and the
-  game-clustered 95% interval around it runs from &minus;0.0027 to +0.0007 &mdash; it contains
+  game-clustered 95% interval around it runs from &minus;0.0027 to +0.0007. It contains
   zero, so the two are not distinguishable on this sample. Figure&nbsp;3 breaks it down by
   family.</p>
 
@@ -609,8 +607,8 @@ math{font-size:1.02em;}
   <p>One family, game totals, is significantly worse; the other six are indistinguishable from
   the market. The weakness in totals concentrates at high lines rather than spreading evenly,
   which locates it as a specific modeling defect rather than as evidence that the family is
-  efficiently priced &mdash; and it is the family whose probability integral transform in Figure&nbsp;2 departs furthest
-  from flat.</p>
+  efficiently priced. It is also the family whose probability integral transform in
+  Figure&nbsp;2 departs furthest from flat.</p>
 
   <p>A more direct test is what happens when the two disagree. On the 1,692 contracts where the
   model and the market took opposite sides, the model's side won 48.8% of the time. So its
@@ -629,9 +627,9 @@ math{font-size:1.02em;}
     <dt>Correcting for compression in the strikeout estimates</dt>
     <dd>Pitchers' estimated strikeout rates appeared to be shrunk too far toward the league
     average, so a multiplier was fitted to push them back out and was shipped. A direct on/off
-    comparison then showed it made the probabilistic forecasts worse at every level &mdash;
-    starter, team, batter and game &mdash; while improving the average predicted count, which is
-    the signature of an over-correction. The reason was that the compression being corrected did
+    comparison then showed it made the probabilistic forecasts worse at every level, starter through
+    game, while improving the average predicted count. That combination is what an
+    over-correction looks like. The reason was that the compression being corrected did
     not exist. How much shrinkage the estimates appear to have depends entirely on how you
     measure it: taking logits of noisy single-game rates gives a slope of 1.21, per-game rates
     give 0.89, and aggregating properly by pitcher gives 1.04, which is calibrated. The
@@ -642,16 +640,16 @@ math{font-size:1.02em;}
     differently. That was moved from a post-hoc adjustment into the model's own likelihood, with
     a per-player term sampled alongside everything else. Graded over 531 walk-forward games it
     came out at parity or slightly worse: the correlation with realized starter strikeouts fell
-    from 0.496 to 0.489, and the ability to separate outcomes was lower at every strikeout line
-    &mdash; the opposite of what a genuine improvement looks like. The per-player signal is real
+    from 0.496 to 0.489, and the ability to separate outcomes was lower at every strikeout line, which is
+    the opposite of what a real improvement looks like. The per-player signal is real
     and was measured correctly; it is simply too small, once properly shrunk, to matter at the
     level of a whole game.</dd>
 
     <dt>Weighting recent performance more heavily for pitchers who have changed</dt>
     <dd>The premise was that a pitcher whose velocity or swing-and-miss rate has recently moved
     should be forecast with more weight on his recent starts. A gate was fitted to do exactly
-    that, and it lost to a fixed middling weight &mdash; not only overall but in every third of
-    every measure of change, including for pitchers whose stuff had demonstrably shifted.
+    that, and it lost to a fixed middling weight. Not just overall, but in every third of
+    every measure of change, including pitchers whose stuff had demonstrably shifted.
     Leaning on recent data over-weights noise even when the change is real. The premise itself
     held up, though: recent change does predict forward error. It belongs in the model of what a
     pitcher's stuff implies about his strikeout rate, not in how his history is weighted, and
@@ -684,9 +682,9 @@ math{font-size:1.02em;}
   preferentially when the quoted price is wrong, so conditioning on fills selects for the
   model's errors and reports worse calibration than the model exhibits. An internal write-up had
   already published a self-critical finding drawn from that sample. Recomputed on the full
-  quoted tape, expected calibration error is 0.0078 against the market's 0.0082 &mdash; the model
-  is, if anything, marginally the better calibrated of the two, and calibration is certainly not
-  where it loses. What it lacks is discrimination, as Figure&nbsp;1
+  quoted tape, expected calibration error is 0.0078 against the market's 0.0082. If anything the
+  model is marginally the better calibrated of the two, and calibration is certainly not where
+  it loses. What it lacks is discrimination, as Figure&nbsp;1
   and the head-to-head comparison both indicate.</p>
 
   <p>Unfavorable results deserve the same scrutiny as favorable ones. A finding that flatters

@@ -2,12 +2,12 @@
 
 ## Headline result
 
-The model quoted seven families of game-level contracts. Across 35,159 scored
-contracts covering 764 games between 29 May and 30 July 2026, its forecasts were
-compared against the market's midpoint price for the same contract at the same
-moment. Both were scored with the Brier score — the mean squared error of a
-probability forecast, and a proper scoring rule, so neither forecaster can improve
-its score by misreporting what it believes.
+The model quoted seven families of game-level contracts. Across 35,159 of them,
+covering 764 games between 29 May and 30 July 2026, every forecast was compared
+against the market's midpoint price for the same contract at the same moment.
+Both get scored with the Brier score, which is the mean squared error of a
+probability forecast. It's a proper scoring rule, so neither forecaster can
+improve its score by reporting something other than what it believes.
 
 | | Brier |
 |---|---|
@@ -17,16 +17,16 @@ its score by misreporting what it believes.
 | difference, model − market | −0.00095, against the model |
 | 95% CI (game-clustered) | [−0.00270, +0.00068] |
 
-Both forecasters are far better than the base rate, so the model is genuinely
-informative. The point estimate favors the market and the interval contains zero,
-so the correct statement is that **the model and the market are indistinguishable
-on this sample, with the point estimate slightly against the model.**
+Both are well clear of the base rate, so the model does carry real information.
+But the point estimate favors the market and the interval contains zero.
+**On this sample the two are indistinguishable, with the point estimate slightly
+against the model.**
 
-Intervals are bootstrapped over **games, not contracts**. The contracts on a
-single game share one realized outcome and are strongly correlated, so games are
-the effective sampling unit. Resampling contracts instead would narrow the
-intervals by a factor of between about 1.3 and 2.5, depending on the family,
-which would overstate the precision of every estimate reported.
+Intervals are bootstrapped over **games, not contracts**. All the contracts on one
+game share a single outcome and move together, so the game is the real sampling
+unit. Resampling contracts instead would narrow these intervals by somewhere
+between 1.3 and 2.5 times depending on the family, and every estimate would look
+more precise than it is.
 
 ## Does the model match real baseball?
 
@@ -38,14 +38,14 @@ model is mildly overconfident: events it assigns 16% occur about 18% of the time
 Expected calibration error over the full range is 0.0078, against the market's
 0.0082.
 
-**Distribution shape.** Calibration alone can be achieved by a forecaster that
-quotes the base rate every time, so the sharper test is whether the whole
-predicted distribution has the right shape. For each game the model's predicted
-distribution is evaluated at what actually happened, giving a probability integral
-transform value that should be uniform on [0, 1] if the distribution is right.
-Across all seven families the resulting histograms are close to flat, with no
-family showing the U shape that indicates a predicted distribution that is too
-narrow. Mean transform values range from 0.497 to 0.510 against an ideal of 0.500.
+**Distribution shape.** A forecaster that quotes the base rate every time is
+perfectly calibrated and useless, so the sharper test is whether the whole
+predicted distribution has the right shape. For each game, take the model's
+predicted distribution, see what fraction of it sits below what actually
+happened, and collect that fraction across games. If the distribution is right,
+those values are uniform on [0, 1]. All seven families come out close to flat.
+None shows the U shape you get when a predicted distribution is too narrow, and
+the mean values run from 0.497 to 0.510 against an ideal of 0.500.
 
 ## Results by contract family
 
@@ -61,97 +61,96 @@ narrow. Mean transform values range from 0.497 to 0.510 against an ideal of 0.50
 | first five, total | 5,238 | 0.1778 | 0.1769 | −0.92 [−3.25, +1.53] | |
 | game total | 8,157 | 0.1821 | 0.1788 | −3.33 [−6.47, −0.50] | **worse** |
 
-One family is significantly worse and six are indistinguishable. None is
-significantly better.
+One family is significantly worse, six are indistinguishable, none is better.
 
-The weakness in game totals concentrates at high lines rather than spreading
-evenly across the family. A failure concentrated in an identifiable region
-indicates a specific modeling defect, whereas one spread uniformly more often
-indicates that the family is efficiently priced.
+The game-total weakness concentrates at high lines rather than spreading evenly
+across the family. That's worth knowing. A failure with an address is usually a
+specific modeling defect, where one smeared uniformly across a family more often
+means the family is just efficiently priced.
 
-The most direct test is what happens when the two forecasters disagree. On the
-1,692 contracts where the model and the market took opposite sides, the model's
-side won **48.8%** of the time. Its calibration is sound and its predicted
-distributions have the right shape; what it lacks is any information the price did
-not already contain.
+The most direct test is what happens when the two disagree. On the 1,692 contracts
+where the model and the market took opposite sides, the model's side won
+**48.8%** of the time. So its confidence is honest and its distributions have the
+right shape. What it doesn't have is information the price didn't already
+contain.
 
 ## A caution about the measurement basis
 
-An earlier internal analysis reported the model as *worse calibrated* than the
-market, measured on the subset of contracts where an order actually filled. This
-document does not repeat that claim, because the two analyses disagree and the
-present basis is the sounder one.
+An earlier internal write-up reported the model as *worse calibrated* than the
+market. That measurement used only the contracts where an order actually filled,
+and it's wrong.
 
-Contracts that fill are not a random sample of contracts quoted. An order fills
-preferentially when the counterparty was willing to take the other side, which
-correlates with the model being wrong — a resting order is most likely to be
-lifted precisely when it is mispriced. Conditioning a calibration measurement on
-fills therefore selects for the model's errors, and will report worse calibration
-than the model actually has, whether or not the model is any good.
+Filled contracts aren't a random sample of quoted ones. An order fills when a
+counterparty takes the other side, which happens preferentially when the price is
+wrong. A resting order is likeliest to get lifted exactly when it's mispriced. So
+conditioning on fills selects for the model's own errors and will report worse
+calibration than the model has, whether or not the model is any good. More data
+doesn't help. The estimate isn't noisy, it's biased.
 
-On the full quoted tape, which does not condition on fills, the model's expected
-calibration error is 0.0078 against the market's 0.0082 — the model is if
-anything marginally the better calibrated, and calibration is certainly not where
-it loses. What it lacks is *discrimination*. The
-two analyses were measuring different things, and the fills-conditioned
-measurement does not answer the question it was taken to answer.
+Measured on everything quoted, expected calibration error is 0.0078 against the
+market's 0.0082. If anything the model is marginally the better calibrated of the
+two, and calibration certainly isn't where it loses. What it lacks is
+*discrimination*.
 
-This kind of error — a conclusion that is an artifact of the slice it was
-measured on — was the single most recurrent failure mode in this project. It is
-worth more attention than any individual result, because it invalidates a
-conclusion without leaving any sign that it has done so.
+This was the most common failure mode in the whole project, and it's worth more
+attention than any single result. A conclusion drawn from a badly chosen sample
+is wrong without leaving any trace that it's wrong.
 
 ## Model changes that were tested and rejected
 
-The following were each built, measured against a criterion fixed in advance,
-and abandoned. They are listed because a record of rejected changes is a better
-indicator of process than a list of accepted ones — accepted changes are
-selected on having worked, and are therefore contaminated by the selection.
+Each of these was built, measured against a criterion set before the test ran,
+and then dropped. A list of changes that worked wouldn't tell you much, since it
+was selected on having worked.
 
 **Correcting for compression in the strikeout estimates.** Pitchers' estimated
-strikeout rates appeared shrunk too far toward the league average, so a
-multiplier was fitted to push them back out, and it was shipped. A direct on/off
-comparison then showed it worsened the probabilistic forecasts at every level —
-starter, team, batter and game — while improving the average predicted count,
-which is the signature of an over-correction. The compression being corrected
-turned out not to exist. How much shrinkage the estimates appear to carry depends
-entirely on how it is measured: logits of noisy single-game rates give a slope of
-1.21, per-game rates 0.89, and proper aggregation by pitcher 1.04, which is
-calibrated. The multiplier was switched off and the de-shrinkage work stopped.
+strikeout rates looked shrunk too far toward the league average, so I fitted a
+multiplier to push them back out and shipped it. An on/off comparison then showed
+it made the probabilistic forecasts worse at every level, starter through game,
+while improving the average predicted count. That combination is what an
+over-correction looks like.
 
-**Per-batter platoon splits inside the model fit.** Moved from a post-hoc
-adjustment into the likelihood itself, with a per-player term sampled alongside
-everything else. Graded over 531 walk-forward games it came out at parity or
-slightly worse: correlation with realized starter strikeouts fell from 0.496 to
-0.489, and the ability to separate outcomes was lower at every strikeout line.
-The per-player signal is real and correctly measured; it is too small, once
-properly shrunk, to matter at the level of a whole game.
+The compression turned out not to exist. How much shrinkage the estimates appear
+to carry depends entirely on how you measure it. Take logits of noisy single-game
+rates and the slope is 1.21. Use per-game rates and it's 0.89. Aggregate properly
+by pitcher and it's 1.04, which is calibrated. I switched the multiplier off and
+stopped the de-shrinkage work.
 
-Reviewing the rejected build surfaced two defects that mattered anyway. Pure
-switch hitters — 92 of 145 — were being silently dropped, because the per-player
-artifact was assembled only from players who had a usable split, and a switch
-hitter never bats same-handed. The lesson generalizes: when a per-player artifact
-is built from the players with enough data, it silently excludes the exact
-population a downstream feature is aimed at, so membership should be emitted from
-the full classification rather than from the survivors.
+**Per-batter platoon splits inside the model fit.** Every batter handles
+left-handed and right-handed pitching a bit differently. I moved that from a
+post-hoc adjustment into the likelihood itself, with a per-player term sampled
+alongside everything else. Over 531 walk-forward games it landed at parity or
+slightly worse: correlation with realized starter strikeouts dropped from 0.496 to
+0.489, and outcome separation was worse at every strikeout line. The per-player
+signal is real and measured correctly. It's just too small, once properly shrunk,
+to matter across a whole game.
 
-**Weighting recent performance more heavily for pitchers who have changed.** The
-premise was that a pitcher whose velocity or swing-and-miss rate has recently
-moved should be forecast with more weight on his recent starts. A gate fitted to
-do that lost to a fixed middling weight — not only overall but in every third of
-every measure of change, including for pitchers whose stuff had demonstrably
-shifted. The premise itself survived: recent change does predict forward error,
-with a correlation of about +0.14 for velocity change. It belongs in the model of
-what a pitcher's stuff implies about his strikeout rate rather than in how his
-history is weighted, and that is where the work went.
+Reviewing the build turned up a bug that mattered anyway. Pure switch hitters, 92
+of 145 of them, were being silently dropped. The per-player artifact was assembled
+only from players with a usable platoon split, and a switch hitter never bats
+same-handed, so he never has one. That generalizes: build a per-player artifact
+from the players who have enough data and you quietly exclude the exact group a
+downstream feature is aimed at. Emit membership from the full classification, not
+from the survivors.
 
-**Position-player pitching.** Position players occasionally pitch in lopsided
-games, and the model treated them as ordinary relievers. Before building the
-correction, the largest attainable effect was computed as the share of plate
-appearances affected multiplied by the maximum rate distortion: +0.0121 runs per
-game, against a discrepancy of 2.8 percentage points under investigation. The
-ceiling was below the target, so the work stopped there. Bounding a mechanism's
-effect before implementing it was the cheapest screening step available.
+**Weighting recent starts more heavily for pitchers who have changed.** The idea
+was that a pitcher whose velocity or swing-and-miss rate has just moved should be
+forecast mostly off his recent starts. I fitted a gate to do that and it lost to a
+fixed middling weight. Not just overall, but in every third of every measure of
+change, including pitchers whose stuff had demonstrably shifted. Leaning on recent
+data over-weights noise even when the change is real.
+
+The premise survived, though. Recent change does predict forward error, at about
++0.14 correlation for velocity. It just belongs in the model of what a pitcher's
+stuff implies about his strikeout rate, not in how his history gets weighted, and
+that's where the work went next.
+
+**Position-player pitching.** Position players sometimes pitch in blowouts, and
+the model treated them as ordinary relievers. Before building anything I worked
+out the biggest effect a fix could possibly have: the share of plate appearances
+involved times the largest plausible rate distortion, which came to 0.0121 runs
+per game. The discrepancy I was chasing was 2.8 percentage points. The ceiling was
+below the target, so I stopped there. Bounding a mechanism before building it was
+the cheapest screening step I had.
 
 ## Limitations
 
@@ -162,15 +161,14 @@ effect before implementing it was the cheapest screening step available.
   information the model does not have, including late lineup and weather news.
   Some of the model's apparent deficit is an information gap rather than a
   modeling one, and this analysis does not separate the two.
-- **Selection into the quoted set.** The seven families reported here were the
-  ones the model quoted, and they were chosen partly on the basis of earlier
-  performance. Results restricted to a set chosen that way are optimistically
-  biased, which makes the absence of any family beating the market a stronger
-  finding than it would otherwise be, not a weaker one.
-- **Single operator, no independent review.** Every modeling choice, and every
-  decision about how to read a result, was made by one person. The
-  pre-commitment discipline described above is a partial substitute for
-  independent review, and only a partial one.
+- **Selection into the quoted set.** These seven are the families the model
+  actually quoted, and they were picked partly on earlier performance. Results
+  from a set chosen that way are optimistically biased, which cuts in an
+  interesting direction here: it makes the absence of any family beating the
+  market a stronger finding, not a weaker one.
+- **One person, no independent review.** Every modeling choice and every call on
+  how to read a result was mine. Fixing each test's criterion beforehand is a
+  partial substitute for someone else checking, and only partial.
 
 ## Reproducing these numbers
 
@@ -181,8 +179,7 @@ python scripts/build_tables.py
 python scripts/validate.py
 ```
 
-The market comparison needs the record of quoted prices and realized outcomes,
-which is not in the repository. The analysis takes a table of `(model
-probability, market probability, realized outcome, game id)` and is short to
-reimplement against any such table; the game-clustered bootstrap is the only part
-that needs care.
+The market comparison needs the record of quoted prices and outcomes, which isn't
+in the repository. The analysis runs off a table of `(model probability, market
+probability, realized outcome, game id)` and is short to rebuild against any such
+table. The game-clustered bootstrap is the only part that needs care.
