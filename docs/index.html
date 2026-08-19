@@ -165,9 +165,9 @@ math{font-size:1.02em;}
   <h2><span class="num">1.</span>Model structure</h2>
   <p>Every contract the model priced asks about a tail, not an average. Whether two teams
   combine for more than 8.5 runs is a question about crossing a threshold. A margin contract
-  wants the distribution of the difference between two correlated quantities. A regression
-  predicting expected runs gives you neither, because getting from an average to the chance of
-  exceeding a threshold needs the shape of the distribution around that average, and the
+  requires the distribution of the difference between two correlated quantities. A regression
+  predicting expected runs supplies neither, because getting from an average to the probability
+  of exceeding a threshold requires the shape of the distribution around that average, and the
   regression never estimated it.</p>
 
   <p>So the model simulates games instead. It plays a half-inning one plate appearance at a
@@ -185,9 +185,9 @@ math{font-size:1.02em;}
   read off that one distribution. That is what keeps the prices consistent with each other: the
   total and the margin cannot end up implying different things about the same game.</p>
 
-  <p>You could try to derive the distribution algebraically instead. That is not available
-  here. The plate appearances are neither independent nor identical: the base-out state carries
-  from one to the next, and the batter changes every time.</p>
+  <p>Deriving the distribution algebraically is the alternative, and it is not available here.
+  The plate appearances are neither independent nor identical: the base-out state carries from
+  one to the next, and the batter changes every time.</p>
 
   <p>Two components layered on top of that core matter enough to describe. The first is
   <b>when the starting pitcher is removed</b>, which drives a large share of scoring, because
@@ -218,9 +218,8 @@ math{font-size:1.02em;}
   <p>The model needs nine outcome probabilities for every batter against every pitcher. The
   obvious way to get them is to count what each player has actually done, and it does not work.
   A hitter with 150 plate appearances has a strikeout rate with a standard error of about 3.5
-  percentage points, bigger than most of the differences the model is trying to detect. Take
-  those numbers at face value and the simulation will reproduce a lot of noise very
-  faithfully.</p>
+  percentage points, larger than most of the differences the model is trying to detect. Taken
+  at face value, those rates would have the simulation reproducing a great deal of noise.</p>
 
   <p>Instead, each player's rate is pulled toward what a model of his observable characteristics
   predicts for a player like him, by an amount that depends on how much is actually known about
@@ -357,17 +356,18 @@ math{font-size:1.02em;}
   </figure>
 
 
-  <p>A useless forecaster can pass that test. Quote the base rate on every game and your
-  probabilities come out perfectly calibrated while telling you nothing about any particular
-  game. The sharper question is whether the whole predicted distribution has the right shape.
-  For that the test is the probability integral transform.</p>
+  <p>A useless forecaster can pass that test. Quoting the base rate on every game produces
+  perfectly calibrated probabilities that say nothing about any particular game. The sharper
+  question is whether the whole predicted distribution has the right shape, and the test for
+  that is the probability integral transform.</p>
 
-  <p>The idea is simple. For each game, take the model's predicted distribution over the
-  outcome, whether that is total runs, a team's runs or the margin, and ask what fraction of it
-  sits below what actually happened. If the model is right, that fraction is equally likely to
-  be anything between 0 and 1. Collect it across hundreds of games and you should get a flat
-  histogram. A distribution that is too narrow pushes too many outcomes into the extreme tails
-  and the histogram develops a U shape. One that is too wide bulges in the middle.</p>
+  <p>The idea is straightforward. For each game, the model's predicted distribution over the
+  outcome, whether total runs, a team's runs or the margin, is evaluated at what actually
+  happened, giving the fraction of that distribution lying below the realized value. If the
+  model is right, that fraction is equally likely to fall anywhere between 0 and 1, so
+  collecting it across hundreds of games should produce a flat histogram. A distribution that is
+  too narrow pushes too many outcomes into the extreme tails and the histogram develops a U
+  shape. One that is too wide bulges in the middle.</p>
 
   <figure>
     <div class="frame"><svg viewBox="0 0 690 332" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Probability integral transform histograms for each contract family">
@@ -498,9 +498,9 @@ math{font-size:1.02em;}
   </figure>
 
 
-  <p>All seven come out close to flat. That says the model's uncertainty is about the right
-  width, not just centred in the right place. The largest departures are in game totals and the
-  first-five markets, and both are modest.</p>
+  <p>All seven come out close to flat, which indicates that the model's uncertainty is about
+  the right width rather than merely centered in the right place. The largest departures are in
+  game totals and the first-five markets, and both are modest.</p>
 </section>
 
 <section>
@@ -528,8 +528,8 @@ math{font-size:1.02em;}
 
   <p>It has
   the property of being <i>proper</i>, meaning a forecaster gets its best expected score only by
-  reporting what it genuinely believes. That matters when comparing two forecasters, because an improper measure like accuracy or a hit rate can be improved by shading your
-  answers, and would reward the wrong thing.</p>
+  reporting what it genuinely believes. That matters when comparing two forecasters, because an improper measure such as accuracy or a hit rate can be improved by
+  misreporting, and would reward the wrong thing.</p>
 
   <p>A forecaster that ignores the specific game and always quotes the base rate scores 0.2490.
   The model at 0.1905 and the market at 0.1896 are both far better than that, so both carry real
@@ -628,8 +628,8 @@ math{font-size:1.02em;}
     <dd>Pitchers' estimated strikeout rates appeared to be shrunk too far toward the league
     average, so a multiplier was fitted to push them back out and was shipped. A direct on/off
     comparison then showed it made the probabilistic forecasts worse at every level, starter through
-    game, while improving the average predicted count. That combination is what an
-    over-correction looks like. The reason was that the compression being corrected did
+    game, while improving the average predicted count, which is the signature of an
+    over-correction. The reason was that the compression being corrected did
     not exist. How much shrinkage the estimates appear to have depends entirely on how you
     measure it: taking logits of noisy single-game rates gives a slope of 1.21, per-game rates
     give 0.89, and aggregating properly by pitcher gives 1.04, which is calibrated. The
@@ -640,15 +640,15 @@ math{font-size:1.02em;}
     differently. That was moved from a post-hoc adjustment into the model's own likelihood, with
     a per-player term sampled alongside everything else. Graded over 531 walk-forward games it
     came out at parity or slightly worse: the correlation with realized starter strikeouts fell
-    from 0.496 to 0.489, and the ability to separate outcomes was lower at every strikeout line, which is
-    the opposite of what a real improvement looks like. The per-player signal is real
+    from 0.496 to 0.489, and the ability to separate outcomes was lower at every strikeout line, the
+    opposite of what a genuine improvement looks like. The per-player signal is real
     and was measured correctly; it is simply too small, once properly shrunk, to matter at the
     level of a whole game.</dd>
 
     <dt>Weighting recent performance more heavily for pitchers who have changed</dt>
     <dd>The premise was that a pitcher whose velocity or swing-and-miss rate has recently moved
     should be forecast with more weight on his recent starts. A gate was fitted to do exactly
-    that, and it lost to a fixed middling weight. Not just overall, but in every third of
+    that, and it lost to a fixed middling weight, not only overall but in every third of
     every measure of change, including pitchers whose stuff had demonstrably shifted.
     Leaning on recent data over-weights noise even when the change is real. The premise itself
     held up, though: recent change does predict forward error. It belongs in the model of what a
@@ -673,9 +673,9 @@ math{font-size:1.02em;}
 <section>
   <h2><span class="num">6.</span>Measurement basis</h2>
   <p>The most frequent error in this project was never in a model. It was in the choice of
-  sample used to judge one. If you evaluate a model only on cases selected by something that
-  correlates with the answer, the result is biased rather than merely noisy, and collecting more
-  data does not fix it.</p>
+  sample used to judge one. Evaluating a model only on cases selected by something correlated
+  with the answer produces a result that is biased rather than merely noisy, and collecting more
+  data does not correct it.</p>
 
   <p>An instance from this project: calibration measured only on contracts where a resting order
   filled. An order fills when a counterparty takes the opposing side, which occurs

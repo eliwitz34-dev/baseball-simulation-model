@@ -40,12 +40,12 @@ Expected calibration error over the full range is 0.0078, against the market's
 
 **Distribution shape.** A forecaster that quotes the base rate every time is
 perfectly calibrated and useless, so the sharper test is whether the whole
-predicted distribution has the right shape. For each game, take the model's
-predicted distribution, see what fraction of it sits below what actually
-happened, and collect that fraction across games. If the distribution is right,
-those values are uniform on [0, 1]. All seven families come out close to flat.
-None shows the U shape you get when a predicted distribution is too narrow, and
-the mean values run from 0.497 to 0.510 against an ideal of 0.500.
+predicted distribution has the right shape. For each game the model's predicted
+distribution is evaluated at what actually happened, giving the fraction of the
+distribution lying below the realized outcome. If the distribution is right,
+those fractions are uniform on [0, 1]. All seven families come out close to flat.
+None shows the U shape produced by a predicted distribution that is too narrow,
+and the mean values run from 0.497 to 0.510 against an ideal of 0.500.
 
 ## Results by contract family
 
@@ -64,93 +64,95 @@ the mean values run from 0.497 to 0.510 against an ideal of 0.500.
 One family is significantly worse, six are indistinguishable, none is better.
 
 The game-total weakness concentrates at high lines rather than spreading evenly
-across the family. That's worth knowing. A failure with an address is usually a
-specific modeling defect, where one smeared uniformly across a family more often
-means the family is just efficiently priced.
+across the family, which is itself informative. A failure confined to an
+identifiable region usually indicates a specific modeling defect, where one spread
+uniformly across a family more often indicates that the family is efficiently
+priced.
 
 The most direct test is what happens when the two disagree. On the 1,692 contracts
 where the model and the market took opposite sides, the model's side won
-**48.8%** of the time. So its confidence is honest and its distributions have the
-right shape. What it doesn't have is information the price didn't already
+**48.8%** of the time. Its stated confidence is honest and its distributions have
+the right shape. What it lacks is information the price did not already
 contain.
 
 ## A caution about the measurement basis
 
 An earlier internal write-up reported the model as *worse calibrated* than the
 market. That measurement used only the contracts where an order actually filled,
-and it's wrong.
+and it is wrong.
 
-Filled contracts aren't a random sample of quoted ones. An order fills when a
+Filled contracts are not a random sample of quoted ones. An order fills when a
 counterparty takes the other side, which happens preferentially when the price is
-wrong. A resting order is likeliest to get lifted exactly when it's mispriced. So
-conditioning on fills selects for the model's own errors and will report worse
-calibration than the model has, whether or not the model is any good. More data
-doesn't help. The estimate isn't noisy, it's biased.
+wrong; a resting order is likeliest to be lifted precisely when it is mispriced.
+Conditioning on fills therefore selects for the model's own errors and will
+report worse calibration than the model has, whether or not the model is any
+good. The resulting estimate is biased rather than merely imprecise, so
+collecting more data does not correct it.
 
 Measured on everything quoted, expected calibration error is 0.0078 against the
 market's 0.0082. If anything the model is marginally the better calibrated of the
 two, and calibration certainly isn't where it loses. What it lacks is
 *discrimination*.
 
-This was the most common failure mode in the whole project, and it's worth more
-attention than any single result. A conclusion drawn from a badly chosen sample
-is wrong without leaving any trace that it's wrong.
+This was the most common failure mode in the project, and it warrants more
+attention than any single result, because a conclusion drawn from a badly chosen
+sample is wrong without leaving any trace of being wrong.
 
 ## Model changes that were tested and rejected
 
 Each of these was built, measured against a criterion set before the test ran,
-and then dropped. A list of changes that worked wouldn't tell you much, since it
-was selected on having worked.
+and then dropped. A list of changes that worked would say little, having been
+selected on the basis of having worked.
 
 **Correcting for compression in the strikeout estimates.** Pitchers' estimated
-strikeout rates looked shrunk too far toward the league average, so I fitted a
-multiplier to push them back out and shipped it. An on/off comparison then showed
-it made the probabilistic forecasts worse at every level, starter through game,
-while improving the average predicted count. That combination is what an
-over-correction looks like.
+strikeout rates looked shrunk too far toward the league average, so a multiplier
+was fitted to push them back out, and it was shipped. An on/off comparison then
+showed it made the probabilistic forecasts worse at every level, starter through
+game, while improving the average predicted count. That combination is the
+signature of an over-correction.
 
 The compression turned out not to exist. How much shrinkage the estimates appear
-to carry depends entirely on how you measure it. Take logits of noisy single-game
-rates and the slope is 1.21. Use per-game rates and it's 0.89. Aggregate properly
-by pitcher and it's 1.04, which is calibrated. I switched the multiplier off and
-stopped the de-shrinkage work.
+to carry depends entirely on how it is measured. Logits of noisy single-game rates
+give a slope of 1.21. Per-game rates give 0.89. Proper aggregation by pitcher gives
+1.04, which is calibrated. The multiplier was switched off and the de-shrinkage
+work stopped.
 
 **Per-batter platoon splits inside the model fit.** Every batter handles
-left-handed and right-handed pitching a bit differently. I moved that from a
+left-handed and right-handed pitching somewhat differently. That was moved from a
 post-hoc adjustment into the likelihood itself, with a per-player term sampled
-alongside everything else. Over 531 walk-forward games it landed at parity or
-slightly worse: correlation with realized starter strikeouts dropped from 0.496 to
-0.489, and outcome separation was worse at every strikeout line. The per-player
-signal is real and measured correctly. It's just too small, once properly shrunk,
-to matter across a whole game.
+alongside everything else. Over 531 walk-forward games it came out at parity or
+slightly worse: correlation with realized starter strikeouts fell from 0.496 to
+0.489, and outcome separation was lower at every strikeout line. The per-player
+signal is real and correctly measured. It is simply too small, once properly
+shrunk, to matter across a whole game.
 
-Reviewing the build turned up a bug that mattered anyway. Pure switch hitters, 92
-of 145 of them, were being silently dropped. The per-player artifact was assembled
-only from players with a usable platoon split, and a switch hitter never bats
-same-handed, so he never has one. That generalizes: build a per-player artifact
-from the players who have enough data and you quietly exclude the exact group a
-downstream feature is aimed at. Emit membership from the full classification, not
-from the survivors.
+Reviewing the build surfaced a defect that mattered regardless. Pure switch
+hitters, 92 of 145 of them, were being silently dropped. The per-player artifact
+was assembled only from players with a usable platoon split, and a switch hitter
+never bats same-handed, so he never has one. The lesson generalizes: a per-player
+artifact built from the players who have enough data will quietly exclude the
+exact group a downstream feature is aimed at. Membership should be emitted from
+the full classification rather than from the survivors.
 
-**Weighting recent starts more heavily for pitchers who have changed.** The idea
-was that a pitcher whose velocity or swing-and-miss rate has just moved should be
-forecast mostly off his recent starts. I fitted a gate to do that and it lost to a
-fixed middling weight. Not just overall, but in every third of every measure of
-change, including pitchers whose stuff had demonstrably shifted. Leaning on recent
-data over-weights noise even when the change is real.
+**Weighting recent starts more heavily for pitchers who have changed.** The
+premise was that a pitcher whose velocity or swing-and-miss rate has recently
+moved should be forecast mostly from his recent starts. A gate fitted to do that
+lost to a fixed middling weight, not only overall but in every third of every
+measure of change, including pitchers whose stuff had demonstrably shifted.
+Leaning on recent data over-weights noise even when the change is real.
 
-The premise survived, though. Recent change does predict forward error, at about
-+0.14 correlation for velocity. It just belongs in the model of what a pitcher's
-stuff implies about his strikeout rate, not in how his history gets weighted, and
-that's where the work went next.
+The premise itself survived. Recent change does predict forward error, at about
++0.14 correlation for velocity. It belongs in the model of what a pitcher's stuff
+implies about his strikeout rate rather than in how his history is weighted, and
+that is where the work went next.
 
 **Position-player pitching.** Position players sometimes pitch in blowouts, and
-the model treated them as ordinary relievers. Before building anything I worked
-out the biggest effect a fix could possibly have: the share of plate appearances
-involved times the largest plausible rate distortion, which came to 0.0121 runs
-per game. The discrepancy I was chasing was 2.8 percentage points. The ceiling was
-below the target, so I stopped there. Bounding a mechanism before building it was
-the cheapest screening step I had.
+the model treated them as ordinary relievers. Before anything was built, the
+largest effect a fix could possibly have was worked out: the share of plate
+appearances involved times the largest plausible rate distortion, which came to
+0.0121 runs per game. The discrepancy under investigation was 2.8 percentage
+points. The ceiling sat below the target, so the work stopped there. Bounding a
+mechanism before building it proved the cheapest screening step available.
 
 ## Limitations
 
@@ -167,8 +169,8 @@ the cheapest screening step I had.
   interesting direction here: it makes the absence of any family beating the
   market a stronger finding, not a weaker one.
 - **One person, no independent review.** Every modeling choice and every call on
-  how to read a result was mine. Fixing each test's criterion beforehand is a
-  partial substitute for someone else checking, and only partial.
+  how to read a result came from the same person. Fixing each test's criterion
+  beforehand substitutes for an outside check only partially.
 
 ## Reproducing these numbers
 
