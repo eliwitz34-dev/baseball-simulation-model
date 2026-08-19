@@ -78,7 +78,7 @@ sim/tables.py            base-out transition tables, with a data-free fallback
 sim/production/          the actual production kernel (3,811 lines), for reference
 scripts/build_tables.py  builds transition tables from published advancement rates
 scripts/validate.py      the checks that must pass before any number here is quoted
-scripts/benchmark.py     measures simulation throughput, if of interest
+scripts/benchmark.py     simulation throughput, for anyone who wants it
 METHODOLOGY.md           how the model was validated, and why it was validated that way
 RESULTS.md               what the validation found, including everything that failed
 ```

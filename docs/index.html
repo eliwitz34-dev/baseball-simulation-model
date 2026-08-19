@@ -431,7 +431,10 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   lineup and weather news, so an unknown portion of the measured shortfall reflects an
   information gap rather than a modeling deficiency. All modeling and interpretive decisions
   were made by one person; the pre-commitment and placebo procedures described above are a
-  partial substitute for independent review.</p>
+  partial substitute for independent review. The simulation engine itself is implemented twice,
+  once as a compiled kernel and once independently from the same specification, and the two are
+  required to agree on the simulated distribution to within Monte Carlo error &mdash; which
+  checks the code, though not the judgment applied to it.</p>
 
   <p>Realized trading results are excluded. The accounting routine that produced the figures
   last computed contained a settlement defect, since corrected, and the sample is in any case
