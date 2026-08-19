@@ -2,78 +2,78 @@
 
 ## Headline result
 
-Across 163,777 scored contracts covering 786 games between 29 May and 30 July
-2026, the model's forecasts were compared against the market's midpoint price
-for the same contract at the same moment. Both were scored with the Brier score
-— the mean squared error of a probability forecast, and a proper scoring rule,
-so neither forecaster can improve its score by misreporting what it believes.
-
-On game-level markets:
+The model quoted six families of game-level contracts. Across 24,659 scored
+contracts covering 760 games between 29 May and 30 July 2026, its forecasts were
+compared against the market's midpoint price for the same contract at the same
+moment. Both were scored with the Brier score — the mean squared error of a
+probability forecast, and a proper scoring rule, so neither forecaster can improve
+its score by misreporting what it believes.
 
 | | Brier |
 |---|---|
-| model | 0.1891 |
-| market | 0.1883 |
-| difference | −0.00088, against the model |
-| 95% CI (game-clustered) | [−0.00249, +0.00078] |
+| model | 0.1885 |
+| market | 0.1875 |
+| base-rate forecast | 0.2489 |
+| difference, model − market | −0.00104, against the model |
+| 95% CI (game-clustered) | [−0.00267, +0.00063] |
 
-The point estimate favors the market and the interval contains zero, so the
-correct statement is that **the model and the market are indistinguishable on this
-sample, with the point estimate slightly against the model.**
+Both forecasters are far better than the base rate, so the model is genuinely
+informative. The point estimate favors the market and the interval contains zero,
+so the correct statement is that **the model and the market are indistinguishable
+on this sample, with the point estimate slightly against the model.** Since the
+model's purpose was to disagree with that price, this is the result that matters
+most, and it is reported first for that reason.
 
-Both are far better than a base-rate forecast, so the model is genuinely
-informative — it simply is not more informative than the price it was quoting
-against. Since the model's purpose was to disagree with that price, this is the
-result that matters most, and it is reported first for that reason.
+Intervals are bootstrapped over **games, not contracts**. The several hundred
+contracts on a single game share one realized outcome and are strongly correlated,
+so games are the effective sampling unit. Resampling contracts instead would
+narrow the intervals in this document by a factor of between about 1.3 and 2.5,
+depending on the family. On this sample that does not change which families come
+out significant — the same one does either way — but it would overstate the
+precision of every estimate reported.
 
-The confidence interval is bootstrapped over **games, not contracts**. The
-several hundred contracts on a single game share one realized outcome and are
-strongly correlated, so games are the effective sampling unit. Resampling
-contracts instead would narrow the intervals in this document by a factor of
-between about 1.1 and 2.5, depending on the family. On this sample that does not
-change which families come out significant — the same five do either way — but it
-would overstate the precision of every estimate reported. Every interval here is
-clustered the same way.
+## Does the model match real baseball?
+
+A separate question from whether it beats the market, and the one to ask first.
+
+**Calibration.** Grouping every forecast by the probability it assigned, observed
+frequencies track predicted ones closely from about 0.25 upward. Below that the
+model is mildly overconfident: events it assigns 16% occur about 18% of the time.
+Expected calibration error over the full range is 0.0078, against the market's
+0.0071 — close enough that calibration is not where the model loses.
+
+**Distribution shape.** Across the ladder of run totals, the model's implied
+probability that a game exceeds each total tracks the realized frequency to within
+one or two percentage points, understating scoring slightly between six and eight
+runs — the densest part of the distribution. That understatement is consistent
+with the one family where the model is significantly worse than the market.
 
 ## Results by contract family
 
-Aggregate agreement conceals a real split. Broken out by contract family, with
-ΔBrier in units of 10⁻³ and positive meaning the model is better:
+ΔBrier in units of 10⁻³, positive meaning the model is better:
 
 | family | n | Brier model | Brier market | ΔBrier ×10³ [95% CI] | |
 |---|---:|---:|---:|---|---|
-| moneyline | 1,510 | 0.2440 | 0.2452 | +1.21 [−2.25, +4.56] | |
-| game total | 8,157 | 0.1821 | 0.1788 | −3.33 [−6.39, −0.48] | **worse** |
-| run line | 4,500 | 0.1895 | 0.1901 | +0.60 [−1.40, +2.48] | |
-| first 5 innings, moneyline | 2,250 | 0.2046 | 0.2045 | −0.01 [−1.85, +1.90] | |
-| first 5 innings, total | 5,238 | 0.1778 | 0.1769 | −0.92 [−3.22, +1.33] | |
-| first 5 innings, run line | 3,004 | 0.1832 | 0.1838 | +0.59 [−1.09, +2.44] | |
-| strikeouts | 8,843 | 0.1584 | 0.1560 | −2.41 [−4.65, −0.26] | **worse** |
-| home runs | 9,106 | 0.1056 | 0.1047 | −0.89 [−1.48, −0.31] | **worse** |
-| hits | 24,725 | 0.1591 | 0.1584 | −0.70 [−1.28, −0.11] | **worse** |
-| total bases | 34,964 | 0.1508 | 0.1508 | +0.03 [−0.58, +0.67] | |
-| home runs recorded | 41,814 | 0.1849 | 0.1873 | **+2.42 [+1.29, +3.65]** | **better** |
+| moneyline | 1,510 | 0.2440 | 0.2452 | +1.21 [−2.18, +4.62] | |
+| run line | 4,500 | 0.1895 | 0.1901 | +0.60 [−1.21, +2.51] | |
+| first five, run line | 3,004 | 0.1832 | 0.1838 | +0.59 [−1.20, +2.26] | |
+| first five, moneyline | 2,250 | 0.2046 | 0.2045 | −0.01 [−1.97, +1.87] | |
+| first five, total | 5,238 | 0.1778 | 0.1769 | −0.92 [−3.20, +1.47] | |
+| game total | 8,157 | 0.1821 | 0.1788 | −3.33 [−6.47, −0.43] | **worse** |
 
-Eleven of the sixteen priced families appear here; the other five carried too
-few scored contracts in this window for a clustered interval to say anything, and
-are omitted rather than reported at a precision the sample cannot support. Of the
-eleven, four are significantly worse, one significantly better, and six
-indistinguishable. The single genuine win is the largest family by volume and
-survives the clustered interval comfortably. Its independent confirmations: a
-discrimination advantage (area under the ROC curve 0.762 against the market's
-0.756), a calibration-error advantage (0.012 against 0.025), and a direct
-comparison in which the model's side wins **55.1% of the 2,962 contracts** where
-model and market take opposite positions.
+One family is significantly worse and five are indistinguishable. None is
+significantly better.
 
-The same head-to-head test applied to game-level markets gives **49.2% of 1,933
-disagreements**: when this model disagreed with the price on a game market, it
-was wrong slightly more often than right.
+The weakness in game totals concentrates at high lines rather than spreading
+evenly across the family. A failure concentrated in an identifiable region
+indicates a specific modeling defect, whereas one spread uniformly more often
+indicates that the family is efficiently priced.
 
-The game-total weakness is consistent with a defect found independently in the
-model's own diagnostics, where the error concentrates at high total lines rather
-than being spread evenly. A failure concentrated in an identifiable region
-indicates a specific modeling defect, whereas one spread uniformly across a
-family more often indicates that the family is efficiently priced.
+The most direct test is what happens when the two forecasters disagree. On the
+1,229 contracts where the model and the market took opposite sides, the model's
+side won **49.0%** of the time. Its calibration is sound and its distribution
+matches reality; what it lacks is any information the price did not already
+contain.
 
 ## A caution about the measurement basis
 
@@ -90,11 +90,10 @@ fills therefore selects for the model's errors, and will report worse calibratio
 than the model actually has, whether or not the model is any good.
 
 On the full quoted tape, which does not condition on fills, the model's expected
-calibration error is 0.007 against the market's 0.007 on game markets, and 0.006
-against 0.014 on props. By that measure calibration is comparable or better,
-while *discrimination* is what the model lacks. The two analyses were measuring
-different things, and the fills-conditioned measurement does not answer the
-question it was taken to answer.
+calibration error is 0.0078 against the market's 0.0071 — close enough that
+calibration is not where the model loses. What it lacks is *discrimination*. The
+two analyses were measuring different things, and the fills-conditioned
+measurement does not answer the question it was taken to answer.
 
 This kind of error — a conclusion that is an artifact of the slice it was
 measured on — was the single most recurrent failure mode in this project. It is
@@ -178,12 +177,11 @@ only reliable protection against selecting the reading after the fact.
   information the model does not have, including late lineup and weather news.
   Some of the model's apparent deficit is an information gap rather than a
   modeling one, and this analysis does not separate the two.
-- **Survivorship in the family set.** Sixteen families were priced and six were
-  quoted. The six were chosen partly on the basis of earlier performance, so
-  results restricted to those six would be optimistically biased. The table above
-  therefore covers every priced family with enough scored contracts to test, not
-  only the traded ones, which is why families that were never quoted appear in
-  it.
+- **Selection into the quoted set.** The six families reported here were the ones
+  the model quoted, and they were chosen partly on the basis of earlier
+  performance. Results restricted to a set chosen that way are optimistically
+  biased, which makes the absence of any family beating the market a stronger
+  finding than it would otherwise be, not a weaker one.
 - **Single operator, no independent review.** Every modeling choice, and every
   decision about how to read a result, was made by one person. The
   pre-commitment discipline described above is a partial substitute for

@@ -4,24 +4,25 @@ A Monte Carlo model that prices the distribution of outcomes for a baseball game
 from the individual players involved, together with the validation apparatus
 built to find out whether it was any good.
 
-It was built to price sixteen families of contracts on a regulated binary options
-exchange, six of which it quoted continuously for two months. The exchange price
-supplies an independent benchmark forecast for every contract, and every contract
-settles against an observed outcome, so the model can be scored against a
-competing forecast rather than against its own residuals.
+It quoted six families of game-level contracts on a regulated binary options
+exchange, continuously, for two months. The exchange price supplies an independent
+benchmark forecast for every contract, and every contract settles against an
+observed outcome, so the model can be scored against a competing forecast rather
+than against its own residuals.
 
-**The headline result is that the model does not beat that benchmark overall.**
-Across 163,777 scored contracts on 786 games, its Brier score is 0.1891 against
-the market's 0.1883 on game-level markets — slightly worse, by a margin whose
-game-clustered confidence interval contains zero. It is significantly better on
-exactly one of the eleven families large enough to test, and significantly worse
-on four.
-[RESULTS.md](RESULTS.md) gives the breakdown by family.
+**Its forecasts match what happened on the field, and do not beat the price it was
+quoting against.** Calibration tracks observed frequency closely, and the
+simulated distribution of run scoring follows the realized one across the whole
+ladder of totals. But across 24,659 scored contracts covering 760 games its Brier
+score is 0.1885 against the market's 0.1875 — a margin whose game-clustered
+confidence interval contains zero — with one family significantly worse and five
+indistinguishable. [RESULTS.md](RESULTS.md) gives the breakdown.
 
 **Short version, if you are skimming:** a stochastic simulation model with
-hierarchically shrunk parameter estimates, validated out-of-sample against a live
-benchmark forecast over 786 games, with per-segment calibration analysis on
-game-clustered intervals, and an explicit account of what it does badly. There is a [one-page summary](https://eliwitz34-dev.github.io/baseball-simulation-model/) if you would
+hierarchically shrunk parameter estimates, validated out-of-sample over 760 games
+against both realized outcomes and a live benchmark forecast, with per-segment
+analysis on game-clustered intervals and an explicit account of what it does
+badly. There is a [one-page summary](https://eliwitz34-dev.github.io/baseball-simulation-model/) if you would
 rather not read three documents.
 
 Repository: <https://github.com/eliwitz34-dev/baseball-simulation-model>

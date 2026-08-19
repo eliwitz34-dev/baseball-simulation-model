@@ -136,9 +136,9 @@ the number of *games*, not the number of contracts.
 
 Every confidence interval reported is therefore bootstrapped by resampling
 games, carrying all of a game's contracts together. Resampling contracts instead
-narrows the intervals by a factor of between about 1.1 and 2.5 depending on the
+narrows the intervals by a factor of between about 1.3 and 2.5 depending on the
 segment. On this particular sample that does not flip any conclusion — the same
-five families are significant either way — but the narrower intervals would
+single family is significant either way — but the narrower intervals would
 misstate the precision of every estimate, and there is no way to know in advance
 that a sample will be forgiving.
 
@@ -223,7 +223,7 @@ constrains is a lesson that generalizes well beyond this application.
 
 ## 4. Known limitations
 
-- **One partial season.** Roughly two months of live operation and 786 games in
+- **One partial season.** Roughly two months of live operation and 760 games in
   the evaluation window. Nothing here establishes stability across seasons,
   rule changes, or roster turnover.
 - **The benchmark holds information the model does not.** Market prices
