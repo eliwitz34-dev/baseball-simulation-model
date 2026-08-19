@@ -513,8 +513,20 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   wrong arm into the highest-leverage innings and understate how much the best relievers
   suppress scoring.</p>
 
-  <p>Nine smaller effects sit above these: times through the order, park and umpire effects,
-  platoon splits, the running game, and others.</p>
+  <p>A third component is worth naming separately, because it follows a published model closely
+  rather than adapting one. Whether a taken pitch is called a strike depends on four people at
+  once: the catcher receiving it, the umpire behind him, the pitcher's command of the edge, and
+  the batter's own effective zone. Those contributions have to be separated or each one absorbs
+  the others, and a pitcher throws to the same one or two catchers all season, so his measured
+  skill silently includes their framing. The model estimates the four as crossed effects on a
+  called-strike probability surface, following Deshpande and Wyner's hierarchical Bayesian
+  treatment of pitch framing and the called-strikes-above-average work at Baseball Prospectus.
+  Their result that the umpire effect is the larger one, with the widest zone worth roughly twice
+  the best framer, carries over here, and it is why the umpire is applied at simulation time
+  rather than folded into any pitcher's rate.</p>
+
+  <p>Eight smaller effects sit above these: times through the order, park factors, platoon
+  splits, the running game, and others.</p>
 </section>
 
 <section>
@@ -1037,8 +1049,22 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
       classical coefficients as a prior.</li>
     <li>Melville, W., Mott, T., Archibald, C. and Grimsman, D. (2025). The impacts of
       increasingly complex matchup models on baseball win probability. arXiv:2511.17733.</li>
+    <li>Morey, P. and Cohen, N. (2015). Bias in the log5 estimate.
+      <i>Journal of Sports Analytics</i> 1(1).</li>
     <li>McCracken, V. (2001). Defense-independent pitching statistics. The reason the
       ball-in-play weights stay small rather than being pushed toward the pitcher.</li>
+  </ul>
+
+  <h3>Called strikes, framing and the umpire</h3>
+  <ul class="refs">
+    <li>Deshpande, S. K. and Wyner, A. (2017). A hierarchical Bayesian model of pitch framing.
+      <i>Journal of Quantitative Analysis in Sports</i> 13(3), 95&ndash;112. The called-strike
+      component described in section&nbsp;1 follows this model closely: participants separated
+      as crossed effects on a location surface, with the umpire effect larger than the
+      catcher's.</li>
+    <li>Judge, J., Brooks, D. and Pavlidis, H. (2015). Moving beyond WOWY: a mixed approach to
+      measuring catcher framing. Baseball Prospectus. The called-strikes-above-average
+      formulation.</li>
   </ul>
 
   <h3>Estimation</h3>
@@ -1056,6 +1082,8 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
       model in section&nbsp;1.</li>
     <li>Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine.
       <i>Annals of Statistics</i> 29(5), 1189&ndash;1232. The starter-removal hazard.</li>
+    <li>Turocy, T. L. (2008). In search of the last-ups advantage.
+      <i>Journal of Quantitative Analysis in Sports</i> 4(2). Home-field structure.</li>
   </ul>
 
   <h3>Scoring and validation</h3>
