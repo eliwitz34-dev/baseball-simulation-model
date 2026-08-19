@@ -534,32 +534,55 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 
 <section>
   <h2><span class="num">6.</span>Rejected model changes</h2>
-  <p>A list of changes that worked says little, because it was selected on having worked. The
-  following were each built, measured against a criterion fixed before the test ran, and then
-  abandoned.</p>
+  <p>A list of changes that worked says little, because it was selected on having worked. Each
+  of the following was built into the simulation, measured against a criterion fixed before the
+  test ran, and then abandoned.</p>
 
   <dl>
+    <dt>Correcting for compression in the strikeout estimates</dt>
+    <dd>Pitchers' estimated strikeout rates appeared to be shrunk too far toward the league
+    average, so a multiplier was fitted to push them back out and was shipped. A direct on/off
+    comparison then showed it made the probabilistic forecasts worse at every level &mdash;
+    starter, team, batter and game &mdash; while improving the average predicted count, which is
+    the signature of an over-correction. The reason was that the compression being corrected did
+    not exist. How much shrinkage the estimates appear to have depends entirely on how you
+    measure it: taking logits of noisy single-game rates gives a slope of 1.21, per-game rates
+    give 0.89, and aggregating properly by pitcher gives 1.04, which is calibrated. The
+    multiplier was turned off and the whole line of work stopped.</dd>
+
+    <dt>Per-batter platoon splits inside the model fit</dt>
+    <dd>Every batter has some individual tendency to hit left-handed and right-handed pitching
+    differently. That was moved from a post-hoc adjustment into the model's own likelihood, with
+    a per-player term sampled alongside everything else. Graded over 531 walk-forward games it
+    came out at parity or slightly worse: the correlation with realized starter strikeouts fell
+    from 0.496 to 0.489, and the ability to separate outcomes was lower at every strikeout line
+    &mdash; the opposite of what a genuine improvement looks like. The per-player signal is real
+    and was measured correctly; it is simply too small, once properly shrunk, to matter at the
+    level of a whole game.</dd>
+
+    <dt>Weighting recent performance more heavily for pitchers who have changed</dt>
+    <dd>The premise was that a pitcher whose velocity or swing-and-miss rate has recently moved
+    should be forecast with more weight on his recent starts. A gate was fitted to do exactly
+    that, and it lost to a fixed middling weight &mdash; not only overall but in every third of
+    every measure of change, including for pitchers whose stuff had demonstrably shifted.
+    Leaning on recent data over-weights noise even when the change is real. The premise itself
+    held up, though: recent change does predict forward error. It belongs in the model of what a
+    pitcher's stuff implies about his strikeout rate, not in how his history is weighted, and
+    that is where the work went next.</dd>
+
     <dt>Position players pitching</dt>
-    <dd>The maximum attainable effect was computed before implementation, as the affected share
-    of plate appearances multiplied by the largest plausible rate distortion: 0.0121 runs per
-    game, against a discrepancy of 2.8 percentage points under investigation. The ceiling fell
-    below the target and the work was stopped. Bounding a mechanism's effect before building it
-    proved the most efficient screening step available.</dd>
-
-    <dt>Fill-conditional price adjustments</dt>
-    <dd>Estimated per family, the adjustments reversed sign when pooled, a Simpson's paradox
-    driven by the mix of sides quoted, and the pooled interval spanned 21 percentage points. The
-    conclusion was not that the effect was unproven but that it was not identifiable at the
-    available sample size.</dd>
-
-    <dt>Reduction of the minimum edge threshold</dt>
-    <dd>A two-arm walk-forward test returned point estimates favoring the reduction. It was
-    rejected: the fill simulator is known to flatter marginal orders, and the result fell on the
-    side that bias would produce. The interpretation agreed before the test was that a result in
-    the direction of a known bias is not evidence. Fixing the reading in advance, including the
-    conditions under which a favorable result will be rejected, is the only reliable protection
-    against selecting the interpretation after the fact.</dd>
+    <dd>Position players occasionally pitch in lopsided games, and the model treated them as
+    ordinary relievers. Before building the correction, the largest effect it could possibly have
+    was computed as the share of plate appearances affected multiplied by the biggest plausible
+    rate distortion: 0.0121 runs per game, against a discrepancy of 2.8 percentage points under
+    investigation. The ceiling was below the target, so the work stopped there. Bounding a
+    mechanism's effect before building it was the cheapest screening step available and the one
+    that saved the most time.</dd>
   </dl>
+
+  <p>The first of these is the one worth dwelling on. It was not a feature that failed to help;
+  it was a correction for a defect that turned out to be an artifact of how the defect had been
+  measured. That is the subject of the next section.</p>
 </section>
 
 <section>
@@ -590,7 +613,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   turnover. The benchmark incorporates information the model does not receive, including late
   lineup and weather news, so an unknown portion of the measured shortfall reflects an
   information gap rather than a modeling deficiency. All modeling and interpretive decisions
-  were made by one person; the pre-commitment and placebo procedures described above are a
+  were made by one person; fixing each test's criterion before running it, as in section 6, is a
   partial substitute for independent review.</p>
 
   <p>Realized trading results are excluded. The accounting routine that produced the figures

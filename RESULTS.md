@@ -133,40 +133,50 @@ and abandoned. They are listed because a record of rejected changes is a better
 indicator of process than a list of accepted ones — accepted changes are
 selected on having worked, and are therefore contaminated by the selection.
 
+**Correcting for compression in the strikeout estimates.** Pitchers' estimated
+strikeout rates appeared shrunk too far toward the league average, so a
+multiplier was fitted to push them back out, and it was shipped. A direct on/off
+comparison then showed it worsened the probabilistic forecasts at every level —
+starter, team, batter and game — while improving the average predicted count,
+which is the signature of an over-correction. The compression being corrected
+turned out not to exist. How much shrinkage the estimates appear to carry depends
+entirely on how it is measured: logits of noisy single-game rates give a slope of
+1.21, per-game rates 0.89, and proper aggregation by pitcher 1.04, which is
+calibrated. The multiplier was switched off and the de-shrinkage work stopped.
+
+**Per-batter platoon splits inside the model fit.** Moved from a post-hoc
+adjustment into the likelihood itself, with a per-player term sampled alongside
+everything else. Graded over 531 walk-forward games it came out at parity or
+slightly worse: correlation with realized starter strikeouts fell from 0.496 to
+0.489, and the ability to separate outcomes was lower at every strikeout line.
+The per-player signal is real and correctly measured; it is too small, once
+properly shrunk, to matter at the level of a whole game.
+
+Reviewing the rejected build surfaced two defects that mattered anyway. Pure
+switch hitters — 92 of 145 — were being silently dropped, because the per-player
+artifact was assembled only from players who had a usable split, and a switch
+hitter never bats same-handed. The lesson generalizes: when a per-player artifact
+is built from the players with enough data, it silently excludes the exact
+population a downstream feature is aimed at, so membership should be emitted from
+the full classification rather than from the survivors.
+
+**Weighting recent performance more heavily for pitchers who have changed.** The
+premise was that a pitcher whose velocity or swing-and-miss rate has recently
+moved should be forecast with more weight on his recent starts. A gate fitted to
+do that lost to a fixed middling weight — not only overall but in every third of
+every measure of change, including for pitchers whose stuff had demonstrably
+shifted. The premise itself survived: recent change does predict forward error,
+with a correlation of about +0.14 for velocity change. It belongs in the model of
+what a pitcher's stuff implies about his strikeout rate rather than in how his
+history is weighted, and that is where the work went.
+
 **Position-player pitching.** Position players occasionally pitch in lopsided
 games, and the model treated them as ordinary relievers. Before building the
-correction, the plausible effect ceiling was computed as the share of plate
+correction, the largest attainable effect was computed as the share of plate
 appearances affected multiplied by the maximum rate distortion: +0.0121 runs per
-game, against a defect being chased of 2.8 percentage points. The ceiling was
-below the target, so the work stopped there. Computing a mechanism's maximum
-possible effect before implementing it turned out to be the highest-return habit
-in the project.
-
-**Adverse-selection adjustments.** Fill-conditional price shifts, estimated per
-contract family. The per-family effects reversed sign when aggregated, a
-straightforward Simpson's paradox driven by the mix of sides quoted, and the
-interval on the pooled estimate spanned 21 percentage points. The conclusion was
-not that the effect was unproven but that it was not identifiable at the sample
-size available.
-
-**A reinforcement-learning run-line policy.** A fast screening harness endorsed
-it. The full walk-forward harness reversed the sign and showed a worse maximum
-drawdown. The screen was wrong because it scored on a metric that reads
-leverage rather than skill. The rule adopted afterwards: a screen may generate
-hypotheses and may never decide.
-
-**Loosening the minimum edge threshold from 1¢ to 0¢.** A full two-arm
-walk-forward test. Point estimates favored the looser threshold, but the fill
-simulator is known to flatter marginal orders, and the result landed on exactly
-the side that known bias would push it. The reading agreed in advance was that a
-win in the direction of a known bias is not evidence. The threshold was kept at
-1¢.
-
-The last case is the most instructive. The test favored the change and was
-rejected regardless, because the direction of the result coincided with that of a
-bias identified before the test was run. Fixing the interpretation in advance,
-including the conditions under which a favorable result will be rejected, is the
-only reliable protection against selecting the reading after the fact.
+game, against a discrepancy of 2.8 percentage points under investigation. The
+ceiling was below the target, so the work stopped there. Bounding a mechanism's
+effect before implementing it was the cheapest screening step available.
 
 ## Limitations
 

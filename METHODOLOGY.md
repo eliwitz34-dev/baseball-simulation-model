@@ -181,12 +181,14 @@ the test ran,
 including the conditions under which a *favorable* result would be
 disbelieved.
 
-One instance: a test of loosening the minimum edge threshold returned point estimates favoring the change. It was rejected anyway,
-because the fill simulator is known to flatter marginal orders and the result
-fell on exactly the side that bias would push it. The pre-registered reading was
-that a win in the direction of a known bias is not evidence. Without the prior
-commitment, the natural move would have been to accept a result that agreed with
-what the change was hoped to do.
+One instance: a multiplier intended to correct apparent over-shrinkage in the
+pitcher strikeout estimates improved the average predicted count, which was the
+number the work had set out to move. The criterion agreed in advance was
+probabilistic accuracy rather than mean accuracy, and on that criterion the
+multiplier made things worse at every level. It was rejected and later found to
+be correcting a defect that was itself an artifact of measurement. Without the
+prior commitment, the natural move would have been to read the improvement in the
+means as success, which is exactly what the change had been built to produce.
 
 ---
 
