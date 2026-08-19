@@ -66,7 +66,7 @@ def build(fragment: str) -> str:
 <meta property="og:image" content="{BASE}preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Title card for the memorandum, with a confidence-interval plot.">
+<meta property="og:image:alt" content="Title card for the memo, with a confidence-interval plot.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{TITLE}">
 <meta name="twitter:description" content="{DESCRIPTION}">
