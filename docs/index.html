@@ -154,7 +154,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 <div class="doc">
 
 <header class="head">
-  <p class="doctype">Technical memorandum</p>
+  <p class="doctype">Technical memo</p>
   <h1>A base-out simulation model for baseball outcomes, and its out-of-sample validation</h1>
   <p class="meta">
     <span>Eli Witz</span>
@@ -165,73 +165,106 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 
 <div class="abstract">
   <span class="lbl">Summary</span>
-  <p>This memorandum describes a Monte Carlo model that estimates the joint distribution of
+  <p>This memo describes a Monte Carlo model that estimates the joint distribution of
   runs scored in a baseball game from individual player rates, and reports the out-of-sample
   testing used to assess it. The model quoted six families of game-level contracts on a
   regulated binary options exchange, continuously, for two months.</p>
-  <p>Two questions are asked of it. First, does its forecast distribution match what actually
+  <p>It gets asked two questions. First, does its forecast distribution match what actually
   happened on the field? Broadly yes: calibration is close through the middle of the range and
   the simulated distribution of run scoring tracks the realized one across the whole ladder of
   totals. Second, is it better than the price it was quoting against? No. Across 24,659 scored
-  contracts covering 760 games its Brier score was 0.1885 against the market's 0.1875, a
-  difference whose game-clustered confidence interval contains zero, and it is significantly
-  worse in one of the six families and indistinguishable in the other five.</p>
+  contracts covering 760 games it scored 0.1885 on the Brier score, a measure of forecast error
+  where lower is better, against the market's 0.1875. The gap is small enough that the
+  uncertainty around it spans zero. One of the six families is significantly worse than the
+  market; the other five are indistinguishable from it.</p>
 </div>
 
 <section>
   <h2><span class="num">1.</span>Model structure</h2>
-  <p>Prices depend on tail probabilities rather than expectations. A contract on total runs
-  requires P(total&nbsp;&gt;&nbsp;8.5); a contract on margin of victory requires the
-  distribution of a difference between two correlated quantities. A regression fitted to
-  expected runs supplies neither, because the mapping from a conditional mean to a tail
-  probability depends on distributional shape the regression does not estimate.</p>
+  <p>Every contract the model priced asks about a tail, not an average. Whether two teams
+  combine for more than 8.5 runs is a question about the probability of crossing a threshold;
+  a margin contract asks for the distribution of the difference between two correlated
+  quantities. A regression predicting expected runs answers neither, because getting from an
+  average to the probability of exceeding a threshold requires the shape of the distribution
+  around that average, and a regression never estimates it.</p>
 
-  <p>The model therefore simulates. A half-inning is treated as a Markov chain on 24 base-out
-  states, being the eight configurations of occupied bases crossed with three out counts. Each
-  plate appearance draws one of nine outcomes from a distribution specific to the batter and
-  the opposing pitcher, and the pair (state, outcome) determines a distribution over the
-  resulting state and any runs scored. Repeated simulation yields the joint distribution of
-  home and away runs, from which all prices are computed as functionals, which keeps them
-  mutually consistent.</p>
+  <p>So the model simulates games instead. It plays a half-inning one plate appearance at a
+  time, tracking two things only: which bases are occupied and how many are out. Eight
+  arrangements of runners and three out counts give 24 states, and those 24 describe the
+  situation completely &mdash; what happens next depends on the current state and the batter,
+  not on how the inning got there. That is what makes the approach practical. The consequences
+  of every outcome in every state can be worked out once and stored in a table, so a game runs
+  to completion in microseconds rather than being re-derived from scratch.</p>
 
-  <p>What is being built is a compound distribution: a random number of events, each of
-  random size, aggregated into a total whose tail governs the quantity of interest. Simulation
-  is used rather than analytic convolution because the summands are neither independent nor
-  identically distributed &mdash; the base-out state couples successive plate appearances, and
-  the batter changes at each one.</p>
+  <p>Each plate appearance draws one of nine outcomes &mdash; strikeout, walk, hit by pitch,
+  ground out, fly out, single, double, triple, home run &mdash; from probabilities specific to
+  that batter facing that pitcher. The outcome moves the runners and may score runs. Running a
+  matchup 50,000 times gives the joint distribution of home and away runs, and every price is
+  read off that one distribution. That is what keeps the prices consistent with each other: the
+  total and the margin cannot end up implying different things about the same game.</p>
 
-  <p>Eleven further effects are layered over this core, each estimated separately: a
-  gradient-boosted discrete-time hazard for starting-pitcher removal, a McFadden conditional
-  logit for relief-pitcher selection, times-through-the-order penalties, park and umpire
-  effects, platoon splits, and others.</p>
+  <p>The alternative is to derive the distribution algebraically rather than by simulation. That
+  is not available here, because the plate appearances are neither independent nor identical
+  &mdash; the base-out state carries from one to the next, and the batter changes every time.</p>
+
+  <p>Two components layered on top of that core matter enough to describe. The first is
+  <b>when the starting pitcher is removed</b>, which drives a large share of scoring, because
+  whoever replaces him is usually fresher. The model estimates, at each plate appearance, the
+  probability the starter is pulled before the next one, from pitch count, runs allowed, the
+  score margin and the base-out state.
+  It uses a gradient-boosted tree model rather than a regression because the relationship is
+  neither smooth nor additive: the same pitch count means something different at a one-run
+  margin than at a six-run one, and a method that must be told the functional form in advance
+  would miss that interaction.</p>
+
+  <p>The second is <b>which reliever comes in</b>, a choice from a menu whose contents change
+  every night,
+  since the available bullpen depends on who pitched yesterday. A conditional logit handles
+  that. It models the probability of selecting each option from the characteristics of the
+  options themselves &mdash; role, handedness, recent workload, the inning, the score &mdash;
+  rather than from a fixed list of alternatives, so it still works when the list is different
+  tomorrow. Drawing relievers at random from a pool, the simpler alternative, would put the
+  wrong arm into the highest-leverage innings and understate how much the best relievers
+  suppress scoring.</p>
+
+  <p>Nine smaller effects sit above these: times through the order, park and umpire effects,
+  platoon splits, the running game, and others.</p>
 </section>
 
 <section>
   <h2><span class="num">2.</span>Parameter estimation</h2>
-  <p>Each batter requires nine outcome probabilities against each pitcher. Observed rates are
-  unusable directly: a hitter with 150 plate appearances has a strikeout rate whose standard
-  error exceeds most of the differences the model must resolve.</p>
+  <p>The model needs nine outcome probabilities for every batter against every pitcher. The
+  obvious way to get them is to count what each player has actually done, and it does not work.
+  A hitter with 150 plate appearances has a strikeout rate with a standard error of about 3.5
+  percentage points, which is larger than most of the differences the model is trying to
+  detect. Take those rates at face value and the simulation will faithfully reproduce a great
+  deal of noise.</p>
 
-  <p>Rates are estimated hierarchically. Each player's rate is shrunk toward a prior mean that
-  is itself a regression on observable covariates, in a Fay&ndash;Herriot small-area
-  specification fitted by Hamiltonian Monte Carlo. Posterior draws can be propagated through
-  the simulation rather than collapsed to posterior means, so that parameter uncertainty is
-  represented alongside process uncertainty.</p>
+  <p>Instead, each player's rate is pulled toward what a model of his observable characteristics
+  predicts for a player like him, by an amount that depends on how much is actually known about
+  him. The weight on his own record is his playing time divided by playing time plus a variance
+  ratio. That ratio compares how much players genuinely differ from one another against how
+  noisy each individual estimate is: when the noise is large relative to the real spread,
+  everyone gets pulled harder. In practice a hitter with a handful of games moves most of the
+  way to the prediction, and one with a full season barely moves at all.</p>
 
-  <p>The weight on a player's own record is his playing time over playing time plus a
-  variance ratio, so a hitter with a handful of games is pulled most of the way toward what the
-  covariate model predicts for him, while one with a full season barely moves. Two points are
-  worth noting. The variance components are estimated jointly with the rates rather than plugged
-  in, so the uncertainty in that weight is itself carried. And because the model's output is a
-  tail probability,
-  propagating the posterior matters: a tail probability evaluated at the posterior mean is not
-  the posterior mean of the tail probability, and treating them as equal produces forecasts
-  that are systematically overconfident.</p>
+  <p>Those variance terms are estimated alongside the rates rather than fixed beforehand, so how
+  much to shrink is part of the answer instead of an assumption. Fitting everything at once
+  means sampling from a distribution over many correlated parameters, which is done with
+  Hamiltonian Monte Carlo &mdash; a method that uses the slope of the distribution to decide
+  where to step next, and so keeps exploring efficiently in high dimensions where simpler
+  samplers get stuck.</p>
+
+  <p>The simulation can then run on the average of those parameter estimates or on draws from
+  their full distribution. Using draws costs time, and it matters: the model's output is a tail
+  probability, and the tail probability computed at the average parameter value is not the same
+  as the average tail probability across parameter values. Treating them as equal makes the
+  forecasts look more certain than they are.</p>
 </section>
 
 <section>
   <h2><span class="num">3.</span>Calibration against outcomes</h2>
-  <p>Before comparing the model with anything else, it is worth asking whether its probabilities
+  <p>Before comparing the model against anything else, the question is whether its probabilities
   mean what they say. A forecast of 30% should be right about 30% of the time. Figure&nbsp;1
   groups every game-level forecast by the probability it assigned and plots the frequency with
   which those events actually occurred.</p>
@@ -298,8 +331,9 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
     760 games. Points sit on the diagonal when forecast probability matches observed frequency;
     bars are two standard errors. The model tracks the diagonal closely from about 0.25 upward.
     Below that it is mildly overconfident: events it assigns 16% occur about 18% of the time, and
-    the lowest bin is further out still, though it holds only 88 contracts. Expected calibration
-    error over the whole range is 0.0078.</figcaption>
+    the lowest bin is further out still, though it holds only 88 contracts. Averaged across the range, forecast
+    probability and observed frequency differ by 0.0078 &mdash; the expected calibration
+    error.</figcaption>
   </figure>
 
   <p>Calibration of individual probabilities is a weaker test than it looks, because a forecaster
@@ -379,11 +413,19 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 
 <section>
   <h2><span class="num">4.</span>Comparison against the market</h2>
-  <p>Forecasts are scored with the Brier score, a proper scoring rule, so a forecaster minimizes
-  expected loss only by reporting its true belief. Against a base-rate forecast, which scores
-  0.2489, both the model at 0.1885 and the market at 0.1875 are substantially informative. The
-  difference between them is 0.0010 in the market's favor, with a game-clustered 95% interval
-  running from &minus;0.0027 to +0.0006. Figure&nbsp;3 breaks that down by family.</p>
+  <p>Forecasts are scored with the Brier score: the squared distance between the probability
+  quoted and what actually happened, averaged over every contract, so lower is better. It has
+  the property of being <i>proper</i>, meaning a forecaster gets its best expected score only by
+  reporting what it genuinely believes. That matters when comparing two forecasters, because an
+  improper measure &mdash; accuracy, or a hit rate &mdash; can be improved by shading your
+  answers, and would reward the wrong thing.</p>
+
+  <p>A forecaster that ignores the specific game and always quotes the base rate scores 0.2489.
+  The model at 0.1885 and the market at 0.1875 are both far better than that, so both carry real
+  information. The difference between the two is 0.0010 in the market's favor, and the
+  game-clustered 95% interval around it runs from &minus;0.0027 to +0.0006 &mdash; it contains
+  zero, so the two are not distinguishable on this sample. Figure&nbsp;3 breaks it down by
+  family.</p>
 
   <figure>
     <div class="frame"><svg viewBox="0 0 690 232" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Difference in Brier score, model minus market, for the six game-level contract families">
@@ -452,16 +494,17 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   Figure&nbsp;2.</p>
 
   <p>A more direct test is what happens when the two disagree. On the 1,229 contracts where the
-  model and the market took opposite sides, the model's side won 49.0% of the time. Its
-  calibration is sound and its distribution matches reality; what it lacks is any information the
-  price did not already contain.</p>
+  model and the market took opposite sides, the model's side won 49.0% of the time. So its
+  stated confidence is honest and its distribution matches reality, but it cannot separate the
+  games the market has mispriced from the ones it has not. That second ability is called
+  discrimination, and it is the one the model is missing.</p>
 </section>
 
 <section>
   <h2><span class="num">5.</span>Sensitivity to the base-running assumption</h2>
-  <p>Base-running advancement is the largest single lever on simulated scoring. The published
-  code constructs the transition tables three ways and measures each against observed league
-  scoring, rather than assuming the simplification is immaterial.</p>
+  <p>How base runners advance is the largest single lever on simulated scoring. The published
+  code builds those transition tables three ways and measures each against real league scoring,
+  rather than assuming the simpler version is good enough.</p>
 
   <p class="tcap"><b>Table 1.</b> Simulated scoring under three treatments of base-running,
   league-average lineups, 100,000 simulations each.</p>
@@ -491,9 +534,9 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 
 <section>
   <h2><span class="num">6.</span>Rejected model changes</h2>
-  <p>Accepted changes are selected on having worked and so carry little information about
-  process. The following were each implemented, measured against a criterion fixed before the
-  test, and abandoned.</p>
+  <p>A list of changes that worked says little, because it was selected on having worked. The
+  following were each built, measured against a criterion fixed before the test ran, and then
+  abandoned.</p>
 
   <dl>
     <dt>Position players pitching</dt>
@@ -521,9 +564,10 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 
 <section>
   <h2><span class="num">7.</span>Measurement basis</h2>
-  <p>The most frequent error encountered in this work was not in any model but in the choice of
-  sample used to evaluate one. Conditioning an evaluation on an event correlated with the
-  outcome produces a biased estimate that additional data does not correct.</p>
+  <p>The most frequent error in this project was never in a model. It was in the choice of
+  sample used to judge one. If you evaluate a model only on cases selected by something that
+  correlates with the answer, the result is biased rather than merely noisy, and collecting more
+  data does not fix it.</p>
 
   <p>An instance from this project: calibration measured only on contracts where a resting order
   filled. An order fills when a counterparty takes the opposing side, which occurs
@@ -531,10 +575,10 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   model's errors and reports worse calibration than the model exhibits. An internal write-up had
   already published a self-critical finding drawn from that sample. Recomputed on the full
   quoted tape, expected calibration error is 0.0078 against the market's 0.0071 &mdash; close
-  enough that calibration is not where the model loses. Its deficiency is in discrimination, as
-  Figure&nbsp;1 and the head-to-head comparison both indicate.</p>
+  enough that calibration is not where the model loses. What it lacks is discrimination, as Figure&nbsp;1
+  and the head-to-head comparison both indicate.</p>
 
-  <p>Unfavorable results warrant the same scrutiny as favorable ones. A finding that flatters
+  <p>Unfavorable results deserve the same scrutiny as favorable ones. A finding that flatters
   the analyst is checked as a matter of course; one that does not is often accepted without the
   same examination, and can be equally wrong.</p>
 </section>
