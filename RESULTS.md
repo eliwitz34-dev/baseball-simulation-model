@@ -191,9 +191,8 @@ only reliable protection against selecting the reading after the fact.
 
 ## Reproducing these numbers
 
-The simulation results in [README.md](README.md) — the transition table
-comparison and the agreement between the two implementations — are reproducible
-from this repository:
+The transition table comparison in [README.md](README.md) is reproducible from
+this repository:
 
 ```bash
 python scripts/build_tables.py

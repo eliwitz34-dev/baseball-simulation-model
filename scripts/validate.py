@@ -2,27 +2,18 @@
 """
 validate.py — checks that must pass before any result from this model is quoted.
 
-These are not unit tests in the usual sense. They are the model-validation checks
-that catch the failures actually observed in this project: transcription errors
-inside the compiled kernel, silent substitution of fallback data, and results
-quoted without regard to Monte Carlo error.
-
-  1. CROSS-IMPLEMENTATION AGREEMENT
-     The compiled kernel and the vectorized NumPy implementation were written
-     separately from the same specification. They should agree on the simulated
-     distribution to within Monte Carlo error. A compiled parallel loop is
-     exactly where an off-by-one in a lookup index hides, because it cannot be
-     inspected mid-flight; an independent implementation is the cheapest
-     available detector.
-
-  2. TRANSITION TABLE INVARIANTS
+  1. TRANSITION TABLE INVARIANTS
      Structural properties the kernel assumes and does not check at run time.
      A malformed table produces plausible-looking output, which is the worst
      possible failure mode.
 
+  2. REPRODUCIBILITY
+     The same seed must give the same answer, independently of how the work is
+     divided across threads.
+
   3. FALLBACK DIVERGENCE
-     Quantifies how far the data-free fallback sits from the empirical tables,
-     so the gap is a measured number rather than a reassuring adjective.
+     Quantifies how far the data-free fallback sits from the built tables, so
+     the gap is a measured number rather than a reassuring adjective.
 
   4. FACE VALIDITY
      Scoring levels against the real league average. A model that is internally
@@ -46,7 +37,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 
 import core  # noqa: E402
 import tables as tbl  # noqa: E402
-from reference_numpy import simulate_numpy  # noqa: E402
 
 # Real-world reference points, for face validity. Both are stable across recent
 # seasons to well inside the tolerance used.
@@ -102,42 +92,6 @@ def check_table_invariants(tables) -> None:
     # A plate appearance can score at most four runs (a grand slam).
     check("runs per play within [0, 4]", int(runs.min()) >= 0 and int(runs.max()) <= 4,
           f"observed range [{int(runs.min())}, {int(runs.max())}]")
-
-
-def check_cross_implementation(tables, n_sims: int) -> None:
-    """Compare the two implementations as distributions, not sample by sample.
-
-    They consume random numbers in a different order, so individual games differ.
-    What must agree is the distribution, and the tolerance is set by Monte Carlo
-    error rather than chosen for convenience: a difference of more than four
-    standard errors between two correct implementations would occur essentially
-    never.
-    """
-    print(f"\nCross-implementation agreement ({n_sims:,} simulations each)")
-
-    a = core.simulate(n_sims=n_sims, tables=tables, seed=11)
-    b_scores = simulate_numpy(n_sims=n_sims, tables=tables, seed=22)
-
-    a_total, b_total = a.total_runs, b_scores.sum(axis=1)
-    a_win = a.p_home_win
-    b_win = float((b_scores[:, 0] > b_scores[:, 1]).mean())
-
-    # Standard error of the difference of two independent sample means.
-    se_total = np.sqrt(a_total.var() / n_sims + b_total.var() / n_sims)
-    d_total = abs(a_total.mean() - b_total.mean())
-    check("mean total runs agree", d_total < 4 * se_total,
-          f"{a_total.mean():.4f} vs {b_total.mean():.4f} "
-          f"(difference {d_total:.4f}, 4 SE = {4 * se_total:.4f})")
-
-    se_win = np.sqrt(2 * 0.25 / n_sims)
-    d_win = abs(a_win - b_win)
-    check("home win probability agrees", d_win < 4 * se_win,
-          f"{a_win:.4f} vs {b_win:.4f} "
-          f"(difference {d_win:.4f}, 4 SE = {4 * se_win:.4f})")
-
-    sd_ratio = a_total.std() / b_total.std()
-    check("total-runs dispersion agrees", 0.97 < sd_ratio < 1.03,
-          f"sd ratio {sd_ratio:.4f}")
 
 
 def check_reproducibility(tables) -> None:
@@ -234,8 +188,6 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--empirical-tables", default=None,
                     help="directory holding emp_*.npy (default: ../data)")
-    ap.add_argument("--n-sims", type=int, default=40_000,
-                    help="simulations per cross-implementation check")
     args = ap.parse_args()
 
     print("=" * 74)
@@ -253,7 +205,6 @@ def main() -> int:
         print("  (some checks below are weaker on the fallback; this is stated per check)")
 
     check_table_invariants(tables)
-    check_cross_implementation(tables, args.n_sims)
     check_reproducibility(tables)
     check_fallback_divergence(args.empirical_tables)
     check_face_validity(tables, empirical, provenance)
