@@ -225,7 +225,7 @@ constrains is a lesson that generalizes well beyond this application.
 
 ## 4. Known limitations
 
-- **One partial season.** Roughly two months of live operation and 760 games in
+- **One partial season.** Roughly two months of live operation and 764 games in
   the evaluation window. Nothing here establishes stability across seasons,
   rule changes, or roster turnover.
 - **The benchmark holds information the model does not.** Market prices

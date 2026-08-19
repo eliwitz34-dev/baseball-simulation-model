@@ -4,7 +4,7 @@ A Monte Carlo model that prices the distribution of outcomes for a baseball game
 from the individual players involved, together with the validation apparatus
 built to find out whether it was any good.
 
-It quoted six families of game-level contracts on a regulated binary options
+It quoted seven families of game-level contracts on a regulated binary options
 exchange, continuously, for two months. The exchange price supplies an independent
 benchmark forecast for every contract, and every contract settles against an
 observed outcome, so the model can be scored against a competing forecast rather
@@ -13,13 +13,13 @@ than against its own residuals.
 **Its forecasts match what happened on the field, and do not beat the price it was
 quoting against.** Calibration tracks observed frequency closely, and the
 simulated distribution of run scoring follows the realized one across the whole
-ladder of totals. But across 24,659 scored contracts covering 760 games its Brier
-score is 0.1885 against the market's 0.1875 — a margin whose game-clustered
-confidence interval contains zero — with one family significantly worse and five
+ladder of totals. But across 35,159 scored contracts covering 764 games its Brier
+score is 0.1905 against the market's 0.1896 — a margin whose game-clustered
+confidence interval contains zero — with one family significantly worse and six
 indistinguishable. [RESULTS.md](RESULTS.md) gives the breakdown.
 
 **Short version, if you are skimming:** a stochastic simulation model with
-hierarchically shrunk parameter estimates, validated out-of-sample over 760 games
+hierarchically shrunk parameter estimates, validated out-of-sample over 764 games
 against both realized outcomes and a live benchmark forecast, with per-segment
 analysis on game-clustered intervals and an explicit account of what it does
 badly. There is a [one-page summary](https://eliwitz34-dev.github.io/baseball-simulation-model/) if you would

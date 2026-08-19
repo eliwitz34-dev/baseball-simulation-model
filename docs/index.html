@@ -101,6 +101,8 @@ svg{display:block; width:100%; min-width:600px; height:auto;}
 .track{fill:none; stroke:var(--ink-soft); stroke-width:1.6;}
 .mdlline{stroke:var(--ink-soft);}
 .pt.mdl{fill:var(--ink);}
+.pitbar{fill:var(--nul); opacity:.5;}
+.unif{stroke:var(--neg); stroke-width:1.2; stroke-dasharray:3 3;}
 .realbar{stroke:var(--nul); stroke-width:9; stroke-linecap:butt; opacity:.42;}
 .lead{stroke:var(--rule-strong); stroke-width:1;}
 .note{font-family:"IBM Plex Sans",sans-serif; font-size:11px; fill:var(--ink-mute);}
@@ -153,18 +155,18 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 
 <div class="abstract">
   <span class="lbl">Summary</span>
-  <p>This memo describes a Monte Carlo model that estimates the joint distribution of
-  runs scored in a baseball game from individual player rates, and reports the out-of-sample
-  testing used to assess it. The model quoted six families of game-level contracts on a
+  <p>This memo describes a Monte Carlo model that estimates the joint distribution of runs
+  scored in a baseball game from individual player rates, and reports the out-of-sample
+  testing used to assess it. The model quoted seven families of game-level contracts on a
   regulated binary options exchange, continuously, for two months.</p>
   <p>It gets asked two questions. First, does its forecast distribution match what actually
-  happened on the field? Broadly yes: calibration is close through the middle of the range and
-  the simulated distribution of run scoring tracks the realized one across the whole ladder of
-  totals. Second, is it better than the price it was quoting against? No. Across 24,659 scored
-  contracts covering 760 games it scored 0.1885 on the Brier score, a measure of forecast error
-  where lower is better, against the market's 0.1875. The gap is small enough that the
-  uncertainty around it spans zero. One of the six families is significantly worse than the
-  market; the other five are indistinguishable from it.</p>
+  happened on the field? Broadly yes: forecast probabilities line up with observed frequencies,
+  and the shape of the predicted distribution is close to uniform under a probability integral
+  transform in every family. Second, is it better than the price it was quoting against? No.
+  Across 35,159 scored contracts covering 764 games it scored 0.1905 on the Brier score, a
+  measure of forecast error where lower is better, against the market's 0.1896. The gap is small
+  enough that the uncertainty around it spans zero. One of the seven families is significantly
+  worse than the market; the other six are indistinguishable from it.</p>
 </div>
 
 <section>
@@ -324,27 +326,27 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 <text class="tk" x="54" y="24.0" text-anchor="end">1.0</text>
 <line class="diag" x1="62.0" y1="330.0" x2="400.0" y2="20.0"/>
 <text class="note" x="332.4" y="119.2" transform="rotate(-45 332.4 119.2)">perfectly calibrated</text>
-<line class="ci nul" x1="89.0" y1="304.9" x2="89.0" y2="256.5"/>
-<line class="ci nul" x1="116.5" y1="278.6" x2="116.5" y2="270.3"/>
-<line class="ci nul" x1="146.3" y1="254.2" x2="146.3" y2="246.3"/>
-<line class="ci nul" x1="179.7" y1="227.5" x2="179.7" y2="218.3"/>
-<line class="ci nul" x1="213.2" y1="198.3" x2="213.2" y2="187.6"/>
-<line class="ci nul" x1="246.3" y1="169.8" x2="246.3" y2="156.8"/>
-<line class="ci nul" x1="281.5" y1="135.0" x2="281.5" y2="119.8"/>
-<line class="ci nul" x1="315.5" y1="103.7" x2="315.5" y2="89.7"/>
-<line class="ci nul" x1="350.5" y1="65.9" x2="350.5" y2="56.1"/>
-<line class="ci nul" x1="381.4" y1="40.7" x2="381.4" y2="34.2"/>
-<polyline class="track" points="89.0,280.7 116.5,274.4 146.3,250.3 179.7,222.9 213.2,192.9 246.3,163.3 281.5,127.4 315.5,96.7 350.5,61.0 381.4,37.4"/>
-<circle class="pt mdl" cx="89.0" cy="280.7" r="2.9"/>
-<circle class="pt mdl" cx="116.5" cy="274.4" r="5.3"/>
-<circle class="pt mdl" cx="146.3" cy="250.3" r="5.8"/>
-<circle class="pt mdl" cx="179.7" cy="222.9" r="5.6"/>
-<circle class="pt mdl" cx="213.2" cy="192.9" r="5.3"/>
-<circle class="pt mdl" cx="246.3" cy="163.3" r="4.8"/>
-<circle class="pt mdl" cx="281.5" cy="127.4" r="4.3"/>
-<circle class="pt mdl" cx="315.5" cy="96.7" r="4.3"/>
-<circle class="pt mdl" cx="350.5" cy="61.0" r="4.5"/>
-<circle class="pt mdl" cx="381.4" cy="37.4" r="4.6"/>
+<line class="ci nul" x1="89.9" y1="299.5" x2="89.9" y2="274.1"/>
+<line class="ci nul" x1="115.8" y1="277.2" x2="115.8" y2="270.4"/>
+<line class="ci nul" x1="146.3" y1="254.0" x2="146.3" y2="247.2"/>
+<line class="ci nul" x1="179.7" y1="227.7" x2="179.7" y2="219.7"/>
+<line class="ci nul" x1="213.3" y1="197.7" x2="213.3" y2="188.6"/>
+<line class="ci nul" x1="246.8" y1="167.2" x2="246.8" y2="156.6"/>
+<line class="ci nul" x1="281.7" y1="135.9" x2="281.7" y2="124.2"/>
+<line class="ci nul" x1="315.3" y1="103.6" x2="315.3" y2="92.9"/>
+<line class="ci nul" x1="349.3" y1="68.8" x2="349.3" y2="60.9"/>
+<line class="ci nul" x1="380.8" y1="41.0" x2="380.8" y2="34.8"/>
+<polyline class="track" points="89.9,286.8 115.8,273.8 146.3,250.6 179.7,223.7 213.3,193.1 246.8,161.9 281.7,130.0 315.3,98.2 349.3,64.9 380.8,37.9"/>
+<circle class="pt mdl" cx="89.9" cy="286.8" r="3.1"/>
+<circle class="pt mdl" cx="115.8" cy="273.8" r="5.4"/>
+<circle class="pt mdl" cx="146.3" cy="250.6" r="5.8"/>
+<circle class="pt mdl" cx="179.7" cy="223.7" r="5.6"/>
+<circle class="pt mdl" cx="213.3" cy="193.1" r="5.3"/>
+<circle class="pt mdl" cx="246.8" cy="161.9" r="4.9"/>
+<circle class="pt mdl" cx="281.7" cy="130.0" r="4.6"/>
+<circle class="pt mdl" cx="315.3" cy="98.2" r="4.6"/>
+<circle class="pt mdl" cx="349.3" cy="64.9" r="4.8"/>
+<circle class="pt mdl" cx="380.8" cy="37.9" r="4.4"/>
 <text class="axlab" x="231.0" y="368" text-anchor="middle">forecast probability</text>
 <text class="axlab" transform="rotate(-90 16 175.0)" x="16" y="175.0" text-anchor="middle">observed frequency</text>
 <text class="note" x="430" y="255.6">below about 0.25 the points sit</text>
@@ -354,88 +356,160 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 <text class="note" x="430" y="137.8">point area &#8733; number of</text>
 <text class="note" x="430" y="150.8">contracts in the bin</text>
 </svg></div>
-    <figcaption><b>Figure 1.</b> Reliability of the game-level forecasts, 24,659 contracts over
-    760 games. Points sit on the diagonal when forecast probability matches observed frequency;
+    <figcaption><b>Figure 1.</b> Reliability of the game-level forecasts, 35,159 contracts over
+    764 games. Points sit on the diagonal when forecast probability matches observed frequency;
     bars are two standard errors. The model tracks the diagonal closely from about 0.25 upward.
     Below that it is mildly overconfident: events it assigns 16% occur about 18% of the time, and
     the lowest bin is further out still, though it holds only 88 contracts. Averaged across the range, forecast
-    probability and observed frequency differ by 0.0078 &mdash; the expected calibration
-    error.</figcaption>
+    probability and observed frequency differ by 0.0078, against the market's 0.0082 &mdash; the
+    expected calibration error.</figcaption>
   </figure>
 
-  <p>Calibration of individual probabilities is a weaker test than it looks, because a forecaster
-  can be perfectly calibrated and still uninformative by predicting the base rate every time. A
-  sharper question is whether the shape of the simulated distribution matches the shape of real
-  baseball. Figure&nbsp;2 compares the model's implied probability that a game exceeds each run
-  total against the frequency with which games actually did.</p>
+
+  <p>That test can be passed by a forecaster that is useless. Quote the base rate on every game
+  and the probabilities will be perfectly calibrated while carrying no information about any
+  particular game. The sharper question is whether the whole predicted distribution has the right
+  shape, and for that the test is the probability integral transform.</p>
+
+  <p>The idea is simple. For each game, take the model's predicted distribution over the outcome
+  &mdash; total runs, a team's runs, the margin &mdash; and ask what fraction of that distribution
+  sits below what actually happened. If the model is right, that fraction is equally likely to be
+  anything between 0 and 1, so collecting it across hundreds of games should give a flat
+  histogram. A predicted distribution that is too narrow puts too many outcomes in the extreme
+  tails and the histogram develops a U shape; one that is too wide bulges in the middle.</p>
 
   <figure>
-    <div class="frame"><svg viewBox="0 0 690 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Model-implied probability that a game exceeds each run total, against the realized frequency">
-<line class="ax" x1="58" y1="292.0" x2="640" y2="292.0"/>
-<text class="tk" x="50" y="296.0" text-anchor="end">0.00</text>
-<line class="ax" x1="58" y1="224.0" x2="640" y2="224.0"/>
-<text class="tk" x="50" y="228.0" text-anchor="end">0.25</text>
-<line class="ax" x1="58" y1="156.0" x2="640" y2="156.0"/>
-<text class="tk" x="50" y="160.0" text-anchor="end">0.50</text>
-<line class="ax" x1="58" y1="88.0" x2="640" y2="88.0"/>
-<text class="tk" x="50" y="92.0" text-anchor="end">0.75</text>
-<line class="ax" x1="58" y1="20.0" x2="640" y2="20.0"/>
-<text class="tk" x="50" y="24.0" text-anchor="end">1.00</text>
-<text class="tk" x="58.0" y="308" text-anchor="middle">2</text>
-<text class="tk" x="106.5" y="308" text-anchor="middle">3</text>
-<text class="tk" x="155.0" y="308" text-anchor="middle">4</text>
-<text class="tk" x="203.5" y="308" text-anchor="middle">5</text>
-<text class="tk" x="252.0" y="308" text-anchor="middle">6</text>
-<text class="tk" x="300.5" y="308" text-anchor="middle">7</text>
-<text class="tk" x="349.0" y="308" text-anchor="middle">8</text>
-<text class="tk" x="397.5" y="308" text-anchor="middle">9</text>
-<text class="tk" x="446.0" y="308" text-anchor="middle">10</text>
-<text class="tk" x="494.5" y="308" text-anchor="middle">11</text>
-<text class="tk" x="543.0" y="308" text-anchor="middle">12</text>
-<text class="tk" x="591.5" y="308" text-anchor="middle">13</text>
-<text class="tk" x="640.0" y="308" text-anchor="middle">14</text>
-<line class="realbar" x1="58.0" y1="292.0" x2="58.0" y2="28.2"/>
-<line class="realbar" x1="106.5" y1="292.0" x2="106.5" y2="28.9"/>
-<line class="realbar" x1="155.0" y1="292.0" x2="155.0" y2="45.3"/>
-<line class="realbar" x1="203.5" y1="292.0" x2="203.5" y2="55.7"/>
-<line class="realbar" x1="252.0" y1="292.0" x2="252.0" y2="79.5"/>
-<line class="realbar" x1="300.5" y1="292.0" x2="300.5" y2="98.5"/>
-<line class="realbar" x1="349.0" y1="292.0" x2="349.0" y2="133.8"/>
-<line class="realbar" x1="397.5" y1="292.0" x2="397.5" y2="156.0"/>
-<line class="realbar" x1="446.0" y1="292.0" x2="446.0" y2="176.7"/>
-<line class="realbar" x1="494.5" y1="292.0" x2="494.5" y2="198.1"/>
-<line class="realbar" x1="543.0" y1="292.0" x2="543.0" y2="217.7"/>
-<line class="realbar" x1="591.5" y1="292.0" x2="591.5" y2="228.9"/>
-<line class="realbar" x1="640.0" y1="292.0" x2="640.0" y2="232.8"/>
-<polyline class="track mdlline" points="58.0,28.1 106.5,32.0 155.0,47.3 203.5,59.8 252.0,84.8 300.5,103.5 349.0,132.6 397.5,153.3 446.0,180.2 494.5,198.3 543.0,219.5 591.5,228.3 640.0,233.2"/>
-<circle class="pt mdl" cx="58.0" cy="28.1" r="3.4"/>
-<circle class="pt mdl" cx="106.5" cy="32.0" r="3.4"/>
-<circle class="pt mdl" cx="155.0" cy="47.3" r="3.4"/>
-<circle class="pt mdl" cx="203.5" cy="59.8" r="3.4"/>
-<circle class="pt mdl" cx="252.0" cy="84.8" r="3.4"/>
-<circle class="pt mdl" cx="300.5" cy="103.5" r="3.4"/>
-<circle class="pt mdl" cx="349.0" cy="132.6" r="3.4"/>
-<circle class="pt mdl" cx="397.5" cy="153.3" r="3.4"/>
-<circle class="pt mdl" cx="446.0" cy="180.2" r="3.4"/>
-<circle class="pt mdl" cx="494.5" cy="198.3" r="3.4"/>
-<circle class="pt mdl" cx="543.0" cy="219.5" r="3.4"/>
-<circle class="pt mdl" cx="591.5" cy="228.3" r="3.4"/>
-<circle class="pt mdl" cx="640.0" cy="233.2" r="3.4"/>
-<text class="axlab" x="349.0" y="330" text-anchor="middle">total runs in the game, both teams</text>
-<text class="axlab" transform="rotate(-90 14 156.0)" x="14" y="156.0" text-anchor="middle">P(total exceeds this)</text>
-<line class="realbar" x1="80" y1="214.3" x2="80" y2="228.3"/>
-<text class="note" x="92" y="225.3">what actually happened, 750 games</text>
-<line class="track mdlline" x1="70" y1="248.5" x2="90" y2="248.5"/>
-<circle class="pt mdl" cx="80" cy="248.5" r="3.4"/>
-<text class="note" x="98" y="252.5">what the model predicted</text>
+    <div class="frame"><svg viewBox="0 0 690 332" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Probability integral transform histograms for each contract family">
+<text class="fm" x="8" y="18">Game total</text>
+<text class="nn" x="160" y="18" text-anchor="end">n=750</text>
+<rect class="pitbar" x="9.0" y="70.0" width="13.2" height="52.0"/>
+<rect class="pitbar" x="24.2" y="57.2" width="13.2" height="64.8"/>
+<rect class="pitbar" x="39.4" y="62.8" width="13.2" height="59.2"/>
+<rect class="pitbar" x="54.6" y="51.6" width="13.2" height="70.4"/>
+<rect class="pitbar" x="69.8" y="59.6" width="13.2" height="62.4"/>
+<rect class="pitbar" x="85.0" y="77.2" width="13.2" height="44.8"/>
+<rect class="pitbar" x="100.2" y="62.0" width="13.2" height="60.0"/>
+<rect class="pitbar" x="115.4" y="66.0" width="13.2" height="56.0"/>
+<rect class="pitbar" x="130.6" y="63.6" width="13.2" height="58.4"/>
+<rect class="pitbar" x="145.8" y="50.0" width="13.2" height="72.0"/>
+<line class="unif" x1="8" y1="62.0" x2="160" y2="62.0"/>
+<line class="ax" x1="8" y1="122" x2="160" y2="122"/>
+<text class="tk" x="8" y="136">0</text>
+<text class="tk" x="160" y="136" text-anchor="end">1</text>
+<text class="fm" x="178" y="18">Team total</text>
+<text class="nn" x="330" y="18" text-anchor="end">n=1,500</text>
+<rect class="pitbar" x="179.0" y="58.0" width="13.2" height="64.0"/>
+<rect class="pitbar" x="194.2" y="62.4" width="13.2" height="59.6"/>
+<rect class="pitbar" x="209.4" y="59.6" width="13.2" height="62.4"/>
+<rect class="pitbar" x="224.6" y="60.8" width="13.2" height="61.2"/>
+<rect class="pitbar" x="239.8" y="66.0" width="13.2" height="56.0"/>
+<rect class="pitbar" x="255.0" y="58.8" width="13.2" height="63.2"/>
+<rect class="pitbar" x="270.2" y="65.6" width="13.2" height="56.4"/>
+<rect class="pitbar" x="285.4" y="68.4" width="13.2" height="53.6"/>
+<rect class="pitbar" x="300.6" y="59.6" width="13.2" height="62.4"/>
+<rect class="pitbar" x="315.8" y="60.8" width="13.2" height="61.2"/>
+<line class="unif" x1="178" y1="62.0" x2="330" y2="62.0"/>
+<line class="ax" x1="178" y1="122" x2="330" y2="122"/>
+<text class="tk" x="178" y="136">0</text>
+<text class="tk" x="330" y="136" text-anchor="end">1</text>
+<text class="fm" x="348" y="18">First five, total</text>
+<text class="nn" x="500" y="18" text-anchor="end">n=750</text>
+<rect class="pitbar" x="349.0" y="67.6" width="13.2" height="54.4"/>
+<rect class="pitbar" x="364.2" y="60.4" width="13.2" height="61.6"/>
+<rect class="pitbar" x="379.4" y="63.6" width="13.2" height="58.4"/>
+<rect class="pitbar" x="394.6" y="57.2" width="13.2" height="64.8"/>
+<rect class="pitbar" x="409.8" y="61.2" width="13.2" height="60.8"/>
+<rect class="pitbar" x="425.0" y="65.2" width="13.2" height="56.8"/>
+<rect class="pitbar" x="440.2" y="67.6" width="13.2" height="54.4"/>
+<rect class="pitbar" x="455.4" y="64.4" width="13.2" height="57.6"/>
+<rect class="pitbar" x="470.6" y="60.4" width="13.2" height="61.6"/>
+<rect class="pitbar" x="485.8" y="52.4" width="13.2" height="69.6"/>
+<line class="unif" x1="348" y1="62.0" x2="500" y2="62.0"/>
+<line class="ax" x1="348" y1="122" x2="500" y2="122"/>
+<text class="tk" x="348" y="136">0</text>
+<text class="tk" x="500" y="136" text-anchor="end">1</text>
+<text class="fm" x="518" y="18">First five, run line</text>
+<text class="nn" x="670" y="18" text-anchor="end">n=1,502</text>
+<rect class="pitbar" x="519.0" y="64.9" width="13.2" height="57.1"/>
+<rect class="pitbar" x="534.2" y="68.9" width="13.2" height="53.1"/>
+<rect class="pitbar" x="549.4" y="67.7" width="13.2" height="54.3"/>
+<rect class="pitbar" x="564.6" y="62.9" width="13.2" height="59.1"/>
+<rect class="pitbar" x="579.8" y="50.5" width="13.2" height="71.5"/>
+<rect class="pitbar" x="595.0" y="64.5" width="13.2" height="57.5"/>
+<rect class="pitbar" x="610.2" y="59.3" width="13.2" height="62.7"/>
+<rect class="pitbar" x="625.4" y="60.1" width="13.2" height="61.9"/>
+<rect class="pitbar" x="640.6" y="58.1" width="13.2" height="63.9"/>
+<rect class="pitbar" x="655.8" y="63.3" width="13.2" height="58.7"/>
+<line class="unif" x1="518" y1="62.0" x2="670" y2="62.0"/>
+<line class="ax" x1="518" y1="122" x2="670" y2="122"/>
+<text class="tk" x="518" y="136">0</text>
+<text class="tk" x="670" y="136" text-anchor="end">1</text>
+<text class="fm" x="8" y="168">Run line</text>
+<text class="nn" x="160" y="168" text-anchor="end">n=1,500</text>
+<rect class="pitbar" x="9.0" y="214.4" width="13.2" height="57.6"/>
+<rect class="pitbar" x="24.2" y="211.6" width="13.2" height="60.4"/>
+<rect class="pitbar" x="39.4" y="216.0" width="13.2" height="56.0"/>
+<rect class="pitbar" x="54.6" y="215.2" width="13.2" height="56.8"/>
+<rect class="pitbar" x="69.8" y="205.2" width="13.2" height="66.8"/>
+<rect class="pitbar" x="85.0" y="211.6" width="13.2" height="60.4"/>
+<rect class="pitbar" x="100.2" y="212.4" width="13.2" height="59.6"/>
+<rect class="pitbar" x="115.4" y="212.8" width="13.2" height="59.2"/>
+<rect class="pitbar" x="130.6" y="206.4" width="13.2" height="65.6"/>
+<rect class="pitbar" x="145.8" y="214.4" width="13.2" height="57.6"/>
+<line class="unif" x1="8" y1="212.0" x2="160" y2="212.0"/>
+<line class="ax" x1="8" y1="272" x2="160" y2="272"/>
+<text class="tk" x="8" y="286">0</text>
+<text class="tk" x="160" y="286" text-anchor="end">1</text>
+<text class="fm" x="178" y="168">First five, moneyline</text>
+<text class="nn" x="330" y="168" text-anchor="end">n=750</text>
+<rect class="pitbar" x="179.0" y="205.6" width="13.2" height="66.4"/>
+<rect class="pitbar" x="194.2" y="207.2" width="13.2" height="64.8"/>
+<rect class="pitbar" x="209.4" y="224.8" width="13.2" height="47.2"/>
+<rect class="pitbar" x="224.6" y="222.4" width="13.2" height="49.6"/>
+<rect class="pitbar" x="239.8" y="203.2" width="13.2" height="68.8"/>
+<rect class="pitbar" x="255.0" y="208.8" width="13.2" height="63.2"/>
+<rect class="pitbar" x="270.2" y="216.8" width="13.2" height="55.2"/>
+<rect class="pitbar" x="285.4" y="210.4" width="13.2" height="61.6"/>
+<rect class="pitbar" x="300.6" y="211.2" width="13.2" height="60.8"/>
+<rect class="pitbar" x="315.8" y="209.6" width="13.2" height="62.4"/>
+<line class="unif" x1="178" y1="212.0" x2="330" y2="212.0"/>
+<line class="ax" x1="178" y1="272" x2="330" y2="272"/>
+<text class="tk" x="178" y="286">0</text>
+<text class="tk" x="330" y="286" text-anchor="end">1</text>
+<text class="fm" x="348" y="168">Moneyline</text>
+<text class="nn" x="500" y="168" text-anchor="end">n=755</text>
+<rect class="pitbar" x="349.0" y="216.4" width="13.2" height="55.6"/>
+<rect class="pitbar" x="364.2" y="211.6" width="13.2" height="60.4"/>
+<rect class="pitbar" x="379.4" y="218.0" width="13.2" height="54.0"/>
+<rect class="pitbar" x="394.6" y="206.0" width="13.2" height="66.0"/>
+<rect class="pitbar" x="409.8" y="210.8" width="13.2" height="61.2"/>
+<rect class="pitbar" x="425.0" y="210.8" width="13.2" height="61.2"/>
+<rect class="pitbar" x="440.2" y="212.4" width="13.2" height="59.6"/>
+<rect class="pitbar" x="455.4" y="207.6" width="13.2" height="64.4"/>
+<rect class="pitbar" x="470.6" y="216.4" width="13.2" height="55.6"/>
+<rect class="pitbar" x="485.8" y="210.0" width="13.2" height="62.0"/>
+<line class="unif" x1="348" y1="212.0" x2="500" y2="212.0"/>
+<line class="ax" x1="348" y1="272" x2="500" y2="272"/>
+<text class="tk" x="348" y="286">0</text>
+<text class="tk" x="500" y="286" text-anchor="end">1</text>
+<line class="unif" x1="518" y1="194" x2="546" y2="194"/>
+<text class="note" x="552" y="198">what a calibrated</text>
+<text class="note" x="552" y="211">model would give</text>
+<text class="note" x="518" y="234">bars above the line at the</text>
+<text class="note" x="518" y="247">edges mean the predicted</text>
+<text class="note" x="518" y="260">distribution is too narrow</text>
 </svg></div>
-    <figcaption><b>Figure 2.</b> The simulated run distribution against the realized one, over
-    750 games. The two agree closely across the full ladder. The model sits slightly below
+    <figcaption><b>Figure 2.</b> Probability integral transform histograms, one per contract
+    family. The two agree closely across the full ladder. The model sits slightly below
     reality between six and eight runs, understating scoring in the densest part of the
     distribution by one to two percentage points, and converges again in both tails. This is a
     test the model can fail without the market being involved at all.</figcaption>
   </figure>
 
+
+  <p>All seven are close to flat, which says the model's uncertainty is about the right width and
+  not just centered in the right place. The largest departures are in game totals and the
+  first-five markets, and they are modest.</p>
 </section>
 
 <section>
@@ -467,64 +541,70 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   improper measure &mdash; accuracy, or a hit rate &mdash; can be improved by shading your
   answers, and would reward the wrong thing.</p>
 
-  <p>A forecaster that ignores the specific game and always quotes the base rate scores 0.2489.
-  The model at 0.1885 and the market at 0.1875 are both far better than that, so both carry real
+  <p>A forecaster that ignores the specific game and always quotes the base rate scores 0.2490.
+  The model at 0.1905 and the market at 0.1896 are both far better than that, so both carry real
   information. The difference between the two is 0.0010 in the market's favor, and the
-  game-clustered 95% interval around it runs from &minus;0.0027 to +0.0006 &mdash; it contains
+  game-clustered 95% interval around it runs from &minus;0.0027 to +0.0007 &mdash; it contains
   zero, so the two are not distinguishable on this sample. Figure&nbsp;3 breaks it down by
   family.</p>
 
   <figure>
-    <div class="frame"><svg viewBox="0 0 690 232" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Difference in Brier score, model minus market, for the six game-level contract families">
-<line class="ax" x1="296.5" y1="26.0" x2="296.5" y2="192.0"/>
-<text class="tk" x="296.5" y="208.0" text-anchor="middle">-6</text>
-<line class="ax" x1="365.5" y1="26.0" x2="365.5" y2="192.0"/>
-<text class="tk" x="365.5" y="208.0" text-anchor="middle">-4</text>
-<line class="ax" x1="434.5" y1="26.0" x2="434.5" y2="192.0"/>
-<text class="tk" x="434.5" y="208.0" text-anchor="middle">-2</text>
-<line class="ax zero" x1="503.5" y1="26.0" x2="503.5" y2="192.0"/>
-<text class="tk" x="503.5" y="208.0" text-anchor="middle">0</text>
-<line class="ax" x1="572.5" y1="26.0" x2="572.5" y2="192.0"/>
-<text class="tk" x="572.5" y="208.0" text-anchor="middle">2</text>
-<line class="ax" x1="641.5" y1="26.0" x2="641.5" y2="192.0"/>
-<text class="tk" x="641.5" y="208.0" text-anchor="middle">4</text>
+    <div class="frame"><svg viewBox="0 0 690 259" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Difference in Brier score, model minus market, for the seven game-level contract families">
+<line class="ax" x1="305.7" y1="26.0" x2="305.7" y2="219.0"/>
+<text class="tk" x="305.7" y="235.0" text-anchor="middle">-6</text>
+<line class="ax" x1="373.0" y1="26.0" x2="373.0" y2="219.0"/>
+<text class="tk" x="373.0" y="235.0" text-anchor="middle">-4</text>
+<line class="ax" x1="440.3" y1="26.0" x2="440.3" y2="219.0"/>
+<text class="tk" x="440.3" y="235.0" text-anchor="middle">-2</text>
+<line class="ax zero" x1="507.7" y1="26.0" x2="507.7" y2="219.0"/>
+<text class="tk" x="507.7" y="235.0" text-anchor="middle">0</text>
+<line class="ax" x1="575.0" y1="26.0" x2="575.0" y2="219.0"/>
+<text class="tk" x="575.0" y="235.0" text-anchor="middle">2</text>
+<line class="ax" x1="642.3" y1="26.0" x2="642.3" y2="219.0"/>
+<text class="tk" x="642.3" y="235.0" text-anchor="middle">4</text>
 <text class="fm" x="0" y="48.0">Moneyline</text>
-<text class="nn" x="244" y="48.0" text-anchor="end">1,510</text>
-<line class="ci nul" x1="428.3" y1="44.0" x2="662.9" y2="44.0"/>
-<line class="ci nul" x1="428.3" y1="41.0" x2="428.3" y2="47.0"/>
-<line class="ci nul" x1="662.9" y1="41.0" x2="662.9" y2="47.0"/>
-<circle class="pt nul" cx="545.2" cy="44.0" r="3.2"/>
+<text class="nn" x="254" y="48.0" text-anchor="end">1,510</text>
+<line class="ci nul" x1="436.5" y1="44.0" x2="661.2" y2="44.0"/>
+<line class="ci nul" x1="436.5" y1="41.0" x2="436.5" y2="47.0"/>
+<line class="ci nul" x1="661.2" y1="41.0" x2="661.2" y2="47.0"/>
+<circle class="pt nul" cx="548.4" cy="44.0" r="3.2"/>
 <text class="fm" x="0" y="75.0">Run line</text>
-<text class="nn" x="244" y="75.0" text-anchor="end">4,500</text>
-<line class="ci nul" x1="461.8" y1="71.0" x2="590.1" y2="71.0"/>
-<line class="ci nul" x1="461.8" y1="68.0" x2="461.8" y2="74.0"/>
-<line class="ci nul" x1="590.1" y1="68.0" x2="590.1" y2="74.0"/>
-<circle class="pt nul" cx="524.2" cy="71.0" r="3.2"/>
+<text class="nn" x="254" y="75.0" text-anchor="end">4,500</text>
+<line class="ci nul" x1="465.3" y1="71.0" x2="593.4" y2="71.0"/>
+<line class="ci nul" x1="465.3" y1="68.0" x2="465.3" y2="74.0"/>
+<line class="ci nul" x1="593.4" y1="68.0" x2="593.4" y2="74.0"/>
+<circle class="pt nul" cx="527.9" cy="71.0" r="3.2"/>
 <text class="fm" x="0" y="102.0">First five, run line</text>
-<text class="nn" x="244" y="102.0" text-anchor="end">3,004</text>
-<line class="ci nul" x1="462.1" y1="98.0" x2="581.5" y2="98.0"/>
-<line class="ci nul" x1="462.1" y1="95.0" x2="462.1" y2="101.0"/>
-<line class="ci nul" x1="581.5" y1="95.0" x2="581.5" y2="101.0"/>
-<circle class="pt nul" cx="523.9" cy="98.0" r="3.2"/>
+<text class="nn" x="254" y="102.0" text-anchor="end">3,004</text>
+<line class="ci nul" x1="464.6" y1="98.0" x2="589.3" y2="98.0"/>
+<line class="ci nul" x1="464.6" y1="95.0" x2="464.6" y2="101.0"/>
+<line class="ci nul" x1="589.3" y1="95.0" x2="589.3" y2="101.0"/>
+<circle class="pt nul" cx="527.4" cy="98.0" r="3.2"/>
 <text class="fm" x="0" y="129.0">First five, moneyline</text>
-<text class="nn" x="244" y="129.0" text-anchor="end">2,250</text>
-<line class="ci nul" x1="435.5" y1="125.0" x2="568.0" y2="125.0"/>
-<line class="ci nul" x1="435.5" y1="122.0" x2="435.5" y2="128.0"/>
-<line class="ci nul" x1="568.0" y1="122.0" x2="568.0" y2="128.0"/>
-<circle class="pt nul" cx="503.2" cy="125.0" r="3.2"/>
-<text class="fm" x="0" y="156.0">First five, total</text>
-<text class="nn" x="244" y="156.0" text-anchor="end">5,238</text>
-<line class="ci nul" x1="393.1" y1="152.0" x2="554.2" y2="152.0"/>
-<line class="ci nul" x1="393.1" y1="149.0" x2="393.1" y2="155.0"/>
-<line class="ci nul" x1="554.2" y1="149.0" x2="554.2" y2="155.0"/>
-<circle class="pt nul" cx="471.8" cy="152.0" r="3.2"/>
-<text class="fm" x="0" y="183.0">Game total</text>
-<text class="nn" x="244" y="183.0" text-anchor="end">8,157</text>
-<line class="ci neg" x1="280.3" y1="179.0" x2="488.7" y2="179.0"/>
-<line class="ci neg" x1="280.3" y1="176.0" x2="280.3" y2="182.0"/>
-<line class="ci neg" x1="488.7" y1="176.0" x2="488.7" y2="182.0"/>
-<circle class="pt neg" cx="388.6" cy="179.0" r="3.2"/>
-<text class="tk" x="503.5" y="224.0" text-anchor="middle">difference in Brier score &#215; 10&#8315;&#179; &nbsp;&nbsp; (left of zero favors the market)</text>
+<text class="nn" x="254" y="129.0" text-anchor="end">2,250</text>
+<line class="ci nul" x1="446.3" y1="125.0" x2="569.8" y2="125.0"/>
+<line class="ci nul" x1="446.3" y1="122.0" x2="446.3" y2="128.0"/>
+<line class="ci nul" x1="569.8" y1="122.0" x2="569.8" y2="128.0"/>
+<circle class="pt nul" cx="507.3" cy="125.0" r="3.2"/>
+<text class="fm" x="0" y="156.0">Team total</text>
+<text class="nn" x="254" y="156.0" text-anchor="end">10,500</text>
+<line class="ci nul" x1="412.0" y1="152.0" x2="549.9" y2="152.0"/>
+<line class="ci nul" x1="412.0" y1="149.0" x2="412.0" y2="155.0"/>
+<line class="ci nul" x1="549.9" y1="149.0" x2="549.9" y2="155.0"/>
+<circle class="pt nul" cx="483.2" cy="152.0" r="3.2"/>
+<text class="fm" x="0" y="183.0">First five, total</text>
+<text class="nn" x="254" y="183.0" text-anchor="end">5,238</text>
+<line class="ci nul" x1="398.1" y1="179.0" x2="559.1" y2="179.0"/>
+<line class="ci nul" x1="398.1" y1="176.0" x2="398.1" y2="182.0"/>
+<line class="ci nul" x1="559.1" y1="176.0" x2="559.1" y2="182.0"/>
+<circle class="pt nul" cx="476.8" cy="179.0" r="3.2"/>
+<text class="fm" x="0" y="210.0">Game total</text>
+<text class="nn" x="254" y="210.0" text-anchor="end">8,157</text>
+<line class="ci neg" x1="289.8" y1="206.0" x2="490.9" y2="206.0"/>
+<line class="ci neg" x1="289.8" y1="203.0" x2="289.8" y2="209.0"/>
+<line class="ci neg" x1="490.9" y1="203.0" x2="490.9" y2="209.0"/>
+<circle class="pt neg" cx="395.7" cy="206.0" r="3.2"/>
+<text class="tk" x="507.7" y="251.0" text-anchor="middle">difference in Brier score &#215; 10&#8315;&#179; &nbsp;&nbsp; (left of zero favors the market)</text>
 </svg></div>
     <figcaption><b>Figure 3.</b> Difference in Brier score, model minus market, by contract
     family; points are estimates, bars are 95% confidence intervals. Red marks an interval
@@ -534,14 +614,14 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
     between about 1.3 and 2.5 and would overstate the precision of every estimate.</figcaption>
   </figure>
 
-  <p>One family, game totals, is significantly worse; the other five are indistinguishable from
+  <p>One family, game totals, is significantly worse; the other six are indistinguishable from
   the market. The weakness in totals concentrates at high lines rather than spreading evenly,
   which locates it as a specific modeling defect rather than as evidence that the family is
-  efficiently priced &mdash; and it is consistent with the understatement of scoring visible in
-  Figure&nbsp;2.</p>
+  efficiently priced &mdash; and it is the family whose probability integral transform in Figure&nbsp;2 departs furthest
+  from flat.</p>
 
-  <p>A more direct test is what happens when the two disagree. On the 1,229 contracts where the
-  model and the market took opposite sides, the model's side won 49.0% of the time. So its
+  <p>A more direct test is what happens when the two disagree. On the 1,692 contracts where the
+  model and the market took opposite sides, the model's side won 48.8% of the time. So its
   stated confidence is honest and its distribution matches reality, but it cannot separate the
   games the market has mispriced from the ones it has not. That second ability is called
   discrimination, and it is the one the model is missing.</p>
@@ -612,8 +692,9 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   preferentially when the quoted price is wrong, so conditioning on fills selects for the
   model's errors and reports worse calibration than the model exhibits. An internal write-up had
   already published a self-critical finding drawn from that sample. Recomputed on the full
-  quoted tape, expected calibration error is 0.0078 against the market's 0.0071 &mdash; close
-  enough that calibration is not where the model loses. What it lacks is discrimination, as Figure&nbsp;1
+  quoted tape, expected calibration error is 0.0078 against the market's 0.0082 &mdash; the model
+  is, if anything, marginally the better calibrated of the two, and calibration is certainly not
+  where it loses. What it lacks is discrimination, as Figure&nbsp;1
   and the head-to-head comparison both indicate.</p>
 
   <p>Unfavorable results deserve the same scrutiny as favorable ones. A finding that flatters
@@ -623,7 +704,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
 
 <section>
   <h2><span class="num">7.</span>Scope and limitations</h2>
-  <p>The evaluation window covers one partial season, roughly two months of operation and 760
+  <p>The evaluation window covers one partial season, roughly two months of operation and 764
   games, and establishes nothing about stability across seasons, rule changes, or roster
   turnover. The benchmark incorporates information the model does not receive, including late
   lineup and weather news, so an unknown portion of the measured shortfall reflects an

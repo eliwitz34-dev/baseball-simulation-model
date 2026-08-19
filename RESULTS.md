@@ -2,8 +2,8 @@
 
 ## Headline result
 
-The model quoted six families of game-level contracts. Across 24,659 scored
-contracts covering 760 games between 29 May and 30 July 2026, its forecasts were
+The model quoted seven families of game-level contracts. Across 35,159 scored
+contracts covering 764 games between 29 May and 30 July 2026, its forecasts were
 compared against the market's midpoint price for the same contract at the same
 moment. Both were scored with the Brier score — the mean squared error of a
 probability forecast, and a proper scoring rule, so neither forecaster can improve
@@ -11,26 +11,22 @@ its score by misreporting what it believes.
 
 | | Brier |
 |---|---|
-| model | 0.1885 |
-| market | 0.1875 |
-| base-rate forecast | 0.2489 |
-| difference, model − market | −0.00104, against the model |
-| 95% CI (game-clustered) | [−0.00267, +0.00063] |
+| model | 0.1905 |
+| market | 0.1896 |
+| base-rate forecast | 0.2490 |
+| difference, model − market | −0.00095, against the model |
+| 95% CI (game-clustered) | [−0.00270, +0.00068] |
 
 Both forecasters are far better than the base rate, so the model is genuinely
 informative. The point estimate favors the market and the interval contains zero,
 so the correct statement is that **the model and the market are indistinguishable
-on this sample, with the point estimate slightly against the model.** Since the
-model's purpose was to disagree with that price, this is the result that matters
-most, and it is reported first for that reason.
+on this sample, with the point estimate slightly against the model.**
 
-Intervals are bootstrapped over **games, not contracts**. The several hundred
-contracts on a single game share one realized outcome and are strongly correlated,
-so games are the effective sampling unit. Resampling contracts instead would
-narrow the intervals in this document by a factor of between about 1.3 and 2.5,
-depending on the family. On this sample that does not change which families come
-out significant — the same one does either way — but it would overstate the
-precision of every estimate reported.
+Intervals are bootstrapped over **games, not contracts**. The contracts on a
+single game share one realized outcome and are strongly correlated, so games are
+the effective sampling unit. Resampling contracts instead would narrow the
+intervals by a factor of between about 1.3 and 2.5, depending on the family,
+which would overstate the precision of every estimate reported.
 
 ## Does the model match real baseball?
 
@@ -40,13 +36,16 @@ A separate question from whether it beats the market, and the one to ask first.
 frequencies track predicted ones closely from about 0.25 upward. Below that the
 model is mildly overconfident: events it assigns 16% occur about 18% of the time.
 Expected calibration error over the full range is 0.0078, against the market's
-0.0071 — close enough that calibration is not where the model loses.
+0.0082.
 
-**Distribution shape.** Across the ladder of run totals, the model's implied
-probability that a game exceeds each total tracks the realized frequency to within
-one or two percentage points, understating scoring slightly between six and eight
-runs — the densest part of the distribution. That understatement is consistent
-with the one family where the model is significantly worse than the market.
+**Distribution shape.** Calibration alone can be achieved by a forecaster that
+quotes the base rate every time, so the sharper test is whether the whole
+predicted distribution has the right shape. For each game the model's predicted
+distribution is evaluated at what actually happened, giving a probability integral
+transform value that should be uniform on [0, 1] if the distribution is right.
+Across all seven families the resulting histograms are close to flat, with no
+family showing the U shape that indicates a predicted distribution that is too
+narrow. Mean transform values range from 0.497 to 0.510 against an ideal of 0.500.
 
 ## Results by contract family
 
@@ -54,14 +53,15 @@ with the one family where the model is significantly worse than the market.
 
 | family | n | Brier model | Brier market | ΔBrier ×10³ [95% CI] | |
 |---|---:|---:|---:|---|---|
-| moneyline | 1,510 | 0.2440 | 0.2452 | +1.21 [−2.18, +4.62] | |
-| run line | 4,500 | 0.1895 | 0.1901 | +0.60 [−1.21, +2.51] | |
-| first five, run line | 3,004 | 0.1832 | 0.1838 | +0.59 [−1.20, +2.26] | |
-| first five, moneyline | 2,250 | 0.2046 | 0.2045 | −0.01 [−1.97, +1.87] | |
-| first five, total | 5,238 | 0.1778 | 0.1769 | −0.92 [−3.20, +1.47] | |
-| game total | 8,157 | 0.1821 | 0.1788 | −3.33 [−6.47, −0.43] | **worse** |
+| moneyline | 1,510 | 0.2440 | 0.2452 | +1.21 [−2.11, +4.56] | |
+| run line | 4,500 | 0.1895 | 0.1901 | +0.60 [−1.26, +2.55] | |
+| first five, run line | 3,004 | 0.1832 | 0.1838 | +0.59 [−1.28, +2.42] | |
+| first five, moneyline | 2,250 | 0.2046 | 0.2045 | −0.01 [−1.82, +1.85] | |
+| team total | 10,500 | 0.1952 | 0.1944 | −0.73 [−2.84, +1.25] | |
+| first five, total | 5,238 | 0.1778 | 0.1769 | −0.92 [−3.25, +1.53] | |
+| game total | 8,157 | 0.1821 | 0.1788 | −3.33 [−6.47, −0.50] | **worse** |
 
-One family is significantly worse and five are indistinguishable. None is
+One family is significantly worse and six are indistinguishable. None is
 significantly better.
 
 The weakness in game totals concentrates at high lines rather than spreading
@@ -70,10 +70,10 @@ indicates a specific modeling defect, whereas one spread uniformly more often
 indicates that the family is efficiently priced.
 
 The most direct test is what happens when the two forecasters disagree. On the
-1,229 contracts where the model and the market took opposite sides, the model's
-side won **49.0%** of the time. Its calibration is sound and its distribution
-matches reality; what it lacks is any information the price did not already
-contain.
+1,692 contracts where the model and the market took opposite sides, the model's
+side won **48.8%** of the time. Its calibration is sound and its predicted
+distributions have the right shape; what it lacks is any information the price did
+not already contain.
 
 ## A caution about the measurement basis
 
@@ -90,8 +90,9 @@ fills therefore selects for the model's errors, and will report worse calibratio
 than the model actually has, whether or not the model is any good.
 
 On the full quoted tape, which does not condition on fills, the model's expected
-calibration error is 0.0078 against the market's 0.0071 — close enough that
-calibration is not where the model loses. What it lacks is *discrimination*. The
+calibration error is 0.0078 against the market's 0.0082 — the model is if
+anything marginally the better calibrated, and calibration is certainly not where
+it loses. What it lacks is *discrimination*. The
 two analyses were measuring different things, and the fills-conditioned
 measurement does not answer the question it was taken to answer.
 
@@ -187,8 +188,8 @@ effect before implementing it was the cheapest screening step available.
   information the model does not have, including late lineup and weather news.
   Some of the model's apparent deficit is an information gap rather than a
   modeling one, and this analysis does not separate the two.
-- **Selection into the quoted set.** The six families reported here were the ones
-  the model quoted, and they were chosen partly on the basis of earlier
+- **Selection into the quoted set.** The seven families reported here were the
+  ones the model quoted, and they were chosen partly on the basis of earlier
   performance. Results restricted to a set chosen that way are optimistically
   biased, which makes the absence of any family beating the market a stronger
   finding than it would otherwise be, not a weaker one.
