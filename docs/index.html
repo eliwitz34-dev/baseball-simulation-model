@@ -99,12 +99,9 @@ svg{display:block; width:100%; min-width:600px; height:auto;}
 .ci{stroke-width:1.5; fill:none;}
 .diag{stroke:var(--rule-strong); stroke-width:1.25; stroke-dasharray:4 4;}
 .track{fill:none; stroke:var(--ink-soft); stroke-width:1.6;}
-.mdlline{stroke:var(--ink-soft);}
 .pt.mdl{fill:var(--ink);}
 .pitbar{fill:var(--nul); opacity:.5;}
 .unif{stroke:var(--neg); stroke-width:1.2; stroke-dasharray:3 3;}
-.realbar{stroke:var(--nul); stroke-width:9; stroke-linecap:butt; opacity:.42;}
-.lead{stroke:var(--rule-strong); stroke-width:1;}
 .note{font-family:"IBM Plex Sans",sans-serif; font-size:11px; fill:var(--ink-mute);}
 .axlab{font-family:"IBM Plex Sans",sans-serif; font-size:11.5px; fill:var(--ink-mute);
   letter-spacing:.03em;}
@@ -134,11 +131,6 @@ math{font-size:1.02em;}
 .eqnote{font-family:"IBM Plex Sans",sans-serif; font-size:13px; color:var(--ink-mute);
   text-align:center; margin:-0.7em 0 1.3em;}
 
-.foot{margin-top:44px; padding-top:20px; border-top:1px solid var(--rule);
-  font-family:"IBM Plex Sans",sans-serif; font-size:13.5px; line-height:1.55; color:var(--ink-mute);}
-.foot p{margin:0 0 .8em;}
-code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
-  background:var(--rule); padding:1px 5px; border-radius:2px; color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -712,18 +704,7 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   were made by one person; fixing each test's criterion before running it, as in section 6, is a
   partial substitute for independent review.</p>
 
-  <p>Realized trading results are excluded. The accounting routine that produced the figures
-  last computed contained a settlement defect, since corrected, and the sample is in any case
-  far too short to separate return from noise.</p>
 </section>
-
-<div class="foot">
-  <p>The exchange is not identified and no market data is redistributed. All simulation results
-  above are reproducible from the published repository; the benchmark comparison is computed
-  from a private record of quoted prices and is identified as such wherever it appears. The
-  system described is not in operation.</p>
-  
-</div>
 
 </div>
 </body>
