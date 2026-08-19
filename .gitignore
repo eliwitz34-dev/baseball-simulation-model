@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.numba_cache/
+
+# Built transition tables. Reproduce with: python scripts/build_tables.py
+# They are derived aggregates rather than a dataset, but the repository ships
+# the code that builds them rather than the output, so that what a reader gets
+# is always traceable to the constants in build_tables.py.
+data/*.npy
+data/provenance.json
+
+# The landing page is published separately as a hosted artifact.
+landing-page.html

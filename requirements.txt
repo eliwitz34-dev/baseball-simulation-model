@@ -1,0 +1,4 @@
+# The simulation needs only these three.
+numpy>=1.24
+numba>=0.58        # the compiled kernel; without it core.py still runs, slowly
+pandas>=2.0        # used only by sim/production/, not by core.py
