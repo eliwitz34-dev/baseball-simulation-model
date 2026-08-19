@@ -101,32 +101,6 @@ measured on — was the single most recurrent failure mode in this project. It i
 worth more attention than any individual result, because it invalidates a
 conclusion without leaving any sign that it has done so.
 
-## Exclusion of profit figures
-
-There are realized trading results. They are omitted deliberately, for three
-reasons.
-
-**They were wrong when last computed.** The accounting code treated an exchange
-settlement record as a position when it is in fact a lifetime activity summary.
-Any position closed before expiry was therefore reported with both legs, booking
-completed round trips as total losses; one row was wrong by a factor of 145. The
-defect was found and fixed after the figures in question were produced, and they
-have not been recomputed on the corrected basis.
-
-**The sample is too small to support a claim.** Two months and a few hundred
-games is nowhere near enough to distinguish a real return from noise at the
-observed effect size. Reporting a percentage return from it would imply a
-precision the data cannot carry.
-
-**It is the least informative number available.** Realized profit over a short
-window is a convolution of forecast quality, position sizing, execution, and
-luck. The Brier decomposition above isolates forecast quality directly, which is
-the only component this repository is about.
-
-The general point is worth stating plainly: a metric that was produced by code
-with a known defect should be withdrawn rather than caveated, and re-derived
-before it is quoted again.
-
 ## Model changes that were tested and rejected
 
 The following were each built, measured against a criterion fixed in advance,
@@ -200,16 +174,15 @@ effect before implementing it was the cheapest screening step available.
 
 ## Reproducing these numbers
 
-The transition table comparison in [README.md](README.md) is reproducible from
-this repository:
+The simulation results are reproducible from this repository:
 
 ```bash
 python scripts/build_tables.py
 python scripts/validate.py
 ```
 
-The market comparison in this document is not. It requires the private tape of
-quoted prices and realized outcomes, which is not redistributable. The analysis
-code that produced it takes a table of `(model probability, market probability,
-realized outcome, game id)` and is straightforward to reimplement against any
-such table; the clustered bootstrap is the only part that needs care.
+The market comparison needs the record of quoted prices and realized outcomes,
+which is not in the repository. The analysis takes a table of `(model
+probability, market probability, realized outcome, game id)` and is short to
+reimplement against any such table; the game-clustered bootstrap is the only part
+that needs care.

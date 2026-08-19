@@ -141,22 +141,21 @@ Whichever tables are loaded, their provenance travels with them in
 `data/provenance.json` and is reported by every script, so no number can be
 quietly attributed to the wrong generation.
 
-## Data note
+## Data
 
-No data from the exchange or from any commercial provider is included or
-redistributed. `scripts/build_tables.py` needs no download at all: it builds the
-transition tables from eight published league-average advancement rates, each
-cited in the file. Those are constants summarizing hundreds of thousands of plays, not a
-dataset. The built tables are written to `data/` and are excluded from version
-control, so what the repository distributes is always the code that produces
-them.
+`scripts/build_tables.py` needs no download. It builds the transition tables from
+eight published league-average advancement rates, each cited in the file — eight
+constants summarizing hundreds of thousands of plays, not a dataset. The built
+tables land in `data/` and are excluded from version control, so what the
+repository carries is the code that produces them.
 
-## Status and provenance
+Play-by-play and pitch-level inputs used by the production model, and the record
+of market prices behind the results, are not included.
+
+## Status
 
 Built and operated as a personal research project between May and August 2026.
-It is not running now, and this repository is a writeup of completed work rather
-than a live system. Nothing here constitutes advice of any kind.
 
-Numbers in this repository are reproducible from the code in it, with the
-exception of the live-market results in [RESULTS.md](RESULTS.md), which are
-computed from a private tape and are labeled as such wherever they appear.
+Everything in the repository reproduces from the code in it. The market
+comparison in [RESULTS.md](RESULTS.md) does not: it needs the price and outcome
+record described above.
