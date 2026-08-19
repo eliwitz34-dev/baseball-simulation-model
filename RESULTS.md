@@ -191,14 +191,13 @@ only reliable protection against selecting the reading after the fact.
 
 ## Reproducing these numbers
 
-The simulation results in [README.md](README.md) — throughput, the transition
-table comparison, the agreement between the two implementations — are
-reproducible from this repository:
+The simulation results in [README.md](README.md) — the transition table
+comparison and the agreement between the two implementations — are reproducible
+from this repository:
 
 ```bash
 python scripts/build_tables.py
 python scripts/validate.py
-python scripts/benchmark.py
 ```
 
 The market comparison in this document is not. It requires the private tape of

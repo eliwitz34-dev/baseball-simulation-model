@@ -73,12 +73,12 @@ rather than assumed away.
 
 ```
 sim/core.py              the simulation engine, 458 readable lines, runs with no data
-sim/reference_numpy.py   an independent vectorized implementation, used to cross-check core.py
+sim/reference_numpy.py   an independent implementation, used to cross-check core.py
 sim/tables.py            base-out transition tables, with a data-free fallback
 sim/production/          the actual production kernel (3,811 lines), for reference
 scripts/build_tables.py  builds transition tables from published advancement rates
 scripts/validate.py      the checks that must pass before any number here is quoted
-scripts/benchmark.py     measures throughput on your machine
+scripts/benchmark.py     measures simulation throughput, if of interest
 METHODOLOGY.md           how the model was validated, and why it was validated that way
 RESULTS.md               what the validation found, including everything that failed
 ```
@@ -142,35 +142,28 @@ Whichever tables are loaded, their provenance travels with them in
 `data/provenance.json` and is reported by every script, so no number can be
 quietly attributed to the wrong generation.
 
-## Performance
+## Checking the implementation
 
-The inner loop is compiled with Numba and parallelized across simulations.
-Measured on an Apple M5 Pro (15 cores) with `scripts/benchmark.py`:
+The model is implemented twice. `sim/core.py` is the compiled kernel used for
+everything; `sim/reference_numpy.py` is an independent implementation written
+separately from the same specification.
 
-| simulations | compiled | vectorized NumPy | speedup |
-|---:|---:|---:|---:|
-| 10,000 | 6.2 ms | 101.0 ms | 16.3× |
-| 50,000 | 25.5 ms | 534.6 ms | 21.0× |
-| 200,000 | 91.5 ms | 2,089 ms | 22.8× |
+That redundancy is the point. A transcription error — an off-by-one in a lookup
+index, a state written back to the wrong variable — produces output that still
+looks like baseball, and inside a compiled parallel loop there is no way to
+inspect the intermediate steps. Two implementations agreeing on a distribution to
+within Monte Carlo error is the cheapest available evidence that neither contains
+one. They agree on mean total runs to 0.02 against a four-standard-error
+tolerance of 0.12, and on the home win probability to 0.001.
+`scripts/validate.py` runs the comparison and takes its tolerances from Monte
+Carlo error rather than from whatever number happens to pass.
 
-That is about 2 million simulated games per second at the 50,000 mark.
-
-The baseline is a genuinely vectorized NumPy implementation
-(`sim/reference_numpy.py`), not interpreted Python loops. Benchmarking against
-interpreted loops would report a much larger multiple and would mean nothing,
-because nobody would write the reference that way; this comparison is the one
-that answers a useful question. Run the script yourself rather than trusting the
-table — it reports your machine and separates one-time compilation from
-steady-state throughput.
-
-The second implementation exists mainly as a cross-check. Two independently
-written versions of the same model agreeing to within Monte Carlo error is
-meaningful evidence that neither contains a transcription bug, which is
-otherwise very hard to establish inside a compiled parallel loop. They agree on
-mean total runs to 0.02 runs against a four-standard-error tolerance of 0.12, and
-on the home win probability to 0.001 — `scripts/validate.py` runs the comparison
-and sets its tolerances from Monte Carlo error rather than by choosing a number
-that passes.
+The kernel is compiled with Numba, which matters here for one reason only: it
+sets how many simulations are affordable, and that sets the precision floor. At
+50,000 simulations the Monte Carlo standard error near a probability of one half
+is about 0.22 percentage points, so two forecasts from this engine closer
+together than that are not meaningfully different. `scripts/benchmark.py`
+measures throughput on your own machine if that is of interest.
 
 ## Data note
 

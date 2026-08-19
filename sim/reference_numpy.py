@@ -1,32 +1,32 @@
 """
-reference_numpy.py — a vectorized NumPy implementation of the same simulation.
+reference_numpy.py — an independent NumPy implementation of the same simulation.
 
-This exists for two reasons.
+PRIMARY PURPOSE: A CROSS-CHECK ON THE COMPILED KERNEL.
+    A compiled parallel loop is precisely where a transcription error hides
+    quietly. An off-by-one in a lookup index or a state written back to the
+    wrong variable produces output that still looks like baseball, and the
+    intermediate steps cannot be inspected mid-flight. This file was written
+    separately from the same specification, so two implementations agreeing on a
+    distribution to within Monte Carlo error is meaningful evidence that neither
+    contains such an error. `scripts/validate.py` runs that comparison and takes
+    its tolerances from Monte Carlo error rather than from a number chosen to
+    pass.
 
-FIRST, IT IS THE HONEST BASELINE FOR THE SPEEDUP CLAIM.
-    It is tempting to benchmark a compiled kernel against naive Python loops,
-    because the resulting multiple is enormous and flattering. It is also
-    meaningless: nobody would write the reference that way. The fair question is
-    "how much faster is the compiled kernel than a competent implementation in
-    the language's normal idiom", and that idiom is vectorized NumPy. This file
-    is that implementation, written to be fast rather than to lose gracefully.
+    The two implementations do not produce identical draws, because they consume
+    random numbers in a different order. They are compared as distributions, not
+    sample by sample.
+
+SECONDARY: IT IS ALSO THE HONEST BASELINE IF THROUGHPUT IS BEING MEASURED.
+    Benchmarking a compiled kernel against naive Python loops reports an
+    enormous and meaningless multiple, because nobody would write the reference
+    that way. This is a competent implementation in the language's normal idiom,
+    written to be fast rather than to lose gracefully.
 
     The vectorization is over *simulations*, not over innings: all N games
     advance in lockstep, one plate appearance at a time, with a boolean mask
     marking which games still have a live half-inning. That is the only axis
     with enough width to amortize NumPy's per-operation overhead, since innings
     are short and their length is itself random.
-
-SECOND, IT IS A CROSS-CHECK ON THE COMPILED KERNEL.
-    Two independent implementations of the same model, agreeing on a
-    distribution to within Monte Carlo error, is meaningful evidence that
-    neither has a transcription bug. `scripts/validate.py` runs exactly that
-    comparison. A compiled kernel is precisely where an indexing error hides
-    quietly, because it cannot be inspected mid-loop.
-
-The two implementations do not produce identical draws, because they consume
-random numbers in a different order. They are compared as distributions, not
-sample by sample.
 """
 from __future__ import annotations
 
