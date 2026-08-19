@@ -63,6 +63,34 @@ and the mean values run from 0.497 to 0.510 against an ideal of 0.500.
 
 One family is significantly worse, six are indistinguishable, none is better.
 
+### Where the gap comes from
+
+A Brier score decomposes into miscalibration, discrimination, and the irreducible
+uncertainty of the events. Estimated by isotonic regression rather than by
+binning, on all seven families, in units of 10⁻³:
+
+| | model | market | difference [95% CI] |
+|---|---:|---:|---|
+| miscalibration | 0.22 | 0.24 | −0.01 [−0.16, +0.16] |
+| discrimination | 59.04 | 59.91 | −0.87 [−2.51, +0.76] |
+| uncertainty | 248.98 | 248.98 | — |
+
+Brier = miscalibration − discrimination + uncertainty, so better discrimination
+lowers the score.
+
+The calibration difference is a hundredth of a point with a third of a point of
+interval around it. The two forecasters are calibrated equally well, and that is a
+tight finding rather than a noisy one. Nearly the whole 0.95 gap is discrimination,
+though the interval on that component also contains zero, so its direction is clear
+and its magnitude is not established.
+
+Both are well calibrated in absolute terms: miscalibration costs the model 0.22
+against an irreducible 249, under a tenth of a percent of its score.
+
+The game-total weakness is discrimination rather than calibration. Its
+discrimination component sits 2.67 below the market's, while its miscalibration
+difference is +0.33 with an interval of [−0.16, +0.93] that contains zero.
+
 The game-total weakness concentrates at high lines rather than spreading evenly
 across the family, which is itself informative. A failure confined to an
 identifiable region usually indicates a specific modeling defect, where one spread
