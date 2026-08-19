@@ -22,9 +22,8 @@ on four.
 credibility-weighted parameter estimates, validated out-of-sample against a live
 benchmark forecast over 786 games, with per-segment actual-versus-expected
 analysis on game-clustered intervals — and an explicit account of what it does
-badly. There is a
-[one-page summary](https://claude.ai/code/artifact/da09aef2-5329-4a53-a756-489e793e5d7f)
-if you would rather not read three documents.
+badly. There is a [one-page summary](https://eliwitz34-dev.github.io/baseball-simulation-model/) if you would
+rather not read three documents.
 
 Repository: <https://github.com/eliwitz34-dev/baseball-simulation-model>
 

@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Base-Out Simulation Model — Eli Witz</title>
+<meta name="description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with credibility-based parameter estimation and out-of-sample validation against a live benchmark forecast.">
+<meta name="author" content="Eli Witz">
+<link rel="canonical" href="https://eliwitz34-dev.github.io/baseball-simulation-model/">
+
+<!-- Link previews on LinkedIn, Slack and elsewhere are built from these. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Eli Witz">
+<meta property="og:title" content="A base-out simulation model for baseball outcomes, and its out-of-sample validation">
+<meta property="og:description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with credibility-based parameter estimation and out-of-sample validation against a live benchmark forecast.">
+<meta property="og:url" content="https://eliwitz34-dev.github.io/baseball-simulation-model/">
+<meta property="og:image" content="https://eliwitz34-dev.github.io/baseball-simulation-model/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Title card for the memorandum, with a confidence-interval plot.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A base-out simulation model for baseball outcomes, and its out-of-sample validation">
+<meta name="twitter:description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with credibility-based parameter estimation and out-of-sample validation against a live benchmark forecast.">
+<meta name="twitter:image" content="https://eliwitz34-dev.github.io/baseball-simulation-model/preview.png">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>&#128202;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#FCFCFC; --ink:#191C1F; --ink-soft:#3E454C; --ink-mute:#6C737A;
+  --rule:#DEE1E4; --rule-strong:#B8BDC2;
+  --pos:#1B6B54; --neg:#9B3226; --nul:#8A9096;
+  --link:#2A4E7C;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14171A; --ink:#E6E9EC; --ink-soft:#B7BEC5; --ink-mute:#878F97;
+    --rule:#2C3237; --rule-strong:#454C53;
+    --pos:#63BFA2; --neg:#DE8474; --nul:#79818A;
+    --link:#8FB2DC;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14171A; --ink:#E6E9EC; --ink-soft:#B7BEC5; --ink-mute:#878F97;
+  --rule:#2C3237; --rule-strong:#454C53;
+  --pos:#63BFA2; --neg:#DE8474; --nul:#79818A;
+  --link:#8FB2DC;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink); margin:0;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:17.5px; line-height:1.58;
+  -webkit-font-smoothing:antialiased;
+}
+.doc{max-width:760px; margin:0 auto; padding:0 30px 90px;}
+
+/* Document head */
+.head{padding:62px 0 22px; border-bottom:1px solid var(--rule-strong);}
+.doctype{
+  font-family:"IBM Plex Sans",sans-serif; font-size:11.5px; font-weight:500;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 16px;
+}
+h1{
+  font-family:"Source Serif 4",Georgia,serif; font-weight:600;
+  font-size:1.92rem; line-height:1.22; letter-spacing:-.008em; margin:0 0 .45em; text-wrap:balance;
+}
+.meta{
+  font-family:"IBM Plex Sans",sans-serif; font-size:13.5px; color:var(--ink-mute);
+  display:flex; flex-wrap:wrap; gap:4px 20px; margin:0;
+}
+.meta a{color:var(--link); text-decoration:none; border-bottom:1px solid var(--rule-strong);}
+.meta a:hover{border-bottom-color:currentColor;}
+.meta a:focus-visible{outline:2px solid var(--link); outline-offset:2px;}
+
+.abstract{padding:26px 0 8px; border-bottom:1px solid var(--rule);}
+.abstract p{color:var(--ink-soft); margin:0 0 .9em;}
+.abstract p:last-child{margin-bottom:0;}
+.abstract .lbl{
+  font-family:"IBM Plex Sans",sans-serif; font-size:11.5px; font-weight:600;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--ink-mute);
+  margin:0 0 10px; display:block;
+}
+
+section{padding:34px 0 0;}
+h2{
+  font-family:"IBM Plex Sans",sans-serif; font-weight:600; font-size:1.02rem;
+  letter-spacing:.005em; margin:0 0 .85em; color:var(--ink);
+}
+h2 .num{color:var(--ink-mute); font-weight:400; margin-right:.55em;
+  font-variant-numeric:tabular-nums;}
+p{margin:0 0 1.05em;}
+p:last-child{margin-bottom:0;}
+strong{font-weight:600;}
+a{color:var(--link);}
+
+/* Figures and tables */
+figure{margin:26px 0 28px;}
+.frame{overflow-x:auto; padding-bottom:2px;}
+svg{display:block; width:100%; min-width:600px; height:auto;}
+.ax{stroke:var(--rule); stroke-width:1;}
+.ax.zero{stroke:var(--rule-strong); stroke-width:1.25;}
+.tk{font-family:"IBM Plex Mono",monospace; font-size:10.5px; fill:var(--ink-mute);}
+.fm{font-family:"IBM Plex Sans",sans-serif; font-size:12.5px; fill:var(--ink);}
+.nn{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--ink-mute);}
+.ci{stroke-width:1.5; fill:none;}
+.ci.pos{stroke:var(--pos);} .pt.pos{fill:var(--pos);}
+.ci.neg{stroke:var(--neg);} .pt.neg{fill:var(--neg);}
+.ci.nul{stroke:var(--nul);} .pt.nul{fill:var(--nul);}
+
+figcaption, .tcap{
+  font-family:"IBM Plex Sans",sans-serif; font-size:13px; line-height:1.5;
+  color:var(--ink-mute); margin-top:14px;
+}
+figcaption b, .tcap b{color:var(--ink-soft); font-weight:600;}
+.tcap{margin:0 0 12px;}
+
+table{border-collapse:collapse; width:100%; font-size:15px; min-width:480px;
+  font-family:"IBM Plex Sans",sans-serif;}
+th{text-align:left; font-weight:600; font-size:12px; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--ink-mute);
+  border-bottom:1px solid var(--rule-strong); padding:0 16px 7px 0;}
+td{padding:8px 16px 8px 0; border-bottom:1px solid var(--rule); color:var(--ink-soft);}
+td:first-child{color:var(--ink);}
+th.n,td.n{text-align:right; font-family:"IBM Plex Mono",monospace;
+  font-variant-numeric:tabular-nums; padding-right:0; white-space:nowrap;}
+tr:last-child td{border-bottom:none;}
+
+dl{margin:0;}
+dt{font-family:"IBM Plex Sans",sans-serif; font-size:14.5px; font-weight:600;
+  color:var(--ink); margin:20px 0 .3em;}
+dd{margin:0; color:var(--ink-soft); font-size:16.5px;}
+
+.foot{margin-top:44px; padding-top:20px; border-top:1px solid var(--rule);
+  font-family:"IBM Plex Sans",sans-serif; font-size:13.5px; line-height:1.55; color:var(--ink-mute);}
+.foot p{margin:0 0 .8em;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
+  background:var(--rule); padding:1px 5px; border-radius:2px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<header class="head">
+  <p class="doctype">Technical memorandum</p>
+  <h1>A base-out simulation model for baseball outcomes, and its out-of-sample validation</h1>
+  <p class="meta">
+    <span>Eli Witz</span>
+    <span>May&ndash;August 2026</span>
+    <a href="https://github.com/eliwitz34-dev/baseball-simulation-model">Source code and full write-up</a>
+  </p>
+</header>
+
+<div class="abstract">
+  <span class="lbl">Summary</span>
+  <p>This memorandum describes a Monte Carlo model that estimates the joint distribution of
+  runs scored in a baseball game from individual player rates, and reports the out-of-sample
+  testing used to assess it. The model was built to price sixteen families of contracts on a
+  regulated binary options exchange, six of which it quoted continuously for two months.</p>
+  <p>The exchange price provides an independent benchmark forecast for every contract, and
+  every contract settles against an observed outcome, so the model can be scored against a
+  competing forecast rather than against its own residuals. On 163,777 scored contracts
+  covering 786 games, the model did not outperform that benchmark: its Brier score on
+  game-level markets was 0.1891 against the market's 0.1883, a difference whose
+  game-clustered confidence interval contains zero. Performance varies by segment, and
+  section&nbsp;3 reports the breakdown.</p>
+</div>
+
+<section>
+  <h2><span class="num">1.</span>Model structure</h2>
+  <p>Prices depend on tail probabilities rather than expectations. A contract on total runs
+  requires P(total&nbsp;&gt;&nbsp;8.5); a contract on margin of victory requires the
+  distribution of a difference between two correlated quantities. A regression fitted to
+  expected runs supplies neither, because the mapping from a conditional mean to a tail
+  probability depends on distributional shape the regression does not estimate.</p>
+
+  <p>The model therefore simulates. A half-inning is treated as a Markov chain on 24 base-out
+  states, being the eight configurations of occupied bases crossed with three out counts. Each
+  plate appearance draws one of nine outcomes from a distribution specific to the batter and
+  the opposing pitcher, and the pair (state, outcome) determines a distribution over the
+  resulting state and any runs scored. Repeated simulation yields the joint distribution of
+  home and away runs, from which all prices are computed as functionals, which keeps them
+  mutually consistent.</p>
+
+  <p>In structure this is a collective risk model: a random number of events, each of random
+  severity, aggregated into a distribution whose tail governs the quantity of interest.
+  Simulation is used rather than analytic convolution because the summands are neither
+  independent nor identically distributed &mdash; the base-out state couples successive plate
+  appearances, and the batter changes at each one.</p>
+
+  <p>Eleven further effects are layered over this core, each estimated separately: a
+  gradient-boosted discrete-time hazard for starting-pitcher removal, a McFadden conditional
+  logit for relief-pitcher selection, times-through-the-order penalties, park and umpire
+  effects, platoon splits, and others.</p>
+</section>
+
+<section>
+  <h2><span class="num">2.</span>Parameter estimation</h2>
+  <p>Each batter requires nine outcome probabilities against each pitcher. Observed rates are
+  unusable directly: a hitter with 150 plate appearances has a strikeout rate whose standard
+  error exceeds most of the differences the model must resolve.</p>
+
+  <p>Rates are estimated hierarchically. Each player's rate is shrunk toward a prior mean that
+  is itself a regression on observable covariates, in a Fay&ndash;Herriot small-area
+  specification fitted by Hamiltonian Monte Carlo. Posterior draws can be propagated through
+  the simulation rather than collapsed to posterior means, so that parameter uncertainty is
+  represented alongside process uncertainty.</p>
+
+  <p>This is a credibility procedure. The Fay&ndash;Herriot estimator is the
+  B&uuml;hlmann&ndash;Straub credibility estimator with a regression complement in place of the
+  grand mean: the weight on a player's own record is his exposure over exposure plus a variance
+  ratio, which is the credibility factor Z. Two differences from the textbook form are worth
+  noting. The variance components are estimated jointly with the rates rather than plugged in,
+  so uncertainty in Z itself is carried. And because the model's output is a tail probability,
+  propagating the posterior matters: a tail probability evaluated at the posterior mean is not
+  the posterior mean of the tail probability, and treating them as equal produces forecasts
+  that are systematically overconfident.</p>
+</section>
+
+<section>
+  <h2><span class="num">3.</span>Out-of-sample results</h2>
+  <p>Forecasts are scored with the Brier score, a proper scoring rule, so that a forecaster
+  minimizes expected loss only by reporting its true belief. Log loss is computed alongside as a
+  second proper rule with different tail sensitivity. The Brier score decomposes into
+  reliability and resolution &mdash; calibration and discrimination &mdash; which is what makes
+  it diagnostic rather than merely comparative, since a model that always forecasts the base
+  rate is perfectly calibrated and useless.</p>
+
+  <p>Aggregate parity conceals substantial variation across contract families. Figure&nbsp;1
+  gives the difference in Brier score, model minus market, by family.</p>
+
+  <figure>
+    <div class="frame"><svg viewBox="0 0 690 345" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Difference in Brier score, model minus market, by contract family, with game-clustered 95 percent confidence intervals">
+<line class="ax" x1="296.5" y1="26.0" x2="296.5" y2="307.0"/>
+<text class="tk" x="296.5" y="323.0" text-anchor="middle">-6</text>
+<line class="ax" x1="365.5" y1="26.0" x2="365.5" y2="307.0"/>
+<text class="tk" x="365.5" y="323.0" text-anchor="middle">-4</text>
+<line class="ax" x1="434.5" y1="26.0" x2="434.5" y2="307.0"/>
+<text class="tk" x="434.5" y="323.0" text-anchor="middle">-2</text>
+<line class="ax zero" x1="503.5" y1="26.0" x2="503.5" y2="307.0"/>
+<text class="tk" x="503.5" y="323.0" text-anchor="middle">0</text>
+<line class="ax" x1="572.5" y1="26.0" x2="572.5" y2="307.0"/>
+<text class="tk" x="572.5" y="323.0" text-anchor="middle">2</text>
+<line class="ax" x1="641.5" y1="26.0" x2="641.5" y2="307.0"/>
+<text class="tk" x="641.5" y="323.0" text-anchor="middle">4</text>
+<text class="fm" x="0" y="48.0">Home runs recorded</text>
+<text class="nn" x="244" y="48.0" text-anchor="end">41,814</text>
+<line class="ci pos" x1="548.0" y1="44.0" x2="629.4" y2="44.0"/>
+<line class="ci pos" x1="548.0" y1="41.0" x2="548.0" y2="47.0"/>
+<line class="ci pos" x1="629.4" y1="41.0" x2="629.4" y2="47.0"/>
+<circle class="pt pos" cx="587.0" cy="44.0" r="3.2"/>
+<text class="fm" x="0" y="73.0">Moneyline</text>
+<text class="nn" x="244" y="73.0" text-anchor="end">1,510</text>
+<line class="ci nul" x1="425.9" y1="69.0" x2="660.8" y2="69.0"/>
+<line class="ci nul" x1="425.9" y1="66.0" x2="425.9" y2="72.0"/>
+<line class="ci nul" x1="660.8" y1="66.0" x2="660.8" y2="72.0"/>
+<circle class="pt nul" cx="545.2" cy="69.0" r="3.2"/>
+<text class="fm" x="0" y="98.0">Run line</text>
+<text class="nn" x="244" y="98.0" text-anchor="end">4,500</text>
+<line class="ci nul" x1="455.2" y1="94.0" x2="589.1" y2="94.0"/>
+<line class="ci nul" x1="455.2" y1="91.0" x2="455.2" y2="97.0"/>
+<line class="ci nul" x1="589.1" y1="91.0" x2="589.1" y2="97.0"/>
+<circle class="pt nul" cx="524.2" cy="94.0" r="3.2"/>
+<text class="fm" x="0" y="123.0">First five, run line</text>
+<text class="nn" x="244" y="123.0" text-anchor="end">3,004</text>
+<line class="ci nul" x1="465.9" y1="119.0" x2="587.7" y2="119.0"/>
+<line class="ci nul" x1="465.9" y1="116.0" x2="465.9" y2="122.0"/>
+<line class="ci nul" x1="587.7" y1="116.0" x2="587.7" y2="122.0"/>
+<circle class="pt nul" cx="523.9" cy="119.0" r="3.2"/>
+<text class="fm" x="0" y="148.0">Total bases</text>
+<text class="nn" x="244" y="148.0" text-anchor="end">34,964</text>
+<line class="ci nul" x1="483.5" y1="144.0" x2="526.6" y2="144.0"/>
+<line class="ci nul" x1="483.5" y1="141.0" x2="483.5" y2="147.0"/>
+<line class="ci nul" x1="526.6" y1="141.0" x2="526.6" y2="147.0"/>
+<circle class="pt nul" cx="504.5" cy="144.0" r="3.2"/>
+<text class="fm" x="0" y="173.0">First five, moneyline</text>
+<text class="nn" x="244" y="173.0" text-anchor="end">2,250</text>
+<line class="ci nul" x1="439.7" y1="169.0" x2="569.0" y2="169.0"/>
+<line class="ci nul" x1="439.7" y1="166.0" x2="439.7" y2="172.0"/>
+<line class="ci nul" x1="569.0" y1="166.0" x2="569.0" y2="172.0"/>
+<circle class="pt nul" cx="503.2" cy="169.0" r="3.2"/>
+<text class="fm" x="0" y="198.0">Hits</text>
+<text class="nn" x="244" y="198.0" text-anchor="end">24,725</text>
+<line class="ci neg" x1="459.3" y1="194.0" x2="499.7" y2="194.0"/>
+<line class="ci neg" x1="459.3" y1="191.0" x2="459.3" y2="197.0"/>
+<line class="ci neg" x1="499.7" y1="191.0" x2="499.7" y2="197.0"/>
+<circle class="pt neg" cx="479.4" cy="194.0" r="3.2"/>
+<text class="fm" x="0" y="223.0">Home runs</text>
+<text class="nn" x="244" y="223.0" text-anchor="end">9,106</text>
+<line class="ci neg" x1="452.4" y1="219.0" x2="492.8" y2="219.0"/>
+<line class="ci neg" x1="452.4" y1="216.0" x2="452.4" y2="222.0"/>
+<line class="ci neg" x1="492.8" y1="216.0" x2="492.8" y2="222.0"/>
+<circle class="pt neg" cx="472.8" cy="219.0" r="3.2"/>
+<text class="fm" x="0" y="248.0">First five, total</text>
+<text class="nn" x="244" y="248.0" text-anchor="end">5,238</text>
+<line class="ci nul" x1="392.4" y1="244.0" x2="549.4" y2="244.0"/>
+<line class="ci nul" x1="392.4" y1="241.0" x2="392.4" y2="247.0"/>
+<line class="ci nul" x1="549.4" y1="241.0" x2="549.4" y2="247.0"/>
+<circle class="pt nul" cx="471.8" cy="244.0" r="3.2"/>
+<text class="fm" x="0" y="273.0">Strikeouts</text>
+<text class="nn" x="244" y="273.0" text-anchor="end">8,843</text>
+<line class="ci neg" x1="343.1" y1="269.0" x2="494.5" y2="269.0"/>
+<line class="ci neg" x1="343.1" y1="266.0" x2="343.1" y2="272.0"/>
+<line class="ci neg" x1="494.5" y1="266.0" x2="494.5" y2="272.0"/>
+<circle class="pt neg" cx="420.4" cy="269.0" r="3.2"/>
+<text class="fm" x="0" y="298.0">Game total</text>
+<text class="nn" x="244" y="298.0" text-anchor="end">8,157</text>
+<line class="ci neg" x1="283.0" y1="294.0" x2="486.9" y2="294.0"/>
+<line class="ci neg" x1="283.0" y1="291.0" x2="283.0" y2="297.0"/>
+<line class="ci neg" x1="486.9" y1="291.0" x2="486.9" y2="297.0"/>
+<circle class="pt neg" cx="388.6" cy="294.0" r="3.2"/>
+<text class="tk" x="503.5" y="337.0" text-anchor="middle">difference in Brier score &#215; 10&#8315;&#179;</text>
+</svg></div>
+    <figcaption><b>Figure 1.</b> Difference in Brier score, model minus market, by contract
+    family; points are estimates, bars are 95% confidence intervals. Negative values favor the
+    market. Green indicates an interval excluding zero in the model's favor, red an interval
+    excluding zero against it. Gray indicates an interval containing zero.
+    Intervals are bootstrapped over games rather than contracts: the several hundred contracts
+    priced on a single game share one realized outcome, so games are the effective sampling unit.
+    Resampling contracts instead would narrow these intervals by a factor of between about 1.1
+    and 2.5 depending on the family. On this sample that does not change which families are
+    significant &mdash; the same five appear either way &mdash; but it would overstate the
+    precision of every estimate.</figcaption>
+  </figure>
+
+  <p>Eleven of the sixteen priced families carried enough scored contracts in this
+  window to support a clustered interval; the remainder are omitted rather than
+  reported at a precision the sample does not support. Of the eleven, four are
+  significantly worse and one significantly better. The exception, home
+  runs recorded, is also the largest by volume, and three further tests agree: area under the
+  ROC curve of 0.762 against the market's 0.756, lower calibration error, and a direct
+  comparison in which the model's side wins 55.1% of the 2,962 contracts where model and market
+  take opposite positions. That last test applied to game-level markets returns 49.2%, so on
+  those markets disagreement with the price was marginally worse than a coin flip.</p>
+
+  <p>The weakness in game totals concentrates at high lines rather than spreading evenly across
+  the family, which locates it as a specific modeling defect rather than as evidence that the
+  family is efficiently priced.</p>
+</section>
+
+<section>
+  <h2><span class="num">4.</span>Sensitivity to the base-running assumption</h2>
+  <p>Base-running advancement is the largest single lever on simulated scoring. The published
+  code constructs the transition tables three ways and measures each against observed league
+  scoring, rather than assuming the simplification is immaterial.</p>
+
+  <p class="tcap"><b>Table 1.</b> Simulated scoring under three treatments of base-running,
+  league-average lineups, 100,000 simulations each.</p>
+  <div class="frame">
+  <table>
+    <thead><tr><th>Treatment</th><th class="n">Mean total runs</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Deterministic</td><td class="n">6.98</td><td>Textbook advancement, one outcome per cell</td></tr>
+      <tr><td>Parameterized</td><td class="n">8.28</td><td>Eight published rates, conditioned on out count</td></tr>
+      <tr><td>Empirical</td><td class="n">8.88</td><td>All 216 state-outcome cells estimated from play-by-play</td></tr>
+      <tr><td>Observed league average</td><td class="n">8.8</td><td>&mdash;</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The deterministic treatment understates scoring by 21%, being unable to represent a double
+  play, a sacrifice fly, or a runner scoring from second on a single. Eight sourced constants
+  recover 68% of the shortfall; the residual 6% consists of rare events that no compact
+  parameterization represents.</p>
+
+  <p>Most of the recovered difference comes from conditioning these rates on the out count. A
+  runner scores from second on a single 39% of the time with none out and 80% with two out,
+  since with two out he advances on contact. The commonly cited single figure of 63% is an
+  average over out states, and applying it uniformly &mdash; as an earlier version of this code
+  did &mdash; biases the run distribution in opposite directions depending on the state.</p>
+</section>
+
+<section>
+  <h2><span class="num">5.</span>Rejected model changes</h2>
+  <p>Accepted changes are selected on having worked and so carry little information about
+  process. The following were each implemented, measured against a criterion fixed before the
+  test, and abandoned.</p>
+
+  <dl>
+    <dt>Position players pitching</dt>
+    <dd>The maximum attainable effect was computed before implementation, as the affected share
+    of plate appearances multiplied by the largest plausible rate distortion: 0.0121 runs per
+    game, against a discrepancy of 2.8 percentage points under investigation. The ceiling fell
+    below the target and the work was stopped. Bounding a mechanism's effect before building it
+    proved the most efficient screening step available.</dd>
+
+    <dt>Fill-conditional price adjustments</dt>
+    <dd>Estimated per family, the adjustments reversed sign when pooled, a Simpson's paradox
+    driven by the mix of sides quoted, and the pooled interval spanned 21 percentage points. The
+    conclusion was not that the effect was unproven but that it was not identifiable at the
+    available sample size.</dd>
+
+    <dt>Reduction of the minimum edge threshold</dt>
+    <dd>A two-arm walk-forward test returned point estimates favoring the reduction. It was
+    rejected: the fill simulator is known to flatter marginal orders, and the result fell on the
+    side that bias would produce. The interpretation agreed before the test was that a result in
+    the direction of a known bias is not evidence. Fixing the reading in advance, including the
+    conditions under which a favorable result will be rejected, is the only reliable protection
+    against selecting the interpretation after the fact.</dd>
+  </dl>
+</section>
+
+<section>
+  <h2><span class="num">6.</span>Measurement basis</h2>
+  <p>The most frequent error encountered in this work was not in any model but in the choice of
+  sample used to evaluate one. Conditioning an evaluation on an event correlated with the
+  outcome produces a biased estimate that additional data does not correct.</p>
+
+  <p>An instance from this project: calibration measured only on contracts where a resting order
+  filled. An order fills when a counterparty takes the opposing side, which occurs
+  preferentially when the quoted price is wrong, so conditioning on fills selects for the
+  model's errors and reports worse calibration than the model exhibits. An internal write-up had
+  already published a self-critical finding drawn from that sample. Recomputed on the full
+  quoted tape, expected calibration error is 0.007 against the market's 0.007 on game markets
+  and 0.006 against 0.014 on props, comparable or better; the model's deficiency lies in
+  discrimination, not calibration.</p>
+
+  <p>Unfavorable results warrant the same scrutiny as favorable ones. A finding that flatters
+  the analyst is checked as a matter of course; one that does not is often accepted without the
+  same examination, and can be equally wrong.</p>
+</section>
+
+<section>
+  <h2><span class="num">7.</span>Scope and limitations</h2>
+  <p>The evaluation window covers one partial season, roughly two months of operation and 786
+  games, and establishes nothing about stability across seasons, rule changes, or roster
+  turnover. The benchmark incorporates information the model does not receive, including late
+  lineup and weather news, so an unknown portion of the measured shortfall reflects an
+  information gap rather than a modeling deficiency. All modeling and interpretive decisions
+  were made by one person; the pre-commitment and placebo procedures described above are a
+  partial substitute for independent review.</p>
+
+  <p>Realized trading results are excluded. The accounting routine that produced the figures
+  last computed contained a settlement defect, since corrected, and the sample is in any case
+  far too short to separate return from noise.</p>
+</section>
+
+<div class="foot">
+  <p>The exchange is not identified and no market data is redistributed. All simulation results
+  above are reproducible from the published repository; the benchmark comparison is computed
+  from a private record of quoted prices and is identified as such wherever it appears. The
+  system described is not in operation.</p>
+  
+</div>
+
+</div>
+</body>
+</html>
