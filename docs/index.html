@@ -136,7 +136,14 @@ math{font-size:1.02em;}
 .eq math{ display:inline-block; }
 .refs{font-family:"IBM Plex Sans",sans-serif; font-size:13.5px; line-height:1.5;
   color:var(--ink-soft); padding-left:0; list-style:none; margin:0;}
-.refs li{margin:0 0 .7em; padding-left:1.6em; text-indent:-1.6em;}
+.refs li{margin:0 0 .7em; padding-left:2.5em; text-indent:-2.5em;}
+.refnum{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;
+  color:var(--ink-mute); margin-right:.5em;}
+.c{font-family:"IBM Plex Sans",sans-serif; font-size:.72em; vertical-align:super;
+  line-height:0; white-space:nowrap;}
+.c a{color:var(--link); text-decoration:none; padding:0 .05em;}
+.c a:hover{text-decoration:underline;}
+.c a:focus-visible{outline:2px solid var(--link); outline-offset:2px;}
 h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   letter-spacing:.08em; text-transform:uppercase; color:var(--ink-mute);
   margin:1.8em 0 .8em;}
@@ -184,8 +191,8 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
 
   <p>So the model simulates games instead. It plays a half-inning one plate appearance at a
   time, tracking two things only: which bases are occupied and how many are out. Eight
-  arrangements of runners and three out counts give 24 states, and those 24 describe the
-  situation completely. What happens next depends on the current state and the batter,
+  arrangements of runners and three out counts give 24 states<span class="c">[<a href="#ref-1">1</a>,<a href="#ref-2">2</a>]</span>, and those 24
+  describe the situation completely. What happens next depends on the current state and the batter,
   not on how the inning got there. That is what makes the approach practical. The consequences
   of every outcome in every state can be worked out once and stored in a table, so a game runs
   to completion in microseconds rather than being re-derived from scratch.</p>
@@ -256,8 +263,8 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
 </svg></div>
     <figcaption><b>Figure 1.</b> The 24 states, with the expected runs scored from each one to
     the end of the half-inning under a league-average lineup. These follow from the model's own
-    transition tables rather than being read from a reference source, and they track published
-    run-expectancy tables closely, which is a check on the tables before any forecast is made.
+    transition tables<span class="c">[<a href="#ref-4">4</a>]</span> rather than being read from a reference source, and they track published
+    run-expectancy tables<span class="c">[<a href="#ref-1">1</a>]</span> closely, which is a check on the tables before any forecast is made.
     The value of a baserunner and the cost of an out are both visible: a runner on second with
     nobody out is worth about as much as the bases loaded with two out.</figcaption>
   </figure>
@@ -265,8 +272,8 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   <p>Each plate appearance draws one of nine outcomes &mdash; strikeout, walk, hit by pitch,
   ground out, fly out, single, double, triple, home run &mdash; from probabilities specific to
   that batter facing that pitcher. Combining a batter's rate and a pitcher's rate into a matchup
-  rate is the log5 problem, and the model uses the multinomial generalization of it rather than
-  the classical binary form, since nine outcomes have to stay coherent with one another. The outcome moves the runners and may score runs. Running a
+  rate is the log5 problem<span class="c">[<a href="#ref-5">5</a>]</span>, and the model uses the multinomial generalization of
+  it<span class="c">[<a href="#ref-6">6</a>,<a href="#ref-7">7</a>,<a href="#ref-8">8</a>]</span> rather than the classical binary form, since nine outcomes have to stay coherent with one another. The outcome moves the runners and may score runs. Running a
   matchup 50,000 times gives the joint distribution of home and away runs, and every price is
   read off that single object.</p>
 
@@ -498,15 +505,14 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   whoever replaces him is usually fresher. The model estimates, at each plate appearance, the
   probability the starter is pulled before the next one, from pitch count, runs allowed, the
   score margin and the base-out state.
-  It uses a gradient-boosted tree model rather than a regression because the relationship is
+  It uses a gradient-boosted tree model<span class="c">[<a href="#ref-17">17</a>]</span> rather than a regression because the relationship is
   neither smooth nor additive: the same pitch count means something different at a one-run
   margin than at a six-run one, and a method that must be told the functional form in advance
   would miss that interaction.</p>
 
   <p>The second is <b>which reliever comes in</b>, a choice from a menu whose contents change
   every night,
-  since the available bullpen depends on who pitched yesterday. A conditional logit handles
-  that. It models the probability of selecting each option from the characteristics of the
+  since the available bullpen depends on who pitched yesterday. A conditional logit<span class="c">[<a href="#ref-16">16</a>]</span> handles that. It models the probability of selecting each option from the characteristics of the
   options themselves &mdash; role, handedness, recent workload, the inning, the score &mdash;
   rather than from a fixed list of alternatives, so it still works when the list is different
   tomorrow. Drawing relievers at random from a pool, the simpler alternative, would put the
@@ -520,7 +526,8 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   the others, and a pitcher throws to the same one or two catchers all season, so his measured
   skill silently includes their framing. The model estimates the four as crossed effects on a
   called-strike probability surface, following Deshpande and Wyner's hierarchical Bayesian
-  treatment of pitch framing and the called-strikes-above-average work at Baseball Prospectus.
+  treatment of pitch framing<span class="c">[<a href="#ref-11">11</a>]</span> and the called-strikes-above-average work at
+  Baseball Prospectus<span class="c">[<a href="#ref-12">12</a>]</span>.
   Their result that the umpire effect is the larger one, with the widest zone worth roughly twice
   the best framer, carries over here, and it is why the umpire is applied at simulation time
   rather than folded into any pitcher's rate.</p>
@@ -539,7 +546,7 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
 
   <p>Instead, each player's rate is pulled toward what a model of his observable characteristics
   predicts for a player like him, by an amount that depends on how much is actually known about
-  him. The estimate is a weighted average of the two:</p>
+  him<span class="c">[<a href="#ref-13">13</a>]</span>. The estimate is a weighted average of the two:</p>
 
   <div class="eq"><math displaystyle="true">
     <mrow>
@@ -574,10 +581,12 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   all.</p>
 
   <p>Those variance terms are estimated alongside the rates rather than fixed beforehand, so how
-  much to shrink is part of the answer instead of an assumption. Fitting everything at once
+  much to shrink is part of the answer instead of an assumption. The covariates the prior mean is
+  built from are themselves measured with error, which matters because a slope fitted on a
+  reliable version of a covariate will over-weight a noisy one<span class="c">[<a href="#ref-14">14</a>]</span>. Fitting everything at once
   means sampling from a distribution over many correlated parameters. That is done with
-  Hamiltonian Monte Carlo, which uses the slope of the distribution to decide where to step
-  next and so keeps exploring efficiently in high dimensions where simpler samplers get
+  Hamiltonian Monte Carlo<span class="c">[<a href="#ref-15">15</a>]</span>, which uses the slope of the distribution to decide
+  where to step next and so keeps exploring efficiently in high dimensions where simpler samplers get
   stuck.</p>
 
   <p>The simulation can then run on the average of those parameter estimates or on draws from
@@ -675,7 +684,7 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   <p>A useless forecaster can pass that test. Quoting the base rate on every game produces
   perfectly calibrated probabilities that say nothing about any particular game. The sharper
   question is whether the whole predicted distribution has the right shape, and the test for
-  that is the probability integral transform.</p>
+  that is the probability integral transform<span class="c">[<a href="#ref-21">21</a>]</span>.</p>
 
   <p>The idea is straightforward. For each game, the model's predicted distribution over the
   outcome, whether total runs, a team's runs or the margin, is evaluated at what actually
@@ -807,10 +816,12 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
 <text class="note" x="518" y="260">distribution is too narrow</text>
 </svg></div>
     <figcaption><b>Figure 4.</b> Probability integral transform histograms, one per contract
-    family. The two agree closely across the full ladder. The model sits slightly below
-    reality between six and eight runs, understating scoring in the densest part of the
-    distribution by one to two percentage points, and converges again in both tails. This is a
-    test the model can fail without the market being involved at all.</figcaption>
+    family, with the dashed line marking what a calibrated model would produce. For each unit the
+    model's predicted distribution is evaluated at the realized outcome, using the randomized
+    transform appropriate to discrete outcomes. Bars piling up at both edges would indicate a
+    predicted distribution that is too narrow. None of the seven shows that pattern. At these
+    sample sizes the histogram is a coarse instrument, so it is better read as an absence of gross
+    misspecification than as a precise verdict.</figcaption>
   </figure>
 
 
@@ -821,8 +832,9 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
 
 <section>
   <h2><span class="num">4.</span>Comparison against the market</h2>
-  <p>Forecasts are scored with the Brier score: the squared distance between the probability
-  quoted and what actually happened, averaged over every contract, so lower is better.</p>
+  <p>Forecasts are scored with the Brier score<span class="c">[<a href="#ref-19">19</a>]</span>: the squared distance between the
+  probability quoted and what actually happened, averaged over every contract, so lower is
+  better.</p>
 
   <div class="eq"><math displaystyle="true">
     <mrow>
@@ -930,7 +942,7 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   model and the market took opposite sides, the model's side won 48.8% of the time. So its
   stated confidence is honest and its distribution matches reality, but it cannot separate the
   games the market has mispriced from the ones it has not. That second ability is called
-  discrimination, and it is the one the model is missing.</p>
+  discrimination<span class="c">[<a href="#ref-20">20</a>]</span>, and it is the one the model is missing.</p>
 </section>
 
 <section>
@@ -1021,86 +1033,88 @@ h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
 
 <section>
   <h2><span class="num">8.</span>References</h2>
-  <p>These are the sources the work was actually built on, rather than a general reading list.</p>
+  <p>These are the sources the work was actually built on, rather than a general reading list.
+  Numbered entries are cited in the text above; the remainder informed a component without a
+  specific claim resting on them.</p>
 
   <h3>Simulation structure</h3>
   <ul class="refs">
-    <li>Lindsey, G. R. (1963). An investigation of strategies in baseball.
+    <li id="ref-1"><span class="refnum">[1]</span> Lindsey, G. R. (1963). An investigation of strategies in baseball.
       <i>Operations Research</i> 11(4), 477&ndash;501. Origin of the base-out state framework
       and of run expectancy as in Figure&nbsp;1.</li>
-    <li>Bukiet, B., Harold, E. R. and Palacios, J. L. (1997). A Markov chain approach to
+    <li id="ref-2"><span class="refnum">[2]</span> Bukiet, B., Harold, E. R. and Palacios, J. L. (1997). A Markov chain approach to
       baseball. <i>Operations Research</i> 45(1), 14&ndash;23. Run distributions from a
       state-based chain, and the direct antecedent of this simulation.</li>
-    <li>Tallavarjula, S. (2026). A Monte Carlo simulation of baseball offense with
+    <li id="ref-3"><span class="refnum">[3]</span> Tallavarjula, S. (2026). A Monte Carlo simulation of baseball offense with
       speed-stratified baserunning and distributional validation.
       <i>Journal of Sports Analytics</i>.</li>
-    <li>Tango, T., Lichtman, M. and Dolphin, A. (2006). <i>The Book: Playing the Percentages
+    <li id="ref-4"><span class="refnum">[4]</span> Tango, T., Lichtman, M. and Dolphin, A. (2006). <i>The Book: Playing the Percentages
       in Baseball</i>. Potomac Books. Base-running advancement rates.</li>
   </ul>
 
   <h3>The batter&ndash;pitcher matchup</h3>
   <ul class="refs">
-    <li>James, B. (1981, 1983). The log5 method, in the <i>Baseball Abstract</i>.</li>
-    <li>Healey, G. (2017). Matchup models for the probability of a ground ball and a ground
+    <li id="ref-5"><span class="refnum">[5]</span> James, B. (1981, 1983). The log5 method, in the <i>Baseball Abstract</i>.</li>
+    <li id="ref-6"><span class="refnum">[6]</span> Healey, G. (2017). Matchup models for the probability of a ground ball and a ground
       ball hit. <i>Journal of Sports Analytics</i>. The generalized log5 model, which frees the
       coefficients the classical form fixes.</li>
-    <li>Doo, W. and Kim, H. (2018). Modeling the probability of a batter/pitcher matchup event:
+    <li id="ref-7"><span class="refnum">[7]</span> Doo, W. and Kim, H. (2018). Modeling the probability of a batter/pitcher matchup event:
       a Bayesian approach. <i>PLOS ONE</i> 13(10), e0204874. Hierarchical log5, using the
       classical coefficients as a prior.</li>
-    <li>Melville, W., Mott, T., Archibald, C. and Grimsman, D. (2025). The impacts of
+    <li id="ref-8"><span class="refnum">[8]</span> Melville, W., Mott, T., Archibald, C. and Grimsman, D. (2025). The impacts of
       increasingly complex matchup models on baseball win probability. arXiv:2511.17733.</li>
-    <li>Morey, P. and Cohen, N. (2015). Bias in the log5 estimate.
+    <li id="ref-9"><span class="refnum">[9]</span> Morey, P. and Cohen, N. (2015). Bias in the log5 estimate.
       <i>Journal of Sports Analytics</i> 1(1).</li>
-    <li>McCracken, V. (2001). Defense-independent pitching statistics. The reason the
+    <li id="ref-10"><span class="refnum">[10]</span> McCracken, V. (2001). Defense-independent pitching statistics. The reason the
       ball-in-play weights stay small rather than being pushed toward the pitcher.</li>
   </ul>
 
   <h3>Called strikes, framing and the umpire</h3>
   <ul class="refs">
-    <li>Deshpande, S. K. and Wyner, A. (2017). A hierarchical Bayesian model of pitch framing.
+    <li id="ref-11"><span class="refnum">[11]</span> Deshpande, S. K. and Wyner, A. (2017). A hierarchical Bayesian model of pitch framing.
       <i>Journal of Quantitative Analysis in Sports</i> 13(3), 95&ndash;112. The called-strike
       component described in section&nbsp;1 follows this model closely: participants separated
       as crossed effects on a location surface, with the umpire effect larger than the
       catcher's.</li>
-    <li>Judge, J., Brooks, D. and Pavlidis, H. (2015). Moving beyond WOWY: a mixed approach to
+    <li id="ref-12"><span class="refnum">[12]</span> Judge, J., Brooks, D. and Pavlidis, H. (2015). Moving beyond WOWY: a mixed approach to
       measuring catcher framing. Baseball Prospectus. The called-strikes-above-average
       formulation.</li>
   </ul>
 
   <h3>Estimation</h3>
   <ul class="refs">
-    <li>Fay, R. E. and Herriot, R. A. (1979). Estimates of income for small places: an
+    <li id="ref-13"><span class="refnum">[13]</span> Fay, R. E. and Herriot, R. A. (1979). Estimates of income for small places: an
       application of James&ndash;Stein procedures to census data. <i>Journal of the American
       Statistical Association</i> 74(366), 269&ndash;277. The estimator in section&nbsp;2.</li>
-    <li>Ybarra, L. M. and Lohr, S. L. (2008). Small area estimation when auxiliary information
+    <li id="ref-14"><span class="refnum">[14]</span> Ybarra, L. M. and Lohr, S. L. (2008). Small area estimation when auxiliary information
       is measured with error. <i>Biometrika</i> 95(4), 919&ndash;931. Applying a slope fitted on
       a reliable covariate to a noisy one over-weights it by the reciprocal of its reliability.</li>
-    <li>Hoffman, M. D. and Gelman, A. (2014). The No-U-Turn Sampler. <i>Journal of Machine
+    <li id="ref-15"><span class="refnum">[15]</span> Hoffman, M. D. and Gelman, A. (2014). The No-U-Turn Sampler. <i>Journal of Machine
       Learning Research</i> 15, 1593&ndash;1623.</li>
-    <li>McFadden, D. (1974). Conditional logit analysis of qualitative choice behavior. In
+    <li id="ref-16"><span class="refnum">[16]</span> McFadden, D. (1974). Conditional logit analysis of qualitative choice behavior. In
       Zarembka, P. (ed.), <i>Frontiers in Econometrics</i>. Academic Press. The reliever choice
       model in section&nbsp;1.</li>
-    <li>Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine.
+    <li id="ref-17"><span class="refnum">[17]</span> Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine.
       <i>Annals of Statistics</i> 29(5), 1189&ndash;1232. The starter-removal hazard.</li>
-    <li>Turocy, T. L. (2008). In search of the last-ups advantage.
+    <li id="ref-18"><span class="refnum">[18]</span> Turocy, T. L. (2008). In search of the last-ups advantage.
       <i>Journal of Quantitative Analysis in Sports</i> 4(2). Home-field structure.</li>
   </ul>
 
   <h3>Scoring and validation</h3>
   <ul class="refs">
-    <li>Brier, G. W. (1950). Verification of forecasts expressed in terms of probability.
+    <li id="ref-19"><span class="refnum">[19]</span> Brier, G. W. (1950). Verification of forecasts expressed in terms of probability.
       <i>Monthly Weather Review</i> 78(1), 1&ndash;3.</li>
-    <li>Murphy, A. H. (1973). A new vector partition of the probability score. <i>Journal of
+    <li id="ref-20"><span class="refnum">[20]</span> Murphy, A. H. (1973). A new vector partition of the probability score. <i>Journal of
       Applied Meteorology</i> 12(4), 595&ndash;600. The decomposition into calibration and
       discrimination used in section&nbsp;4.</li>
-    <li>Dawid, A. P. (1984). Statistical theory: the prequential approach. <i>Journal of the
+    <li id="ref-21"><span class="refnum">[21]</span> Dawid, A. P. (1984). Statistical theory: the prequential approach. <i>Journal of the
       Royal Statistical Society A</i> 147(2), 278&ndash;292. The probability integral transform
       in Figure&nbsp;4.</li>
-    <li>Ranjan, R. and Gneiting, T. (2010). Combining probability forecasts. <i>Journal of the
+    <li id="ref-22"><span class="refnum">[22]</span> Ranjan, R. and Gneiting, T. (2010). Combining probability forecasts. <i>Journal of the
       Royal Statistical Society B</i> 72(1), 71&ndash;91. Any non-trivial average of distinct
       calibrated forecasts is itself uncalibrated, which constrains how a model forecast and a
       market price can be blended.</li>
-    <li>Bailey, D. H., Borwein, J., L&oacute;pez de Prado, M. and Zhu, Q. J. (2017). The
+    <li id="ref-23"><span class="refnum">[23]</span> Bailey, D. H., Borwein, J., L&oacute;pez de Prado, M. and Zhu, Q. J. (2017). The
       probability of backtest overfitting. <i>Journal of Computational Finance</i> 20(4).</li>
   </ul>
 </section>
