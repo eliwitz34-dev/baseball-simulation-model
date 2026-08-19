@@ -35,7 +35,7 @@ TITLE = ("A base-out simulation model for baseball outcomes, "
          "and its out-of-sample validation")
 DESCRIPTION = (
     "A Monte Carlo model estimating the joint distribution of runs scored in a "
-    "baseball game, with credibility-based parameter estimation and out-of-sample "
+    "baseball game, with hierarchically shrunk parameter estimates and out-of-sample "
     "validation against a live benchmark forecast."
 )
 

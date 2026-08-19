@@ -15,13 +15,13 @@ WHAT IT MODELS
     quantity of interest is a functional of that distribution: the probability
     the home team wins, the distribution of total runs, the margin of victory.
 
-    Structurally this is a collective risk model. Each half-inning aggregates a
+    Structurally this is a compound distribution. Each half-inning aggregates a
     random number of plate appearances, each contributing a random number of
     runs, and the object of interest is the aggregate distribution rather than
-    its mean. As in aggregate loss modeling, the mean is the easy part and
-    almost never the part that matters; the tails carry the information, and the
-    reason to simulate rather than to derive is that the summands are neither
-    independent nor identically distributed — the base-out state couples them.
+    its mean. The mean is the easy part and almost never the part that matters;
+    the tails carry the information, and the reason to simulate rather than to
+    derive is that the summands are neither independent nor identically
+    distributed — the base-out state couples them.
 
 WHAT IT DELIBERATELY OMITS
     The production system layers eleven further effects on top of this core:

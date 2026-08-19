@@ -48,7 +48,7 @@ and each gated behind a switch so it can be turned off for testing:
 Each layer earned its place by improving out-of-sample score, and several
 candidate layers did not — see [RESULTS.md](RESULTS.md).
 
-### 1.3 Parameter estimation and credibility
+### 1.3 Parameter estimation
 
 Every batter needs nine outcome probabilities against every pitcher. Raw
 observed rates cannot supply them: a hitter with 150 plate appearances has a
@@ -63,20 +63,19 @@ propagate coherent posterior draws through the simulation instead, which
 produces a predictive distribution that accounts for parameter uncertainty
 rather than conditioning on a point estimate.
 
-**This is credibility theory.** The Fay–Herriot estimator
+The estimator has the form
 
   θ̂ᵢ = Zᵢ · yᵢ + (1 − Zᵢ) · x'ᵢβ,  Zᵢ = σ²_between ⁄ (σ²_between + σ²_within,ᵢ)
 
-is the Bühlmann–Straub credibility estimator with a regression prior mean in
-place of the grand mean. Zᵢ is the credibility factor, rising with the player's
-exposure and falling with the ratio of process variance to hypothetical mean
-variance; x'ᵢβ is the complement of credibility. A rating actuary shrinking a
-thin class toward a class-group relativity is performing the same computation
-for the same reason.
+where yᵢ is the player's observed rate, x'ᵢβ is what the covariate model predicts
+for him, and Zᵢ is the weight between them. Zᵢ rises with the player's playing
+time and falls as his own record becomes noisier relative to the spread between
+players, so a thin sample is pulled most of the way toward the prediction and a
+full season is barely moved.
 
-Two differences from the textbook treatment are worth naming. The variance
-components are estimated jointly with everything else rather than plugged in,
-so the uncertainty in the credibility factor itself is represented. And the
+Two points are worth naming. The variance components are estimated jointly with
+the rates rather than plugged in, so the uncertainty in that weight is itself
+represented. And the
 posterior is propagated rather than collapsed, which matters because the model's
 output is a tail probability, and a tail probability computed at the posterior
 mean is not the posterior mean of the tail probability. That gap is Jensen's
@@ -141,9 +140,7 @@ narrows the intervals by a factor of between about 1.1 and 2.5 depending on the
 segment. On this particular sample that does not flip any conclusion — the same
 five families are significant either way — but the narrower intervals would
 misstate the precision of every estimate, and there is no way to know in advance
-that a sample will be forgiving. This is the same consideration that makes an
-actuary resample accident years or policies rather than individual claim
-transactions.
+that a sample will be forgiving.
 
 ### 2.4 The measurement basis
 
@@ -168,8 +165,8 @@ The general forms this took, all of which recurred:
   is a collider between the treatment and the outcome, which induces an
   association where none exists.
 - **Canceling aggregates.** Two large errors of opposite sign in different
-  segments, netting to a small aggregate error that looks like success. Only
-  segment-level actual-versus-expected finds these.
+  segments, netting to a small aggregate error that looks like success. Only a
+  segment-level breakdown finds these.
 
 The defense adopted was a written pre-flight check on the measurement basis
 before any result was believed: what defines the sample, what could have
@@ -204,12 +201,10 @@ systematically take too much correlated exposure.
 The optimization is constrained by a tail-risk limit expressed as a **Conditional
 Value at Risk** bound, implemented in the Rockafellar–Uryasev auxiliary-variable
 form that makes the constraint convex and therefore tractable alongside the
-exposure caps. Under the name Tail Value at Risk or Conditional Tail
-Expectation, this is the coherent risk measure used in insurance capital work,
-and it is preferred over Value at Risk for exactly the reason it is preferred
-here: VaR is not subadditive, so it can report that a diversified portfolio is
-riskier than its parts, and it says nothing about the severity of losses beyond
-the quantile.
+exposure caps. It is preferred over value at risk for two reasons: VaR is not
+subadditive, so it can report that a diversified portfolio is riskier than its
+parts, and it says nothing about how bad losses are once the quantile is
+breached.
 
 Maximizing expected log wealth is a utility-theoretic statement, not a trading
 heuristic: log utility is the unique utility function under which the optimal
@@ -226,35 +221,7 @@ constrains is a lesson that generalizes well beyond this application.
 
 ---
 
-## 4. Correspondence with actuarial practice
-
-For a property and casualty reader, with the closest analogue named:
-
-| method here | actuarial analogue |
-|---|---|
-| Fay–Herriot hierarchical shrinkage with a regression prior mean | **Bühlmann–Straub credibility**; complement of credibility from a class-group relativity |
-| posterior propagation instead of plug-in point estimates | **parameter risk** as distinct from process risk |
-| Monte Carlo over base-out states to a run distribution | **collective risk model**; aggregate loss distribution |
-| joint simulation of correlated contracts | **dependency modeling** in an aggregation framework |
-| CVaR constraint, Rockafellar–Uryasev form | **TVaR / CTE**, the coherent capital measure |
-| walk-forward refit with as-of inputs | out-of-sample validation, **ASOP 56** |
-| Brier decomposition, reliability curves, PIT | **actual-versus-expected** monitoring by segment |
-| game-clustered bootstrap | resampling the correct exposure unit |
-| pre-registered acceptance criteria; log of rejected changes | model change control and governance |
-
-The correspondence runs deeper than vocabulary. The reason to credibility-weight
-a player's strikeout rate is the reason to credibility-weight a small class's
-loss ratio: the observed mean of a low-exposure cell is mostly process variance,
-and the minimum-variance unbiased-in-aggregate estimator trades bias against
-variance at a rate set by the variance components. The reason to decompose a
-score into calibration and discrimination is the reason to run
-actual-versus-expected by segment rather than in total: an aggregate that nets
-two offsetting errors is indistinguishable from an aggregate with no errors, and
-only one of those is a working model.
-
----
-
-## 5. Known limitations
+## 4. Known limitations
 
 - **One partial season.** Roughly two months of live operation and 786 games in
   the evaluation window. Nothing here establishes stability across seasons,

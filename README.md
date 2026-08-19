@@ -18,11 +18,10 @@ exactly one of the eleven families large enough to test, and significantly worse
 on four.
 [RESULTS.md](RESULTS.md) gives the breakdown by family.
 
-**Short version, if you are skimming:** a stochastic simulation model built with
-credibility-weighted parameter estimates, validated out-of-sample against a live
-benchmark forecast over 786 games, with per-segment actual-versus-expected
-analysis on game-clustered intervals — and an explicit account of what it does
-badly. There is a [one-page summary](https://eliwitz34-dev.github.io/baseball-simulation-model/) if you would
+**Short version, if you are skimming:** a stochastic simulation model with
+hierarchically shrunk parameter estimates, validated out-of-sample against a live
+benchmark forecast over 786 games, with per-segment calibration analysis on
+game-clustered intervals, and an explicit account of what it does badly. There is a [one-page summary](https://eliwitz34-dev.github.io/baseball-simulation-model/) if you would
 rather not read three documents.
 
 Repository: <https://github.com/eliwitz34-dev/baseball-simulation-model>
@@ -46,12 +45,11 @@ possibly scores runs. Simulating the chain many times produces the joint
 distribution of (home runs, away runs), and every price is a functional of that
 one object, which guarantees the prices are mutually consistent.
 
-This is structurally a **collective risk model**: a random number of events, each
-contributing a random severity, aggregated to a distribution whose tail is the
-thing that matters. The reason to simulate rather than convolve analytically is
-that the summands are neither independent nor identically distributed — the
-base-out state couples consecutive plate appearances, and the batter changes
-every time.
+The object being built is a compound distribution: a random number of events,
+each contributing a random amount, aggregated into a total whose tail is the
+quantity of interest. Simulation is used rather than analytic convolution because
+the summands are neither independent nor identically distributed — the base-out
+state couples consecutive plate appearances, and the batter changes every time.
 
 ## Where the parameters come from
 
@@ -64,14 +62,12 @@ Carlo. The simulation can be run on posterior means or, at higher cost, on
 posterior draws, so that parameter uncertainty is carried into the output rather
 than discarded.
 
-An actuary will recognize this as **credibility theory**. The Fay–Herriot
-estimator is the Bühlmann–Straub credibility estimator with an explicit
-regression component for the prior mean: the weight placed on a player's own
-record is his exposure divided by exposure plus a variance ratio, which is
-exactly the credibility factor Z. The difference from textbook credibility is
-that the hyperparameters are estimated jointly with everything else rather than
-plugged in, and that the resulting parameter uncertainty flows through to the
-simulated distribution instead of being discarded.
+The weight on a player's own record is his playing time divided by playing time
+plus a variance ratio, so a hitter with a handful of games is pulled most of the
+way toward what the covariate model predicts for him, while one with a full
+season barely moves. The variance components are estimated jointly with the rates
+rather than fixed in advance, so the uncertainty in that weight is itself carried
+rather than assumed away.
 
 ## What is in this repository
 
@@ -175,29 +171,6 @@ mean total runs to 0.02 runs against a four-standard-error tolerance of 0.12, an
 on the home win probability to 0.001 — `scripts/validate.py` runs the comparison
 and sets its tolerances from Monte Carlo error rather than by choosing a number
 that passes.
-
-## Correspondence with actuarial practice
-
-The methods here are standard actuarial machinery wearing different names. For a
-property and casualty reader in particular:
-
-| in this project | actuarial equivalent |
-|---|---|
-| Fay–Herriot hierarchical shrinkage of player rates | Bühlmann–Straub **credibility**, with a regression prior mean |
-| Monte Carlo over base-out states → run distribution | **collective risk model**; aggregate loss distribution |
-| tail measures on the simulated position portfolio | **TVaR / Conditional Tail Expectation** |
-| leak-safe walk-forward backtesting | out-of-sample validation under **ASOP 56** |
-| Brier decomposition, reliability curves, PIT histograms | **actual-versus-expected** monitoring |
-| the record of rejected model changes | model change control and documented limitations |
-
-The correspondence is not decorative. The reason the model shrinks player rates
-is the same reason a rating plan credibility-weights a small class: the observed
-mean of a low-exposure cell is mostly noise, and the optimal estimator trades
-bias for variance in a way that depends on the ratio of process variance to
-hypothetical mean variance. The reason the validation reports reliability rather
-than accuracy is the same reason a reserving actuary runs actual-versus-expected
-by segment: an aggregate in which two offsetting errors cancel is
-indistinguishable from an aggregate with no errors at all.
 
 ## Data note
 

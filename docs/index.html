@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Base-Out Simulation Model — Eli Witz</title>
-<meta name="description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with credibility-based parameter estimation and out-of-sample validation against a live benchmark forecast.">
+<meta name="description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with hierarchically shrunk parameter estimates and out-of-sample validation against a live benchmark forecast.">
 <meta name="author" content="Eli Witz">
 <link rel="canonical" href="https://eliwitz34-dev.github.io/baseball-simulation-model/">
 
@@ -12,7 +12,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Eli Witz">
 <meta property="og:title" content="A base-out simulation model for baseball outcomes, and its out-of-sample validation">
-<meta property="og:description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with credibility-based parameter estimation and out-of-sample validation against a live benchmark forecast.">
+<meta property="og:description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with hierarchically shrunk parameter estimates and out-of-sample validation against a live benchmark forecast.">
 <meta property="og:url" content="https://eliwitz34-dev.github.io/baseball-simulation-model/">
 <meta property="og:image" content="https://eliwitz34-dev.github.io/baseball-simulation-model/preview.png">
 <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
 <meta property="og:image:alt" content="Title card for the memorandum, with a confidence-interval plot.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="A base-out simulation model for baseball outcomes, and its out-of-sample validation">
-<meta name="twitter:description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with credibility-based parameter estimation and out-of-sample validation against a live benchmark forecast.">
+<meta name="twitter:description" content="A Monte Carlo model estimating the joint distribution of runs scored in a baseball game, with hierarchically shrunk parameter estimates and out-of-sample validation against a live benchmark forecast.">
 <meta name="twitter:image" content="https://eliwitz34-dev.github.io/baseball-simulation-model/preview.png">
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>&#128202;</text></svg>">
@@ -185,11 +185,11 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   home and away runs, from which all prices are computed as functionals, which keeps them
   mutually consistent.</p>
 
-  <p>In structure this is a collective risk model: a random number of events, each of random
-  severity, aggregated into a distribution whose tail governs the quantity of interest.
-  Simulation is used rather than analytic convolution because the summands are neither
-  independent nor identically distributed &mdash; the base-out state couples successive plate
-  appearances, and the batter changes at each one.</p>
+  <p>What is being built is a compound distribution: a random number of events, each of
+  random size, aggregated into a total whose tail governs the quantity of interest. Simulation
+  is used rather than analytic convolution because the summands are neither independent nor
+  identically distributed &mdash; the base-out state couples successive plate appearances, and
+  the batter changes at each one.</p>
 
   <p>Eleven further effects are layered over this core, each estimated separately: a
   gradient-boosted discrete-time hazard for starting-pitcher removal, a McFadden conditional
@@ -209,12 +209,12 @@ code{font-family:"IBM Plex Mono",monospace; font-size:.88em;
   the simulation rather than collapsed to posterior means, so that parameter uncertainty is
   represented alongside process uncertainty.</p>
 
-  <p>This is a credibility procedure. The Fay&ndash;Herriot estimator is the
-  B&uuml;hlmann&ndash;Straub credibility estimator with a regression complement in place of the
-  grand mean: the weight on a player's own record is his exposure over exposure plus a variance
-  ratio, which is the credibility factor Z. Two differences from the textbook form are worth
-  noting. The variance components are estimated jointly with the rates rather than plugged in,
-  so uncertainty in Z itself is carried. And because the model's output is a tail probability,
+  <p>The weight on a player's own record is his playing time over playing time plus a
+  variance ratio, so a hitter with a handful of games is pulled most of the way toward what the
+  covariate model predicts for him, while one with a full season barely moves. Two points are
+  worth noting. The variance components are estimated jointly with the rates rather than plugged
+  in, so the uncertainty in that weight is itself carried. And because the model's output is a
+  tail probability,
   propagating the posterior matters: a tail probability evaluated at the posterior mean is not
   the posterior mean of the tail probability, and treating them as equal produces forecasts
   that are systematically overconfident.</p>
