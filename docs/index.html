@@ -111,6 +111,10 @@ svg{display:block; width:100%; min-width:600px; height:auto;}
 .hrbox{fill:none; stroke-width:1.6;}
 .hrbox.good{stroke:var(--pos);}
 .hrbox.bad{stroke:var(--neg);}
+.spray{fill:none; stroke-width:1.8;}
+.spray.lg{stroke:var(--rule-strong); stroke-dasharray:5 3;} .pt.lg{fill:var(--rule-strong);}
+.spray.p1{stroke:var(--pos);} .pt.p1{fill:var(--pos);}
+.spray.p2{stroke:var(--neg);} .pt.p2{fill:var(--neg);}
 .lival{font-family:"IBM Plex Mono",monospace; font-size:9.5px; fill:var(--paper); font-weight:600;}
 .tie{stroke:var(--neg); stroke-width:1.4; stroke-dasharray:4 3;}
 .unif{stroke:var(--neg); stroke-width:1.2; stroke-dasharray:3 3;}
@@ -153,6 +157,11 @@ math{font-size:1.02em;}
 h3{font-family:"IBM Plex Sans",sans-serif; font-size:12px; font-weight:600;
   letter-spacing:.08em; text-transform:uppercase; color:var(--ink-mute);
   margin:1.8em 0 .8em;}
+section h3{font-family:"Source Serif 4",Georgia,serif; font-size:1.02rem; font-weight:600;
+  letter-spacing:0; text-transform:none; color:var(--ink); margin:2.2em 0 .7em;}
+section h3:first-of-type{margin-top:1.2em;}
+.refs + h3, h3 + ul.refs{margin-top:1.8em;}
+section h3 + p{margin-top:0;}
 table{border-collapse:collapse; width:100%; font-size:15px; min-width:460px;
   font-family:"IBM Plex Sans",sans-serif; margin:.6em 0 0;}
 th{text-align:left; font-weight:600; font-size:12px; letter-spacing:.05em;
@@ -198,6 +207,7 @@ tr:last-child td{border-bottom:none;}
 
 <section>
   <h2><span class="num">1.</span>Model structure</h2>
+  <h3>Why a simulation</h3>
   <p>Every contract the model priced asks about a tail, not an average. Whether two teams
   combine for more than 8.5 runs is a question about crossing a threshold. A margin contract
   requires the distribution of the difference between two correlated quantities. A regression
@@ -285,6 +295,7 @@ tr:last-child td{border-bottom:none;}
     nobody out is worth about as much as the bases loaded with two out.</figcaption>
   </figure>
 
+  <h3>The matchup</h3>
   <p>Each plate appearance draws one of nine outcomes &mdash; strikeout, walk, hit by pitch,
   ground out, fly out, single, double, triple, home run &mdash; from probabilities specific to
   that batter facing that pitcher. Combining a batter's rate and a pitcher's rate into a matchup
@@ -516,6 +527,7 @@ tr:last-child td{border-bottom:none;}
   The plate appearances are neither independent nor identical: the base-out state carries from
   one to the next, and the batter changes every time.</p>
 
+  <h3>When the starter comes out, and who replaces him</h3>
   <p>Two components layered on top of that core matter enough to describe. The first is
   <b>when the starting pitcher is removed</b>, which drives a large share of scoring, because
   whoever replaces him is usually fresher. The model estimates, at each plate appearance, the
@@ -804,7 +816,8 @@ tr:last-child td{border-bottom:none;}
     who is ahead.</figcaption>
   </figure>
 
-  <p>A third component is worth naming separately, because it follows a published model closely
+  <h3>Called strikes</h3>
+  <p>This next component is worth naming separately, because it follows a published model closely
   rather than adapting one. Whether a taken pitch is called a strike depends on four people at
   once: the catcher receiving it, the umpire behind him, the pitcher's command of the edge, and
   the batter's own effective zone. Those contributions have to be separated or each one absorbs
@@ -817,7 +830,8 @@ tr:last-child td{border-bottom:none;}
   the best framer, carries over here, and it is why the umpire is applied at simulation time
   rather than folded into any pitcher's rate.</p>
 
-  <p>One more piece is worth showing, because it works differently from everything above. Most of
+  <h3>Batted balls, and why home runs are modeled differently</h3>
+  <p>One more piece works differently from everything above. Most of
   the model runs on rates: a batter has some probability of a home run, estimated from how often he
   has hit one. That is fine when the outcome is common. It breaks down when the outcome is rare. A
   batter's doubles rate needs something like 1,600 plate appearances to settle down, and nobody
@@ -1343,6 +1357,62 @@ tr:last-child td{border-bottom:none;}
   zero across batters within each park, so it adds only that interaction and leaves the park's
   average home run rate alone.</p>
 
+  <figure>
+    <div class="frame"><svg viewBox="0 0 690 402" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Probability a hard-hit fly ball is a home run, by spray angle, in two parks against the league">
+<line class="ax" x1="72" y1="296.0" x2="470" y2="296.0"/>
+<text class="tk" x="64" y="300.0" text-anchor="end">0.0</text>
+<line class="ax" x1="72" y1="232.9" x2="470" y2="232.9"/>
+<text class="tk" x="64" y="236.9" text-anchor="end">0.2</text>
+<line class="ax" x1="72" y1="169.9" x2="470" y2="169.9"/>
+<text class="tk" x="64" y="173.9" text-anchor="end">0.4</text>
+<line class="ax" x1="72" y1="106.8" x2="470" y2="106.8"/>
+<text class="tk" x="64" y="110.8" text-anchor="end">0.6</text>
+<line class="ax" x1="72" y1="43.8" x2="470" y2="43.8"/>
+<text class="tk" x="64" y="47.8" text-anchor="end">0.8</text>
+<text class="tk" x="94.1" y="312" text-anchor="middle">40</text>
+<text class="tk" x="182.6" y="312" text-anchor="middle">20</text>
+<text class="tk" x="271.0" y="312" text-anchor="middle">0</text>
+<text class="tk" x="359.4" y="312" text-anchor="middle">20</text>
+<text class="tk" x="447.9" y="312" text-anchor="middle">40</text>
+<line class="ax zero" x1="271.0" y1="28" x2="271.0" y2="296"/>
+<polyline class="spray lg" points="94.1,97.4 138.3,117.0 182.6,176.1 226.8,226.2 271.0,252.0 315.2,236.9 359.4,191.8 403.7,147.3 447.9,115.7"/><circle class="pt lg" cx="94.1" cy="97.4" r="2.8"/><circle class="pt lg" cx="138.3" cy="117.0" r="2.8"/><circle class="pt lg" cx="182.6" cy="176.1" r="2.8"/><circle class="pt lg" cx="226.8" cy="226.2" r="2.8"/><circle class="pt lg" cx="271.0" cy="252.0" r="2.8"/><circle class="pt lg" cx="315.2" cy="236.9" r="2.8"/><circle class="pt lg" cx="359.4" cy="191.8" r="2.8"/><circle class="pt lg" cx="403.7" cy="147.3" r="2.8"/><circle class="pt lg" cx="447.9" cy="115.7" r="2.8"/>
+<polyline class="spray p1" points="94.1,227.0 138.3,232.9 182.6,211.1 226.8,200.8 271.0,257.3 315.2,197.1 359.4,171.2 403.7,61.4 447.9,75.3"/><circle class="pt p1" cx="94.1" cy="227.0" r="2.8"/><circle class="pt p1" cx="138.3" cy="232.9" r="2.8"/><circle class="pt p1" cx="182.6" cy="211.1" r="2.8"/><circle class="pt p1" cx="226.8" cy="200.8" r="2.8"/><circle class="pt p1" cx="271.0" cy="257.3" r="2.8"/><circle class="pt p1" cx="315.2" cy="197.1" r="2.8"/><circle class="pt p1" cx="359.4" cy="171.2" r="2.8"/><circle class="pt p1" cx="403.7" cy="61.4" r="2.8"/><circle class="pt p1" cx="447.9" cy="75.3" r="2.8"/>
+<polyline class="spray p2" points="138.3,119.4 182.6,143.4 226.8,214.5 271.0,259.6 315.2,256.0 359.4,224.3 403.7,257.5 447.9,167.5"/><circle class="pt p2" cx="138.3" cy="119.4" r="2.8"/><circle class="pt p2" cx="182.6" cy="143.4" r="2.8"/><circle class="pt p2" cx="226.8" cy="214.5" r="2.8"/><circle class="pt p2" cx="271.0" cy="259.6" r="2.8"/><circle class="pt p2" cx="315.2" cy="256.0" r="2.8"/><circle class="pt p2" cx="359.4" cy="224.3" r="2.8"/><circle class="pt p2" cx="403.7" cy="257.5" r="2.8"/><circle class="pt p2" cx="447.9" cy="167.5" r="2.8"/>
+<text class="axlab" x="271" y="334" text-anchor="middle">spray angle, degrees from centre</text>
+<text class="axlab" transform="rotate(-90 20 162)" x="20" y="162" text-anchor="middle">P(home run)</text>
+<text class="note" x="78" y="352">left field</text>
+<text class="note" x="78" y="365">a right-handed batter pulls here</text>
+<text class="note" x="464" y="352" text-anchor="end">right field</text>
+<text class="note" x="464" y="365" text-anchor="end">a left-handed batter pulls here</text>
+<line class="spray lg" x1="492" y1="42" x2="516" y2="42"/>
+<circle class="pt lg" cx="504" cy="42" r="2.8"/>
+<text class="fm" x="522" y="46">league</text>
+<text class="note" x="522" y="58">all 30 parks</text>
+<line class="spray p1" x1="492" y1="76" x2="516" y2="76"/>
+<circle class="pt p1" cx="504" cy="76" r="2.8"/>
+<text class="fm" x="522" y="80">Camden Yards</text>
+<text class="note" x="522" y="92">deep in left</text>
+<line class="spray p2" x1="492" y1="110" x2="516" y2="110"/>
+<circle class="pt p2" cx="504" cy="110" r="2.8"/>
+<text class="fm" x="522" y="114">Oakland</text>
+<text class="note" x="522" y="126">deep in right</text>
+<text class="note" x="492" y="168">The same fly ball. Whether it</text>
+<text class="note" x="492" y="181">clears the fence depends on</text>
+<text class="note" x="492" y="194">which way it went, and the two</text>
+<text class="note" x="492" y="207">parks disagree in opposite</text>
+<text class="note" x="492" y="220">directions.</text>
+<text class="axlab" x="72" y="386">hard-hit fly balls only: 95 to 108 mph, 22 to 38 degrees. 10,912 in all, about 390 per park.</text>
+</svg></div>
+    <figcaption><b>Figure 5.</b> The same hard-hit fly ball in two parks, by the direction it was
+    hit. Camden Yards moved its left-field wall back and is now among the hardest parks in which
+    to homer that way; Oakland is the reverse. The two curves cross, which is the whole point:
+    there is no single number that describes either park's effect on home runs, because the effect
+    depends on the batter. A right-handed pull hitter and a left-handed pull hitter put the ball in
+    opposite halves of the field, so the same park helps one and hurts the other. Yankee Stadium
+    and Oracle Park form a similar pair, at 0.80 and 0.20 respectively for balls pulled to
+    right.</figcaption>
+  </figure>
+
   <p>The same construction was extended to singles, doubles and triples, and the reason was
   measurable. Comparing the spread of the model's per-batter estimates against the spread of what
   actually happened gives a ratio of 0.55 for singles, 0.30 for doubles and 0.12 for triples: on
@@ -1350,6 +1420,7 @@ tr:last-child td{border-bottom:none;}
   home runs was 0.82, and home runs were the outcome that already had the batted-ball layer
   underneath.</p>
 
+  <h3>The rest</h3>
   <p>Eight smaller effects sit above these: times through the order, park factors, platoon
   splits, the running game, and others.</p>
 </section>
@@ -1428,7 +1499,7 @@ tr:last-child td{border-bottom:none;}
 <section>
   <h2><span class="num">3.</span>Calibration against outcomes</h2>
   <p>Before comparing the model against anything else, the question is whether its probabilities
-  mean what they say. A forecast of 30% should be right about 30% of the time. Figure&nbsp;5
+  mean what they say. A forecast of 30% should be right about 30% of the time. Figure&nbsp;6
   groups every game-level forecast by the probability it assigned and plots the frequency with
   which those events actually occurred.</p>
 
@@ -1490,7 +1561,7 @@ tr:last-child td{border-bottom:none;}
 <text class="note" x="430" y="137.8">point area &#8733; number of</text>
 <text class="note" x="430" y="150.8">contracts in the bin</text>
 </svg></div>
-    <figcaption><b>Figure 5.</b> Reliability of the game-level forecasts, 35,159 contracts over
+    <figcaption><b>Figure 6.</b> Reliability of the game-level forecasts, 35,159 contracts over
     764 games. Points sit on the diagonal when forecast probability matches observed frequency;
     bars are two standard errors. The model tracks the diagonal closely from about 0.25 upward.
     Below that it is mildly overconfident: events it assigns 16% occur about 18% of the time, and
@@ -1634,7 +1705,7 @@ tr:last-child td{border-bottom:none;}
 <text class="note" x="518" y="247">edges mean the predicted</text>
 <text class="note" x="518" y="260">distribution is too narrow</text>
 </svg></div>
-    <figcaption><b>Figure 6.</b> Probability integral transform histograms, one per contract
+    <figcaption><b>Figure 7.</b> Probability integral transform histograms, one per contract
     family, with the dashed line marking what a calibrated model would produce. For each unit the
     model's predicted distribution is evaluated at the realized outcome, using the randomized
     transform appropriate to discrete outcomes. Bars piling up at both edges would indicate a
@@ -1682,7 +1753,7 @@ tr:last-child td{border-bottom:none;}
   The model at 0.1905 and the market at 0.1896 are both far better than that, so both carry real
   information. The difference between the two is 0.0010 in the market's favor, and the
   game-clustered 95% interval around it runs from &minus;0.0027 to +0.0007. It contains
-  zero, so the two are not distinguishable on this sample. Figure&nbsp;7 breaks it down by
+  zero, so the two are not distinguishable on this sample. Figure&nbsp;8 breaks it down by
   family.</p>
 
   <figure>
@@ -1743,7 +1814,7 @@ tr:last-child td{border-bottom:none;}
 <circle class="pt neg" cx="395.7" cy="206.0" r="3.2"/>
 <text class="tk" x="507.7" y="251.0" text-anchor="middle">difference in Brier score &#215; 10&#8315;&#179; &nbsp;&nbsp; (left of zero favors the market)</text>
 </svg></div>
-    <figcaption><b>Figure 7.</b> Difference in Brier score, model minus market, by contract
+    <figcaption><b>Figure 8.</b> Difference in Brier score, model minus market, by contract
     family; points are estimates, bars are 95% confidence intervals. Red marks an interval
     excluding zero against the model, gray an interval containing zero. Intervals are
     bootstrapped over games rather than contracts, since the contracts priced on one game share a
@@ -1784,7 +1855,7 @@ tr:last-child td{border-bottom:none;}
   indistinguishable from the market. The weakness in totals concentrates at high lines rather than spreading evenly,
   which locates it as a specific modeling defect rather than as evidence that the family is
   efficiently priced. It is also the family whose probability integral transform in
-  Figure&nbsp;6 departs furthest from flat.</p>
+  Figure&nbsp;7 departs furthest from flat.</p>
 
   <p>A more direct test is what happens when the two disagree. On the 1,692 contracts where the
   model and the market took opposite sides, the model's side won 48.8% of the time. So its
@@ -1859,7 +1930,7 @@ tr:last-child td{border-bottom:none;}
   already published a self-critical finding drawn from that sample. Recomputed on the full
   quoted tape, the miscalibration components are 0.22 and 0.24 &times;10&#8315;&#179;, a
   difference of &minus;0.01 with an interval of [&minus;0.16, +0.16]. The two are calibrated
-  equally well, and neither loses anything worth measuring to calibration. What it lacks is discrimination, as Figure&nbsp;5
+  equally well, and neither loses anything worth measuring to calibration. What it lacks is discrimination, as Figure&nbsp;6
   and the head-to-head comparison both indicate.</p>
 
   <p>Unfavorable results deserve the same scrutiny as favorable ones. A finding that flatters
