@@ -4,8 +4,8 @@ A Monte Carlo model that estimates the full distribution of outcomes for a
 baseball game from the individual players in it, together with the validation
 work done to find out whether it was any good.
 
-It quoted seven families of game-level contracts on a regulated binary options
-exchange, continuously, for two months. That setting is what makes the project
+The model quoted seven families of game-level contracts continuously on a
+regulated binary options exchange for two months. That setting is what makes the project
 worth reporting. The exchange price is an independent forecast of the same event
 at the same moment, and every contract eventually settles against what happened,
 so the model could be scored against a competing forecast rather than against its

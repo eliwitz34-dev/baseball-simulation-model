@@ -186,7 +186,7 @@ tr:last-child td{border-bottom:none;}
     <span>Eli Witz</span>
     <span>May&ndash;August 2026</span>
     <a href="https://github.com/eliwitz34-dev/baseball-simulation-model">Source code and full write-up</a>
-    <a href="mailto:eawitz@ucdavis.edu">eawitz@ucdavis.edu</a>
+    <a href="mailto:eliwitz34@gmail.com">eliwitz34@gmail.com</a>
   </p>
 </header>
 
@@ -194,8 +194,8 @@ tr:last-child td{border-bottom:none;}
   <span class="lbl">Summary</span>
   <p>This memo describes a Monte Carlo model that estimates the joint distribution of runs
   scored in a baseball game from individual player rates, and reports the out-of-sample
-  testing used to assess it. It quoted seven families of game-level contracts continuously on a regulated
-  binary options exchange for two months.</p>
+  testing used to assess it. The model quoted seven families of game-level contracts continuously
+  on a regulated binary options exchange for two months.</p>
   <p>Two questions organize the evaluation. First, does its forecast distribution match what actually
   happened on the field? Broadly yes: forecast probabilities line up with observed frequencies,
   and the probability integral transform is close to uniform in every family. Second, is it better than the price it was quoting against? No.
@@ -527,7 +527,7 @@ tr:last-child td{border-bottom:none;}
 
 
   <h3>When the starter comes out, and who replaces him</h3>
-  <p>Two layers on top of this core matter enough to describe. The first is
+  <p>Two of the layers on top of this core matter enough to describe here. The first is
   <b>when the starting pitcher is removed</b>, which drives a large share of scoring, because
   whoever replaces him is usually fresher. The model estimates, at each plate appearance, the
   probability the starter is pulled before the next one, from pitch count, runs allowed, the
@@ -683,8 +683,8 @@ tr:last-child td{border-bottom:none;}
   rather than folded into any pitcher's rate.</p>
 
   <h3>Batted balls, and why home runs are modeled differently</h3>
-  <p>One more piece works differently from everything above, in that it acts on the inputs to the
-  simulation rather than inside it. Most of the
+  <p>One more piece sits outside that sequence, working on the inputs to the simulation rather
+  than inside it. Most of the
   model runs on rates: a batter has some probability of a home run, estimated from how often he has
   hit one. That works when the outcome is common and breaks down when it is rare. A batter's
   doubles rate needs something like 1,600 plate appearances to settle down, and nobody gets that in
@@ -692,7 +692,8 @@ tr:last-child td{border-bottom:none;}
   the model stops telling batters apart.</p>
 
   <p>The way out is to model the ball instead of the rate. Exit velocity and launch angle settle
-  down within 40 to 80 batted balls, and between them they very nearly determine what happens.</p>
+  down within 40 to 80 batted balls, and between them they largely determine what happens to
+  it.</p>
 
   <figure>
     <div class="frame"><svg viewBox="0 0 690 404" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Probability a batted ball is a home run, by exit velocity and launch angle">
@@ -1258,8 +1259,8 @@ tr:last-child td{border-bottom:none;}
 </svg></div>
     <figcaption><b>Figure 5.</b> The same hard-hit fly ball in two parks, by the direction it was
     hit. Camden Yards moved its left-field wall back and is now among the hardest parks in which
-    to homer that way; Oakland is the reverse. The two curves cross, which is the point: no
-    single number describes either park's effect on home runs, because the effect depends on where
+    to homer that way; Oakland is the reverse. The curves cross, and that is the difficulty: no single
+    number describes either park's effect on home runs, because the effect depends on where
     the batter hits the ball. A right-handed and a left-handed pull hitter put it in opposite
     halves of the field, so the same park helps one and hurts the other.</figcaption>
   </figure>
@@ -1272,9 +1273,9 @@ tr:last-child td{border-bottom:none;}
   underneath.</p>
 
   <h3>The rest</h3>
-  <p>Those three in-simulation components are part of eleven modulating layers in all. The
-  remaining eight are times through the order, park factors, platoon splits, the running game,
-  and others.</p>
+  <p>Starter removal, reliever selection and called strikes are three of eleven modulating layers.
+  The other eight are times through the order, park factors, platoon splits, the running game, and
+  others.</p>
 </section>
 
 <section>
@@ -1755,8 +1756,8 @@ tr:last-child td{border-bottom:none;}
     that saved the most time.</dd>
   </dl>
 
-  <p>The first is the one worth dwelling on: a correction for a defect that turned out to be an
-  artifact of how the defect had been measured. That is the subject of the next section.</p>
+  <p>The first is the one worth dwelling on: a correction for a weakness that turned out to be an
+  artifact of how it had been measured. That is the subject of the next section.</p>
 </section>
 
 <section>
@@ -1770,7 +1771,7 @@ tr:last-child td{border-bottom:none;}
   filled. An order fills when a counterparty takes the opposing side, which happens preferentially when
   the quoted price is wrong. Fills are adversely selected, so conditioning on them selects for the
   model's own errors and reports worse calibration than the model exhibits. An earlier write-up of
-  this work had already reported a self-critical finding drawn from that sample. Recomputed on the full
+  this work had reported that measurement as a real weakness in the model. Recomputed on the full
   quoted tape, the two forecasters are calibrated equally well, which is the result reported in
   section&nbsp;4. What the model lacks is discrimination, and the evidence for that is the
   head-to-head record rather than anything visible in Figure&nbsp;6.</p>
