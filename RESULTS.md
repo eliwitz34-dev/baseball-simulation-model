@@ -112,7 +112,8 @@ and it is wrong.
 Filled contracts are not a random sample of quoted ones. An order fills when a
 counterparty takes the other side, which happens preferentially when the price is
 wrong; a resting order is likeliest to be lifted precisely when it is mispriced.
-Conditioning on fills therefore selects for the model's own errors and will
+Fills are adversely selected, so conditioning on them selects for the model's own
+errors and will
 report worse calibration than the model has, whether or not the model is any
 good. The resulting estimate is biased rather than merely imprecise, so
 collecting more data does not correct it.

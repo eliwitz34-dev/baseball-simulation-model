@@ -37,7 +37,7 @@ more than 8.5 runs is a question about crossing a threshold. A margin contract
 requires the distribution of the difference between two correlated quantities. A
 regression predicting expected runs supplies neither, because getting from an
 average to the probability of exceeding a threshold requires the shape of the
-distribution around that average, and the regression never estimated it.
+distribution around that average, and a mean regression does not estimate it.
 
 So the model simulates. It plays a half-inning one plate appearance at a time,
 tracking two things: which bases are occupied, and how many are out. Eight
@@ -69,9 +69,10 @@ differ from one another against how noisy each individual estimate is. A hitter
 with a handful of games moves most of the way to the prediction. One with a full
 season barely moves.
 
-Those variance terms are estimated alongside the rates rather than fixed
-beforehand, so how much to shrink is part of the answer instead of an assumption.
-The fit uses a Fay–Herriot specification sampled with Hamiltonian Monte Carlo. The
+The weight is the Bühlmann credibility factor, and the variance terms behind it
+are estimated alongside the rates rather than fixed beforehand, so how much to
+shrink is part of the answer instead of an assumption. The fit uses a Fay–Herriot
+specification sampled with Hamiltonian Monte Carlo. The
 simulation can then run on the average of those estimates, or at higher cost on
 draws from their full distribution, which carries parameter uncertainty into the
 output rather than discarding it.

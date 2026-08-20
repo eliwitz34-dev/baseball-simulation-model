@@ -101,7 +101,8 @@ most of the differences the model has to resolve.
 The rates are therefore estimated hierarchically. Each player's rate is shrunk
 toward a prior mean that is itself a regression on observable covariates, in a
 Fay–Herriot specification fitted by Hamiltonian Monte Carlo with the No-U-Turn
-Sampler. The serving layer uses posterior means by default, and can instead
+Sampler. The weight Zᵢ below is the Bühlmann credibility factor, written with the
+variance ratio in place of Bühlmann's k. The serving layer uses posterior means by default, and can instead
 propagate coherent posterior draws through the simulation, which gives a
 predictive distribution accounting for parameter uncertainty rather than
 conditioning on a single point.
@@ -202,8 +203,8 @@ correlated with the outcome.
 
 The clearest case was calibration measured only on the contracts where an order
 actually filled. An order fills when a counterparty takes the other side, and that
-happens preferentially when the price is wrong. Conditioning on fills therefore
-selects for the model's own errors and reports worse calibration than the model
+happens preferentially when the price is wrong. Fills are adversely selected, so
+conditioning on them selects for the model's own errors and reports worse calibration than the model
 has. The resulting estimate is biased rather than merely imprecise, so more data
 does not correct it.
 
