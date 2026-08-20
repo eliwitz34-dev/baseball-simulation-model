@@ -106,6 +106,12 @@ svg{display:block; width:100%; min-width:600px; height:auto;}
 .base.on{fill:var(--ink);}
 .base.off{fill:var(--paper); stroke:var(--rule-strong); stroke-width:1;}
 .jcell{fill:var(--ink);}
+.licell{fill:var(--ink);}
+.hrcell{fill:var(--ink);}
+.hrbox{fill:none; stroke-width:1.6;}
+.hrbox.good{stroke:var(--pos);}
+.hrbox.bad{stroke:var(--neg);}
+.lival{font-family:"IBM Plex Mono",monospace; font-size:9.5px; fill:var(--paper); font-weight:600;}
 .tie{stroke:var(--neg); stroke-width:1.4; stroke-dasharray:4 3;}
 .unif{stroke:var(--neg); stroke-width:1.2; stroke-dasharray:3 3;}
 .note{font-family:"IBM Plex Sans",sans-serif; font-size:11px; fill:var(--ink-mute);}
@@ -529,6 +535,275 @@ tr:last-child td{border-bottom:none;}
   wrong arm into the highest-leverage innings and understate how much the best relievers
   suppress scoring.</p>
 
+  <figure>
+    <div class="frame"><svg viewBox="0 0 690 448" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Leverage index by base-out state and inning in a tied game">
+<text class="tk" x="176" y="42" text-anchor="middle">1</text>
+<text class="tk" x="231" y="42" text-anchor="middle">2</text>
+<text class="tk" x="286" y="42" text-anchor="middle">3</text>
+<text class="tk" x="341" y="42" text-anchor="middle">4</text>
+<text class="tk" x="396" y="42" text-anchor="middle">5</text>
+<text class="tk" x="451" y="42" text-anchor="middle">6</text>
+<text class="tk" x="506" y="42" text-anchor="middle">7</text>
+<text class="tk" x="561" y="42" text-anchor="middle">8</text>
+<text class="tk" x="616" y="42" text-anchor="middle">9</text>
+<text class="axlab" x="398" y="24" text-anchor="middle">inning</text>
+<text class="fm" x="0" y="60">0 outs</text>
+<text class="note" x="142" y="60" text-anchor="end">bases empty</text>
+<rect class="licell" x="150" y="50" width="52" height="13.5" style="fill-opacity:0.219"/>
+<text class="lival" x="176" y="60" text-anchor="middle">1.0</text>
+<rect class="licell" x="205" y="50" width="52" height="13.5" style="fill-opacity:0.206"/>
+<rect class="licell" x="260" y="50" width="52" height="13.5" style="fill-opacity:0.233"/>
+<rect class="licell" x="315" y="50" width="52" height="13.5" style="fill-opacity:0.166"/>
+<rect class="licell" x="370" y="50" width="52" height="13.5" style="fill-opacity:0.203"/>
+<rect class="licell" x="425" y="50" width="52" height="13.5" style="fill-opacity:0.177"/>
+<rect class="licell" x="480" y="50" width="52" height="13.5" style="fill-opacity:0.289"/>
+<rect class="licell" x="535" y="50" width="52" height="13.5" style="fill-opacity:0.359"/>
+<rect class="licell" x="590" y="50" width="52" height="13.5" style="fill-opacity:0.362"/>
+<text class="lival" x="616" y="60" text-anchor="middle">1.9</text>
+<text class="note" x="142" y="74" text-anchor="end">1B</text>
+<rect class="licell" x="150" y="64" width="52" height="13.5" style="fill-opacity:0.303"/>
+<rect class="licell" x="205" y="64" width="52" height="13.5" style="fill-opacity:0.290"/>
+<rect class="licell" x="260" y="64" width="52" height="13.5" style="fill-opacity:0.275"/>
+<rect class="licell" x="315" y="64" width="52" height="13.5" style="fill-opacity:0.287"/>
+<rect class="licell" x="370" y="64" width="52" height="13.5" style="fill-opacity:0.307"/>
+<rect class="licell" x="425" y="64" width="52" height="13.5" style="fill-opacity:0.331"/>
+<rect class="licell" x="480" y="64" width="52" height="13.5" style="fill-opacity:0.339"/>
+<rect class="licell" x="535" y="64" width="52" height="13.5" style="fill-opacity:0.432"/>
+<rect class="licell" x="590" y="64" width="52" height="13.5" style="fill-opacity:0.338"/>
+<text class="note" x="142" y="89" text-anchor="end">2B</text>
+<rect class="licell" x="150" y="79" width="52" height="13.5" style="fill-opacity:0.219"/>
+<rect class="licell" x="205" y="79" width="52" height="13.5" style="fill-opacity:0.282"/>
+<rect class="licell" x="260" y="79" width="52" height="13.5" style="fill-opacity:0.192"/>
+<rect class="licell" x="315" y="79" width="52" height="13.5" style="fill-opacity:0.311"/>
+<rect class="licell" x="370" y="79" width="52" height="13.5" style="fill-opacity:0.349"/>
+<rect class="licell" x="425" y="79" width="52" height="13.5" style="fill-opacity:0.317"/>
+<rect class="licell" x="480" y="79" width="52" height="13.5" style="fill-opacity:0.346"/>
+<rect class="licell" x="535" y="79" width="52" height="13.5" style="fill-opacity:0.342"/>
+<rect class="licell" x="590" y="79" width="52" height="13.5" style="fill-opacity:0.352"/>
+<text class="note" x="142" y="104" text-anchor="end">1B 2B</text>
+<rect class="licell" x="150" y="94" width="52" height="13.5" style="fill-opacity:0.332"/>
+<rect class="licell" x="205" y="94" width="52" height="13.5" style="fill-opacity:0.303"/>
+<rect class="licell" x="260" y="94" width="52" height="13.5" style="fill-opacity:0.253"/>
+<rect class="licell" x="315" y="94" width="52" height="13.5" style="fill-opacity:0.338"/>
+<rect class="licell" x="370" y="94" width="52" height="13.5" style="fill-opacity:0.295"/>
+<rect class="licell" x="425" y="94" width="52" height="13.5" style="fill-opacity:0.366"/>
+<rect class="licell" x="480" y="94" width="52" height="13.5" style="fill-opacity:0.301"/>
+<rect class="licell" x="535" y="94" width="52" height="13.5" style="fill-opacity:0.381"/>
+<rect class="licell" x="590" y="94" width="52" height="13.5" style="fill-opacity:0.349"/>
+<text class="note" x="142" y="118" text-anchor="end">3B</text>
+<rect class="licell" x="150" y="108" width="52" height="13.5" style="fill-opacity:0.217"/>
+<rect class="licell" x="205" y="108" width="52" height="13.5" style="fill-opacity:0.232"/>
+<rect class="licell" x="260" y="108" width="52" height="13.5" style="fill-opacity:0.354"/>
+<rect class="licell" x="315" y="108" width="52" height="13.5" style="fill-opacity:0.279"/>
+<rect class="licell" x="370" y="108" width="52" height="13.5" style="fill-opacity:0.294"/>
+<rect class="licell" x="425" y="108" width="52" height="13.5" style="fill-opacity:0.341"/>
+<rect class="licell" x="480" y="108" width="52" height="13.5" style="fill-opacity:0.412"/>
+<rect class="licell" x="535" y="108" width="52" height="13.5" style="fill-opacity:0.429"/>
+<rect class="licell" x="590" y="108" width="52" height="13.5" style="fill-opacity:0.501"/>
+<text class="note" x="142" y="132" text-anchor="end">1B 3B</text>
+<rect class="licell" x="150" y="122" width="52" height="13.5" style="fill-opacity:0.245"/>
+<rect class="licell" x="205" y="122" width="52" height="13.5" style="fill-opacity:0.348"/>
+<rect class="licell" x="260" y="122" width="52" height="13.5" style="fill-opacity:0.253"/>
+<rect class="licell" x="315" y="122" width="52" height="13.5" style="fill-opacity:0.287"/>
+<rect class="licell" x="370" y="122" width="52" height="13.5" style="fill-opacity:0.345"/>
+<rect class="licell" x="425" y="122" width="52" height="13.5" style="fill-opacity:0.347"/>
+<rect class="licell" x="480" y="122" width="52" height="13.5" style="fill-opacity:0.390"/>
+<rect class="licell" x="535" y="122" width="52" height="13.5" style="fill-opacity:0.494"/>
+<rect class="licell" x="590" y="122" width="52" height="13.5" style="fill-opacity:0.518"/>
+<text class="note" x="142" y="147" text-anchor="end">2B 3B</text>
+<rect class="licell" x="150" y="137" width="52" height="13.5" style="fill-opacity:0.222"/>
+<rect class="licell" x="205" y="137" width="52" height="13.5" style="fill-opacity:0.258"/>
+<rect class="licell" x="260" y="137" width="52" height="13.5" style="fill-opacity:0.250"/>
+<rect class="licell" x="315" y="137" width="52" height="13.5" style="fill-opacity:0.305"/>
+<rect class="licell" x="370" y="137" width="52" height="13.5" style="fill-opacity:0.408"/>
+<rect class="licell" x="425" y="137" width="52" height="13.5" style="fill-opacity:0.324"/>
+<rect class="licell" x="480" y="137" width="52" height="13.5" style="fill-opacity:0.377"/>
+<rect class="licell" x="535" y="137" width="52" height="13.5" style="fill-opacity:0.495"/>
+<rect class="licell" x="590" y="137" width="52" height="13.5" style="fill-opacity:0.509"/>
+<text class="note" x="142" y="162" text-anchor="end">loaded</text>
+<rect class="licell" x="150" y="152" width="52" height="13.5" style="fill-opacity:0.305"/>
+<rect class="licell" x="205" y="152" width="52" height="13.5" style="fill-opacity:0.279"/>
+<rect class="licell" x="260" y="152" width="52" height="13.5" style="fill-opacity:0.266"/>
+<rect class="licell" x="315" y="152" width="52" height="13.5" style="fill-opacity:0.339"/>
+<rect class="licell" x="370" y="152" width="52" height="13.5" style="fill-opacity:0.415"/>
+<rect class="licell" x="425" y="152" width="52" height="13.5" style="fill-opacity:0.427"/>
+<rect class="licell" x="480" y="152" width="52" height="13.5" style="fill-opacity:0.440"/>
+<rect class="licell" x="535" y="152" width="52" height="13.5" style="fill-opacity:0.518"/>
+<rect class="licell" x="590" y="152" width="52" height="13.5" style="fill-opacity:0.640"/>
+<text class="fm" x="0" y="186">1 out</text>
+<text class="note" x="142" y="186" text-anchor="end">bases empty</text>
+<rect class="licell" x="150" y="176" width="52" height="13.5" style="fill-opacity:0.175"/>
+<rect class="licell" x="205" y="176" width="52" height="13.5" style="fill-opacity:0.146"/>
+<rect class="licell" x="260" y="176" width="52" height="13.5" style="fill-opacity:0.227"/>
+<rect class="licell" x="315" y="176" width="52" height="13.5" style="fill-opacity:0.157"/>
+<rect class="licell" x="370" y="176" width="52" height="13.5" style="fill-opacity:0.184"/>
+<rect class="licell" x="425" y="176" width="52" height="13.5" style="fill-opacity:0.191"/>
+<rect class="licell" x="480" y="176" width="52" height="13.5" style="fill-opacity:0.224"/>
+<rect class="licell" x="535" y="176" width="52" height="13.5" style="fill-opacity:0.319"/>
+<rect class="licell" x="590" y="176" width="52" height="13.5" style="fill-opacity:0.386"/>
+<text class="note" x="142" y="200" text-anchor="end">1B</text>
+<rect class="licell" x="150" y="190" width="52" height="13.5" style="fill-opacity:0.278"/>
+<rect class="licell" x="205" y="190" width="52" height="13.5" style="fill-opacity:0.236"/>
+<rect class="licell" x="260" y="190" width="52" height="13.5" style="fill-opacity:0.390"/>
+<rect class="licell" x="315" y="190" width="52" height="13.5" style="fill-opacity:0.253"/>
+<rect class="licell" x="370" y="190" width="52" height="13.5" style="fill-opacity:0.317"/>
+<rect class="licell" x="425" y="190" width="52" height="13.5" style="fill-opacity:0.275"/>
+<rect class="licell" x="480" y="190" width="52" height="13.5" style="fill-opacity:0.393"/>
+<rect class="licell" x="535" y="190" width="52" height="13.5" style="fill-opacity:0.446"/>
+<rect class="licell" x="590" y="190" width="52" height="13.5" style="fill-opacity:0.432"/>
+<text class="note" x="142" y="215" text-anchor="end">2B</text>
+<rect class="licell" x="150" y="205" width="52" height="13.5" style="fill-opacity:0.261"/>
+<rect class="licell" x="205" y="205" width="52" height="13.5" style="fill-opacity:0.302"/>
+<rect class="licell" x="260" y="205" width="52" height="13.5" style="fill-opacity:0.378"/>
+<rect class="licell" x="315" y="205" width="52" height="13.5" style="fill-opacity:0.363"/>
+<rect class="licell" x="370" y="205" width="52" height="13.5" style="fill-opacity:0.339"/>
+<rect class="licell" x="425" y="205" width="52" height="13.5" style="fill-opacity:0.374"/>
+<rect class="licell" x="480" y="205" width="52" height="13.5" style="fill-opacity:0.343"/>
+<rect class="licell" x="535" y="205" width="52" height="13.5" style="fill-opacity:0.455"/>
+<rect class="licell" x="590" y="205" width="52" height="13.5" style="fill-opacity:0.383"/>
+<text class="note" x="142" y="230" text-anchor="end">1B 2B</text>
+<rect class="licell" x="150" y="220" width="52" height="13.5" style="fill-opacity:0.348"/>
+<rect class="licell" x="205" y="220" width="52" height="13.5" style="fill-opacity:0.341"/>
+<rect class="licell" x="260" y="220" width="52" height="13.5" style="fill-opacity:0.372"/>
+<rect class="licell" x="315" y="220" width="52" height="13.5" style="fill-opacity:0.299"/>
+<rect class="licell" x="370" y="220" width="52" height="13.5" style="fill-opacity:0.450"/>
+<rect class="licell" x="425" y="220" width="52" height="13.5" style="fill-opacity:0.368"/>
+<rect class="licell" x="480" y="220" width="52" height="13.5" style="fill-opacity:0.442"/>
+<rect class="licell" x="535" y="220" width="52" height="13.5" style="fill-opacity:0.581"/>
+<rect class="licell" x="590" y="220" width="52" height="13.5" style="fill-opacity:0.585"/>
+<text class="note" x="142" y="244" text-anchor="end">3B</text>
+<rect class="licell" x="150" y="234" width="52" height="13.5" style="fill-opacity:0.249"/>
+<rect class="licell" x="205" y="234" width="52" height="13.5" style="fill-opacity:0.352"/>
+<rect class="licell" x="260" y="234" width="52" height="13.5" style="fill-opacity:0.304"/>
+<rect class="licell" x="315" y="234" width="52" height="13.5" style="fill-opacity:0.318"/>
+<rect class="licell" x="370" y="234" width="52" height="13.5" style="fill-opacity:0.381"/>
+<rect class="licell" x="425" y="234" width="52" height="13.5" style="fill-opacity:0.446"/>
+<rect class="licell" x="480" y="234" width="52" height="13.5" style="fill-opacity:0.455"/>
+<rect class="licell" x="535" y="234" width="52" height="13.5" style="fill-opacity:0.477"/>
+<rect class="licell" x="590" y="234" width="52" height="13.5" style="fill-opacity:0.531"/>
+<text class="note" x="142" y="258" text-anchor="end">1B 3B</text>
+<rect class="licell" x="150" y="248" width="52" height="13.5" style="fill-opacity:0.301"/>
+<rect class="licell" x="205" y="248" width="52" height="13.5" style="fill-opacity:0.383"/>
+<rect class="licell" x="260" y="248" width="52" height="13.5" style="fill-opacity:0.315"/>
+<rect class="licell" x="315" y="248" width="52" height="13.5" style="fill-opacity:0.444"/>
+<rect class="licell" x="370" y="248" width="52" height="13.5" style="fill-opacity:0.397"/>
+<rect class="licell" x="425" y="248" width="52" height="13.5" style="fill-opacity:0.423"/>
+<rect class="licell" x="480" y="248" width="52" height="13.5" style="fill-opacity:0.489"/>
+<rect class="licell" x="535" y="248" width="52" height="13.5" style="fill-opacity:0.579"/>
+<rect class="licell" x="590" y="248" width="52" height="13.5" style="fill-opacity:0.574"/>
+<text class="note" x="142" y="273" text-anchor="end">2B 3B</text>
+<rect class="licell" x="150" y="263" width="52" height="13.5" style="fill-opacity:0.280"/>
+<rect class="licell" x="205" y="263" width="52" height="13.5" style="fill-opacity:0.261"/>
+<rect class="licell" x="260" y="263" width="52" height="13.5" style="fill-opacity:0.382"/>
+<rect class="licell" x="315" y="263" width="52" height="13.5" style="fill-opacity:0.375"/>
+<rect class="licell" x="370" y="263" width="52" height="13.5" style="fill-opacity:0.466"/>
+<rect class="licell" x="425" y="263" width="52" height="13.5" style="fill-opacity:0.383"/>
+<rect class="licell" x="480" y="263" width="52" height="13.5" style="fill-opacity:0.473"/>
+<rect class="licell" x="535" y="263" width="52" height="13.5" style="fill-opacity:0.491"/>
+<rect class="licell" x="590" y="263" width="52" height="13.5" style="fill-opacity:0.530"/>
+<text class="note" x="142" y="288" text-anchor="end">loaded</text>
+<rect class="licell" x="150" y="278" width="52" height="13.5" style="fill-opacity:0.384"/>
+<rect class="licell" x="205" y="278" width="52" height="13.5" style="fill-opacity:0.384"/>
+<rect class="licell" x="260" y="278" width="52" height="13.5" style="fill-opacity:0.377"/>
+<rect class="licell" x="315" y="278" width="52" height="13.5" style="fill-opacity:0.436"/>
+<rect class="licell" x="370" y="278" width="52" height="13.5" style="fill-opacity:0.492"/>
+<rect class="licell" x="425" y="278" width="52" height="13.5" style="fill-opacity:0.442"/>
+<rect class="licell" x="480" y="278" width="52" height="13.5" style="fill-opacity:0.587"/>
+<rect class="licell" x="535" y="278" width="52" height="13.5" style="fill-opacity:0.641"/>
+<rect class="licell" x="590" y="278" width="52" height="13.5" style="fill-opacity:0.800"/>
+<text class="lival" x="616" y="288" text-anchor="middle">4.5</text>
+<text class="fm" x="0" y="312">2 outs</text>
+<text class="note" x="142" y="312" text-anchor="end">bases empty</text>
+<rect class="licell" x="150" y="302" width="52" height="13.5" style="fill-opacity:0.127"/>
+<rect class="licell" x="205" y="302" width="52" height="13.5" style="fill-opacity:0.125"/>
+<rect class="licell" x="260" y="302" width="52" height="13.5" style="fill-opacity:0.108"/>
+<rect class="licell" x="315" y="302" width="52" height="13.5" style="fill-opacity:0.186"/>
+<rect class="licell" x="370" y="302" width="52" height="13.5" style="fill-opacity:0.208"/>
+<rect class="licell" x="425" y="302" width="52" height="13.5" style="fill-opacity:0.238"/>
+<rect class="licell" x="480" y="302" width="52" height="13.5" style="fill-opacity:0.205"/>
+<rect class="licell" x="535" y="302" width="52" height="13.5" style="fill-opacity:0.240"/>
+<rect class="licell" x="590" y="302" width="52" height="13.5" style="fill-opacity:0.286"/>
+<text class="note" x="142" y="326" text-anchor="end">1B</text>
+<rect class="licell" x="150" y="316" width="52" height="13.5" style="fill-opacity:0.213"/>
+<rect class="licell" x="205" y="316" width="52" height="13.5" style="fill-opacity:0.220"/>
+<rect class="licell" x="260" y="316" width="52" height="13.5" style="fill-opacity:0.235"/>
+<rect class="licell" x="315" y="316" width="52" height="13.5" style="fill-opacity:0.280"/>
+<rect class="licell" x="370" y="316" width="52" height="13.5" style="fill-opacity:0.323"/>
+<rect class="licell" x="425" y="316" width="52" height="13.5" style="fill-opacity:0.342"/>
+<rect class="licell" x="480" y="316" width="52" height="13.5" style="fill-opacity:0.279"/>
+<rect class="licell" x="535" y="316" width="52" height="13.5" style="fill-opacity:0.391"/>
+<rect class="licell" x="590" y="316" width="52" height="13.5" style="fill-opacity:0.432"/>
+<text class="note" x="142" y="341" text-anchor="end">2B</text>
+<rect class="licell" x="150" y="331" width="52" height="13.5" style="fill-opacity:0.255"/>
+<rect class="licell" x="205" y="331" width="52" height="13.5" style="fill-opacity:0.230"/>
+<rect class="licell" x="260" y="331" width="52" height="13.5" style="fill-opacity:0.293"/>
+<rect class="licell" x="315" y="331" width="52" height="13.5" style="fill-opacity:0.292"/>
+<rect class="licell" x="370" y="331" width="52" height="13.5" style="fill-opacity:0.332"/>
+<rect class="licell" x="425" y="331" width="52" height="13.5" style="fill-opacity:0.382"/>
+<rect class="licell" x="480" y="331" width="52" height="13.5" style="fill-opacity:0.427"/>
+<rect class="licell" x="535" y="331" width="52" height="13.5" style="fill-opacity:0.493"/>
+<rect class="licell" x="590" y="331" width="52" height="13.5" style="fill-opacity:0.568"/>
+<text class="note" x="142" y="356" text-anchor="end">1B 2B</text>
+<rect class="licell" x="150" y="346" width="52" height="13.5" style="fill-opacity:0.321"/>
+<rect class="licell" x="205" y="346" width="52" height="13.5" style="fill-opacity:0.350"/>
+<rect class="licell" x="260" y="346" width="52" height="13.5" style="fill-opacity:0.444"/>
+<rect class="licell" x="315" y="346" width="52" height="13.5" style="fill-opacity:0.423"/>
+<rect class="licell" x="370" y="346" width="52" height="13.5" style="fill-opacity:0.447"/>
+<rect class="licell" x="425" y="346" width="52" height="13.5" style="fill-opacity:0.510"/>
+<rect class="licell" x="480" y="346" width="52" height="13.5" style="fill-opacity:0.464"/>
+<rect class="licell" x="535" y="346" width="52" height="13.5" style="fill-opacity:0.658"/>
+<rect class="licell" x="590" y="346" width="52" height="13.5" style="fill-opacity:0.628"/>
+<text class="note" x="142" y="370" text-anchor="end">3B</text>
+<rect class="licell" x="150" y="360" width="52" height="13.5" style="fill-opacity:0.314"/>
+<rect class="licell" x="205" y="360" width="52" height="13.5" style="fill-opacity:0.209"/>
+<rect class="licell" x="260" y="360" width="52" height="13.5" style="fill-opacity:0.345"/>
+<rect class="licell" x="315" y="360" width="52" height="13.5" style="fill-opacity:0.332"/>
+<rect class="licell" x="370" y="360" width="52" height="13.5" style="fill-opacity:0.381"/>
+<rect class="licell" x="425" y="360" width="52" height="13.5" style="fill-opacity:0.343"/>
+<rect class="licell" x="480" y="360" width="52" height="13.5" style="fill-opacity:0.516"/>
+<rect class="licell" x="535" y="360" width="52" height="13.5" style="fill-opacity:0.580"/>
+<rect class="licell" x="590" y="360" width="52" height="13.5" style="fill-opacity:0.670"/>
+<text class="note" x="142" y="384" text-anchor="end">1B 3B</text>
+<rect class="licell" x="150" y="374" width="52" height="13.5" style="fill-opacity:0.341"/>
+<rect class="licell" x="205" y="374" width="52" height="13.5" style="fill-opacity:0.290"/>
+<rect class="licell" x="260" y="374" width="52" height="13.5" style="fill-opacity:0.460"/>
+<rect class="licell" x="315" y="374" width="52" height="13.5" style="fill-opacity:0.353"/>
+<rect class="licell" x="370" y="374" width="52" height="13.5" style="fill-opacity:0.475"/>
+<rect class="licell" x="425" y="374" width="52" height="13.5" style="fill-opacity:0.502"/>
+<rect class="licell" x="480" y="374" width="52" height="13.5" style="fill-opacity:0.597"/>
+<rect class="licell" x="535" y="374" width="52" height="13.5" style="fill-opacity:0.646"/>
+<rect class="licell" x="590" y="374" width="52" height="13.5" style="fill-opacity:0.553"/>
+<text class="note" x="142" y="399" text-anchor="end">2B 3B</text>
+<rect class="licell" x="150" y="389" width="52" height="13.5" style="fill-opacity:0.467"/>
+<rect class="licell" x="205" y="389" width="52" height="13.5" style="fill-opacity:0.443"/>
+<rect class="licell" x="260" y="389" width="52" height="13.5" style="fill-opacity:0.339"/>
+<rect class="licell" x="315" y="389" width="52" height="13.5" style="fill-opacity:0.356"/>
+<rect class="licell" x="370" y="389" width="52" height="13.5" style="fill-opacity:0.419"/>
+<rect class="licell" x="425" y="389" width="52" height="13.5" style="fill-opacity:0.467"/>
+<rect class="licell" x="480" y="389" width="52" height="13.5" style="fill-opacity:0.518"/>
+<rect class="licell" x="535" y="389" width="52" height="13.5" style="fill-opacity:0.540"/>
+<rect class="licell" x="590" y="389" width="52" height="13.5" style="fill-opacity:0.696"/>
+<text class="note" x="142" y="414" text-anchor="end">loaded</text>
+<rect class="licell" x="150" y="404" width="52" height="13.5" style="fill-opacity:0.450"/>
+<rect class="licell" x="205" y="404" width="52" height="13.5" style="fill-opacity:0.519"/>
+<rect class="licell" x="260" y="404" width="52" height="13.5" style="fill-opacity:0.444"/>
+<rect class="licell" x="315" y="404" width="52" height="13.5" style="fill-opacity:0.477"/>
+<rect class="licell" x="370" y="404" width="52" height="13.5" style="fill-opacity:0.581"/>
+<rect class="licell" x="425" y="404" width="52" height="13.5" style="fill-opacity:0.655"/>
+<rect class="licell" x="480" y="404" width="52" height="13.5" style="fill-opacity:0.560"/>
+<rect class="licell" x="535" y="404" width="52" height="13.5" style="fill-opacity:0.784"/>
+<rect class="licell" x="590" y="404" width="52" height="13.5" style="fill-opacity:0.779"/>
+<text class="axlab" x="0" y="440">darker is higher leverage; 1.0 is an average situation</text>
+</svg></div>
+    <figcaption><b>Figure 3.</b> Leverage index by base-out state and inning in a tied game: how
+    much the win probability can swing on the next plate appearance, relative to an average
+    situation. This is what the reliever choice responds to. It reuses the state space from
+    Figure&nbsp;1, which is the point of having one: a quantity defined on those 24 states is
+    available anywhere in the simulation. Note that leverage measures importance rather than
+    direction, being near-symmetric in the sign of the lead, so it cannot stand in for knowing
+    who is ahead.</figcaption>
+  </figure>
+
   <p>A third component is worth naming separately, because it follows a published model closely
   rather than adapting one. Whether a taken pitch is called a strike depends on four people at
   once: the catcher receiving it, the umpire behind him, the pitcher's command of the edge, and
@@ -541,6 +816,539 @@ tr:last-child td{border-bottom:none;}
   Their result that the umpire effect is the larger one, with the widest zone worth roughly twice
   the best framer, carries over here, and it is why the umpire is applied at simulation time
   rather than folded into any pitcher's rate.</p>
+
+  <p>One more piece is worth showing, because it works differently from everything above. Most of
+  the model runs on rates: a batter has some probability of a home run, estimated from how often he
+  has hit one. That is fine when the outcome is common. It breaks down when the outcome is rare. A
+  batter's doubles rate needs something like 1,600 plate appearances to settle down, and nobody
+  gets that in a season, so the estimate is shrunk nearly all the way to the league average and the
+  model stops telling batters apart.</p>
+
+  <p>The way out is to model the ball instead of the rate. Exit velocity and launch angle settle
+  down within 40 to 80 batted balls, and between them they very nearly determine what happens.</p>
+
+  <figure>
+    <div class="frame"><svg viewBox="0 0 690 404" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Probability a batted ball is a home run, by exit velocity and launch angle">
+<rect class="hrcell" x="64.0" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="326.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="313.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="64.0" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="300.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="287.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="274.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="261.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="64.0" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="247.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="234.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="403.5" y="221.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="371.2" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="387.3" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.051"/>
+<rect class="hrcell" x="403.5" y="208.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="64.0" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.043"/>
+<rect class="hrcell" x="258.0" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="355.0" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.044"/>
+<rect class="hrcell" x="371.2" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.047"/>
+<rect class="hrcell" x="387.3" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.064"/>
+<rect class="hrcell" x="403.5" y="195.2" width="16.8" height="13.8" style="fill-opacity:0.083"/>
+<rect class="hrcell" x="80.2" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.043"/>
+<rect class="hrcell" x="338.8" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.056"/>
+<rect class="hrcell" x="355.0" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.094"/>
+<rect class="hrcell" x="371.2" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.136"/>
+<rect class="hrcell" x="387.3" y="182.0" width="16.8" height="13.8" style="fill-opacity:0.300"/>
+<rect class="hrcell" x="64.0" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.044"/>
+<rect class="hrcell" x="241.8" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.049"/>
+<rect class="hrcell" x="322.7" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.086"/>
+<rect class="hrcell" x="338.8" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.169"/>
+<rect class="hrcell" x="355.0" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.344"/>
+<rect class="hrcell" x="371.2" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.533"/>
+<rect class="hrcell" x="387.3" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.657"/>
+<rect class="hrcell" x="403.5" y="168.8" width="16.8" height="13.8" style="fill-opacity:0.869"/>
+<rect class="hrcell" x="80.2" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.058"/>
+<rect class="hrcell" x="306.5" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.121"/>
+<rect class="hrcell" x="322.7" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.230"/>
+<rect class="hrcell" x="338.8" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.429"/>
+<rect class="hrcell" x="355.0" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.659"/>
+<rect class="hrcell" x="371.2" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.876"/>
+<rect class="hrcell" x="387.3" y="155.7" width="16.8" height="13.8" style="fill-opacity:0.937"/>
+<rect class="hrcell" x="64.0" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.043"/>
+<rect class="hrcell" x="274.2" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.055"/>
+<rect class="hrcell" x="290.3" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.109"/>
+<rect class="hrcell" x="306.5" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.195"/>
+<rect class="hrcell" x="322.7" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.395"/>
+<rect class="hrcell" x="338.8" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.686"/>
+<rect class="hrcell" x="355.0" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.857"/>
+<rect class="hrcell" x="371.2" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.941"/>
+<rect class="hrcell" x="387.3" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.952"/>
+<rect class="hrcell" x="403.5" y="142.5" width="16.8" height="13.8" style="fill-opacity:0.980"/>
+<rect class="hrcell" x="96.3" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.052"/>
+<rect class="hrcell" x="274.2" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.077"/>
+<rect class="hrcell" x="290.3" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.169"/>
+<rect class="hrcell" x="306.5" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.283"/>
+<rect class="hrcell" x="322.7" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.484"/>
+<rect class="hrcell" x="338.8" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.718"/>
+<rect class="hrcell" x="355.0" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.886"/>
+<rect class="hrcell" x="371.2" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.959"/>
+<rect class="hrcell" x="387.3" y="129.3" width="16.8" height="13.8" style="fill-opacity:0.980"/>
+<rect class="hrcell" x="80.2" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.043"/>
+<rect class="hrcell" x="241.8" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.043"/>
+<rect class="hrcell" x="258.0" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.045"/>
+<rect class="hrcell" x="274.2" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.087"/>
+<rect class="hrcell" x="290.3" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.162"/>
+<rect class="hrcell" x="306.5" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.333"/>
+<rect class="hrcell" x="322.7" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.476"/>
+<rect class="hrcell" x="338.8" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.707"/>
+<rect class="hrcell" x="355.0" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.808"/>
+<rect class="hrcell" x="371.2" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.950"/>
+<rect class="hrcell" x="387.3" y="116.2" width="16.8" height="13.8" style="fill-opacity:0.980"/>
+<rect class="hrcell" x="80.2" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.046"/>
+<rect class="hrcell" x="241.8" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.045"/>
+<rect class="hrcell" x="258.0" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.045"/>
+<rect class="hrcell" x="274.2" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.083"/>
+<rect class="hrcell" x="290.3" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.185"/>
+<rect class="hrcell" x="306.5" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.260"/>
+<rect class="hrcell" x="322.7" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.410"/>
+<rect class="hrcell" x="338.8" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.602"/>
+<rect class="hrcell" x="355.0" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.816"/>
+<rect class="hrcell" x="371.2" y="103.0" width="16.8" height="13.8" style="fill-opacity:0.880"/>
+<rect class="hrcell" x="64.0" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="80.2" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.046"/>
+<rect class="hrcell" x="274.2" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.069"/>
+<rect class="hrcell" x="290.3" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.125"/>
+<rect class="hrcell" x="306.5" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.225"/>
+<rect class="hrcell" x="322.7" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.325"/>
+<rect class="hrcell" x="338.8" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.519"/>
+<rect class="hrcell" x="355.0" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.721"/>
+<rect class="hrcell" x="371.2" y="89.8" width="16.8" height="13.8" style="fill-opacity:0.886"/>
+<rect class="hrcell" x="112.5" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.046"/>
+<rect class="hrcell" x="258.0" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.050"/>
+<rect class="hrcell" x="274.2" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.056"/>
+<rect class="hrcell" x="290.3" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.108"/>
+<rect class="hrcell" x="306.5" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.128"/>
+<rect class="hrcell" x="322.7" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.182"/>
+<rect class="hrcell" x="338.8" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.390"/>
+<rect class="hrcell" x="355.0" y="76.7" width="16.8" height="13.8" style="fill-opacity:0.627"/>
+<rect class="hrcell" x="80.2" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.044"/>
+<rect class="hrcell" x="258.0" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.049"/>
+<rect class="hrcell" x="290.3" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.054"/>
+<rect class="hrcell" x="306.5" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.101"/>
+<rect class="hrcell" x="322.7" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.185"/>
+<rect class="hrcell" x="338.8" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.294"/>
+<rect class="hrcell" x="355.0" y="63.5" width="16.8" height="13.8" style="fill-opacity:0.426"/>
+<rect class="hrcell" x="96.3" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.051"/>
+<rect class="hrcell" x="306.5" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.083"/>
+<rect class="hrcell" x="322.7" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.077"/>
+<rect class="hrcell" x="338.8" y="50.3" width="16.8" height="13.8" style="fill-opacity:0.142"/>
+<rect class="hrcell" x="80.2" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="96.3" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.046"/>
+<rect class="hrcell" x="322.7" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="338.8" y="37.2" width="16.8" height="13.8" style="fill-opacity:0.059"/>
+<rect class="hrcell" x="96.3" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="112.5" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="128.7" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="144.8" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="161.0" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="177.2" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="193.3" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="209.5" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="225.7" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="241.8" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="258.0" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="274.2" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="290.3" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="306.5" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<rect class="hrcell" x="322.7" y="24.0" width="16.8" height="13.8" style="fill-opacity:0.040"/>
+<text class="tk" x="64.0" y="355" text-anchor="middle">60</text>
+<text class="tk" x="128.7" y="355" text-anchor="middle">70</text>
+<text class="tk" x="193.3" y="355" text-anchor="middle">80</text>
+<text class="tk" x="258.0" y="355" text-anchor="middle">90</text>
+<text class="tk" x="322.7" y="355" text-anchor="middle">100</text>
+<text class="tk" x="387.3" y="355" text-anchor="middle">110</text>
+<text class="tk" x="452.0" y="355" text-anchor="middle">120</text>
+<text class="tk" x="56" y="344.0" text-anchor="end">-10</text>
+<text class="tk" x="56" y="291.3" text-anchor="end">0</text>
+<text class="tk" x="56" y="238.7" text-anchor="end">10</text>
+<text class="tk" x="56" y="186.0" text-anchor="end">20</text>
+<text class="tk" x="56" y="133.3" text-anchor="end">30</text>
+<text class="tk" x="56" y="80.7" text-anchor="end">40</text>
+<text class="tk" x="56" y="28.0" text-anchor="end">50</text>
+<text class="axlab" x="258" y="376" text-anchor="middle">exit velocity, mph</text>
+<text class="axlab" transform="rotate(-90 18 182)" x="18" y="182" text-anchor="middle">launch angle, degrees</text>
+<rect class="hrbox good" x="322.7" y="118.8" width="129.3" height="36.9"/>
+<rect class="hrbox bad" x="322.7" y="234.7" width="129.3" height="52.7"/>
+<rect class="hrbox good" x="474" y="32" width="16" height="11"/>
+<text class="note" x="496" y="42">69% home runs</text>
+<text class="note" x="474" y="58">3,514 balls at 100+ mph,</text>
+<text class="note" x="474" y="71">25 to 32 degrees</text>
+<rect class="hrbox bad" x="474" y="98" width="16" height="11"/>
+<text class="note" x="496" y="108">none at all</text>
+<text class="note" x="474" y="124">6,833 balls, hit just as</text>
+<text class="note" x="474" y="137">hard, 8 degrees flatter</text>
+<text class="note" x="474" y="170">A rate model has to learn</text>
+<text class="note" x="474" y="183">this boundary from home</text>
+<text class="note" x="474" y="196">runs alone. A generative</text>
+<text class="note" x="474" y="209">one gets it from every</text>
+<text class="note" x="474" y="222">ball in play.</text>
+<text class="axlab" x="64" y="398">122,510 batted balls, 2024. Darker is a higher chance of clearing the fence.</text>
+</svg></div>
+    <figcaption><b>Figure 4.</b> The probability that a batted ball leaves the park, over exit
+    velocity and launch angle, from every batted ball in the 2024 season. Cells with fewer than 25
+    balls are left blank. The region that produces home runs is narrow in both directions, which is
+    the reason the generative approach is worth the trouble: the boundary is sharp, and it is
+    visible in every ball in play rather than only in the ones that went out.</figcaption>
+  </figure>
+
+  <p>So each batter's own distribution of batted balls is integrated through that surface, and
+  through each park's version of it. That last step is what turns a park factor into something
+  batter-specific: the same fly ball clears the fence in one park and is caught in another, and
+  which batters it helps depends on where and how hard they hit the ball. The layer is centered to
+  zero across batters within each park, so it adds only that interaction and leaves the park's
+  average home run rate alone.</p>
+
+  <p>The same construction was extended to singles, doubles and triples, and the reason was
+  measurable. Comparing the spread of the model's per-batter estimates against the spread of what
+  actually happened gives a ratio of 0.55 for singles, 0.30 for doubles and 0.12 for triples: on
+  the rare outcomes the model had almost stopped distinguishing between batters. The same ratio for
+  home runs was 0.82, and home runs were the outcome that already had the batted-ball layer
+  underneath.</p>
 
   <p>Eight smaller effects sit above these: times through the order, park factors, platoon
   splits, the running game, and others.</p>
@@ -620,7 +1428,7 @@ tr:last-child td{border-bottom:none;}
 <section>
   <h2><span class="num">3.</span>Calibration against outcomes</h2>
   <p>Before comparing the model against anything else, the question is whether its probabilities
-  mean what they say. A forecast of 30% should be right about 30% of the time. Figure&nbsp;3
+  mean what they say. A forecast of 30% should be right about 30% of the time. Figure&nbsp;5
   groups every game-level forecast by the probability it assigned and plots the frequency with
   which those events actually occurred.</p>
 
@@ -682,7 +1490,7 @@ tr:last-child td{border-bottom:none;}
 <text class="note" x="430" y="137.8">point area &#8733; number of</text>
 <text class="note" x="430" y="150.8">contracts in the bin</text>
 </svg></div>
-    <figcaption><b>Figure 3.</b> Reliability of the game-level forecasts, 35,159 contracts over
+    <figcaption><b>Figure 5.</b> Reliability of the game-level forecasts, 35,159 contracts over
     764 games. Points sit on the diagonal when forecast probability matches observed frequency;
     bars are two standard errors. The model tracks the diagonal closely from about 0.25 upward.
     Below that it is mildly overconfident: events it assigns 16% occur about 18% of the time, and
@@ -826,7 +1634,7 @@ tr:last-child td{border-bottom:none;}
 <text class="note" x="518" y="247">edges mean the predicted</text>
 <text class="note" x="518" y="260">distribution is too narrow</text>
 </svg></div>
-    <figcaption><b>Figure 4.</b> Probability integral transform histograms, one per contract
+    <figcaption><b>Figure 6.</b> Probability integral transform histograms, one per contract
     family, with the dashed line marking what a calibrated model would produce. For each unit the
     model's predicted distribution is evaluated at the realized outcome, using the randomized
     transform appropriate to discrete outcomes. Bars piling up at both edges would indicate a
@@ -874,7 +1682,7 @@ tr:last-child td{border-bottom:none;}
   The model at 0.1905 and the market at 0.1896 are both far better than that, so both carry real
   information. The difference between the two is 0.0010 in the market's favor, and the
   game-clustered 95% interval around it runs from &minus;0.0027 to +0.0007. It contains
-  zero, so the two are not distinguishable on this sample. Figure&nbsp;5 breaks it down by
+  zero, so the two are not distinguishable on this sample. Figure&nbsp;7 breaks it down by
   family.</p>
 
   <figure>
@@ -935,7 +1743,7 @@ tr:last-child td{border-bottom:none;}
 <circle class="pt neg" cx="395.7" cy="206.0" r="3.2"/>
 <text class="tk" x="507.7" y="251.0" text-anchor="middle">difference in Brier score &#215; 10&#8315;&#179; &nbsp;&nbsp; (left of zero favors the market)</text>
 </svg></div>
-    <figcaption><b>Figure 5.</b> Difference in Brier score, model minus market, by contract
+    <figcaption><b>Figure 7.</b> Difference in Brier score, model minus market, by contract
     family; points are estimates, bars are 95% confidence intervals. Red marks an interval
     excluding zero against the model, gray an interval containing zero. Intervals are
     bootstrapped over games rather than contracts, since the contracts priced on one game share a
@@ -976,7 +1784,7 @@ tr:last-child td{border-bottom:none;}
   indistinguishable from the market. The weakness in totals concentrates at high lines rather than spreading evenly,
   which locates it as a specific modeling defect rather than as evidence that the family is
   efficiently priced. It is also the family whose probability integral transform in
-  Figure&nbsp;4 departs furthest from flat.</p>
+  Figure&nbsp;6 departs furthest from flat.</p>
 
   <p>A more direct test is what happens when the two disagree. On the 1,692 contracts where the
   model and the market took opposite sides, the model's side won 48.8% of the time. So its
@@ -1051,7 +1859,7 @@ tr:last-child td{border-bottom:none;}
   already published a self-critical finding drawn from that sample. Recomputed on the full
   quoted tape, the miscalibration components are 0.22 and 0.24 &times;10&#8315;&#179;, a
   difference of &minus;0.01 with an interval of [&minus;0.16, +0.16]. The two are calibrated
-  equally well, and neither loses anything worth measuring to calibration. What it lacks is discrimination, as Figure&nbsp;3
+  equally well, and neither loses anything worth measuring to calibration. What it lacks is discrimination, as Figure&nbsp;5
   and the head-to-head comparison both indicate.</p>
 
   <p>Unfavorable results deserve the same scrutiny as favorable ones. A finding that flatters
