@@ -32,11 +32,26 @@
    the same for every reader regardless of their system setting. color-scheme
    keeps the browser from darkening scrollbars and form controls around it. */
 :root{
-  color-scheme: light;
+  color-scheme: light dark;
   --paper:#FFFFFF; --ink:#000000; --ink-soft:#262626; --ink-mute:#5C5C5C;
   --rule:#E2E2E2; --rule-strong:#ADADAD;
   --pos:#16624C; --neg:#8E2C21; --nul:#7E7E7E;
   --link:#134A94;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --paper:#15161A; --ink:#EDEEF2; --ink-soft:#C9CBD2; --ink-mute:#9093A0;
+  --rule:#2A2C33; --rule-strong:#5A5E6E;
+  --pos:#5FBF9B; --neg:#E1735F; --nul:#9093A0;
+  --link:#8AB4F0;
+  }
+}
+:root[data-theme="dark"] {
+  --paper:#15161A; --ink:#EDEEF2; --ink-soft:#C9CBD2; --ink-mute:#9093A0;
+  --rule:#2A2C33; --rule-strong:#5A5E6E;
+  --pos:#5FBF9B; --neg:#E1735F; --nul:#9093A0;
+  --link:#8AB4F0;
 }
 
 *{box-sizing:border-box}
@@ -106,7 +121,7 @@ svg{display:block; width:100%; min-width:600px; height:auto;}
 .base.on{fill:var(--ink);}
 .base.off{fill:var(--paper); stroke:var(--rule-strong); stroke-width:1;}
 .jcell{fill:var(--ink);}
-.licell{fill:var(--ink);}
+
 .hrcell{fill:var(--ink);}
 .hrbox{fill:none; stroke-width:1.6;}
 .hrbox.good{stroke:var(--pos);}
@@ -115,7 +130,7 @@ svg{display:block; width:100%; min-width:600px; height:auto;}
 .spray.lg{stroke:var(--rule-strong); stroke-dasharray:5 3;} .pt.lg{fill:var(--rule-strong);}
 .spray.p1{stroke:var(--pos);} .pt.p1{fill:var(--pos);}
 .spray.p2{stroke:var(--neg);} .pt.p2{fill:var(--neg);}
-.lival{font-family:"IBM Plex Mono",monospace; font-size:9.5px; fill:var(--paper); font-weight:600;}
+
 .tie{stroke:var(--neg); stroke-width:1.4; stroke-dasharray:4 3;}
 .unif{stroke:var(--neg); stroke-width:1.2; stroke-dasharray:3 3;}
 .note{font-family:"IBM Plex Sans",sans-serif; font-size:11px; fill:var(--ink-mute);}
@@ -234,55 +249,55 @@ tr:last-child td{border-bottom:none;}
 <rect class="base off" x="548.8" y="29.8" width="6.4" height="6.4" transform="rotate(45 552.0 33.0)"/><rect class="base on" x="539.8" y="17.8" width="6.4" height="6.4" transform="rotate(45 543.0 21.0)"/><rect class="base on" x="530.8" y="29.8" width="6.4" height="6.4" transform="rotate(45 534.0 33.0)"/>
 <rect class="base on" x="616.8" y="29.8" width="6.4" height="6.4" transform="rotate(45 620.0 33.0)"/><rect class="base on" x="607.8" y="17.8" width="6.4" height="6.4" transform="rotate(45 611.0 21.0)"/><rect class="base on" x="598.8" y="29.8" width="6.4" height="6.4" transform="rotate(45 602.0 33.0)"/>
 <text class="fm" x="0" y="88">0 outs</text>
-<rect class="recell" x="104" y="62" width="62" height="44" style="fill-opacity:0.179"/>
+<rect class="recell" x="104" y="62" width="62" height="44" style="fill-opacity:0.157"/>
 <text class="reval" x="135.0" y="89" text-anchor="middle">0.45</text>
-<rect class="recell" x="172" y="62" width="62" height="44" style="fill-opacity:0.260"/>
+<rect class="recell" x="172" y="62" width="62" height="44" style="fill-opacity:0.210"/>
 <text class="reval" x="203.0" y="89" text-anchor="middle">0.79</text>
-<rect class="recell" x="240" y="62" width="62" height="44" style="fill-opacity:0.319"/>
+<rect class="recell" x="240" y="62" width="62" height="44" style="fill-opacity:0.250"/>
 <text class="reval" x="271.0" y="89" text-anchor="middle">1.04</text>
-<rect class="recell" x="308" y="62" width="62" height="44" style="fill-opacity:0.402"/>
+<rect class="recell" x="308" y="62" width="62" height="44" style="fill-opacity:0.305"/>
 <text class="reval" x="339.0" y="89" text-anchor="middle">1.38</text>
-<rect class="recell" x="376" y="62" width="62" height="44" style="fill-opacity:0.371"/>
+<rect class="recell" x="376" y="62" width="62" height="44" style="fill-opacity:0.284"/>
 <text class="reval" x="407.0" y="89" text-anchor="middle">1.26</text>
-<rect class="recell" x="444" y="62" width="62" height="44" style="fill-opacity:0.467"/>
+<rect class="recell" x="444" y="62" width="62" height="44" style="fill-opacity:0.348"/>
 <text class="reval" x="475.0" y="89" text-anchor="middle">1.66</text>
-<rect class="recell" x="512" y="62" width="62" height="44" style="fill-opacity:0.505"/>
+<rect class="recell" x="512" y="62" width="62" height="44" style="fill-opacity:0.373"/>
 <text class="reval" x="543.0" y="89" text-anchor="middle">1.81</text>
-<rect class="recell" x="580" y="62" width="62" height="44" style="fill-opacity:0.620"/>
+<rect class="recell" x="580" y="62" width="62" height="44" style="fill-opacity:0.450"/>
 <text class="reval" x="611.0" y="89" text-anchor="middle">2.29</text>
 <text class="fm" x="0" y="138">1 out</text>
-<rect class="recell" x="104" y="112" width="62" height="44" style="fill-opacity:0.131"/>
+<rect class="recell" x="104" y="112" width="62" height="44" style="fill-opacity:0.125"/>
 <text class="reval" x="135.0" y="139" text-anchor="middle">0.25</text>
-<rect class="recell" x="172" y="112" width="62" height="44" style="fill-opacity:0.186"/>
+<rect class="recell" x="172" y="112" width="62" height="44" style="fill-opacity:0.161"/>
 <text class="reval" x="203.0" y="139" text-anchor="middle">0.48</text>
-<rect class="recell" x="240" y="112" width="62" height="44" style="fill-opacity:0.224"/>
+<rect class="recell" x="240" y="112" width="62" height="44" style="fill-opacity:0.187"/>
 <text class="reval" x="271.0" y="139" text-anchor="middle">0.64</text>
-<rect class="recell" x="308" y="112" width="62" height="44" style="fill-opacity:0.282"/>
+<rect class="recell" x="308" y="112" width="62" height="44" style="fill-opacity:0.225"/>
 <text class="reval" x="339.0" y="139" text-anchor="middle">0.88</text>
-<rect class="recell" x="376" y="112" width="62" height="44" style="fill-opacity:0.279"/>
+<rect class="recell" x="376" y="112" width="62" height="44" style="fill-opacity:0.223"/>
 <text class="reval" x="407.0" y="139" text-anchor="middle">0.87</text>
-<rect class="recell" x="444" y="112" width="62" height="44" style="fill-opacity:0.343"/>
+<rect class="recell" x="444" y="112" width="62" height="44" style="fill-opacity:0.266"/>
 <text class="reval" x="475.0" y="139" text-anchor="middle">1.14</text>
-<rect class="recell" x="512" y="112" width="62" height="44" style="fill-opacity:0.375"/>
+<rect class="recell" x="512" y="112" width="62" height="44" style="fill-opacity:0.287"/>
 <text class="reval" x="543.0" y="139" text-anchor="middle">1.27</text>
-<rect class="recell" x="580" y="112" width="62" height="44" style="fill-opacity:0.458"/>
+<rect class="recell" x="580" y="112" width="62" height="44" style="fill-opacity:0.342"/>
 <text class="reval" x="611.0" y="139" text-anchor="middle">1.62</text>
 <text class="fm" x="0" y="188">2 outs</text>
-<rect class="recell" x="104" y="162" width="62" height="44" style="fill-opacity:0.094"/>
+<rect class="recell" x="104" y="162" width="62" height="44" style="fill-opacity:0.100"/>
 <text class="reval" x="135.0" y="189" text-anchor="middle">0.10</text>
-<rect class="recell" x="172" y="162" width="62" height="44" style="fill-opacity:0.122"/>
+<rect class="recell" x="172" y="162" width="62" height="44" style="fill-opacity:0.119"/>
 <text class="reval" x="203.0" y="189" text-anchor="middle">0.22</text>
-<rect class="recell" x="240" y="162" width="62" height="44" style="fill-opacity:0.147"/>
+<rect class="recell" x="240" y="162" width="62" height="44" style="fill-opacity:0.135"/>
 <text class="reval" x="271.0" y="189" text-anchor="middle">0.32</text>
-<rect class="recell" x="308" y="162" width="62" height="44" style="fill-opacity:0.177"/>
+<rect class="recell" x="308" y="162" width="62" height="44" style="fill-opacity:0.155"/>
 <text class="reval" x="339.0" y="189" text-anchor="middle">0.45</text>
-<rect class="recell" x="376" y="162" width="62" height="44" style="fill-opacity:0.152"/>
+<rect class="recell" x="376" y="162" width="62" height="44" style="fill-opacity:0.139"/>
 <text class="reval" x="407.0" y="189" text-anchor="middle">0.34</text>
-<rect class="recell" x="444" y="162" width="62" height="44" style="fill-opacity:0.182"/>
+<rect class="recell" x="444" y="162" width="62" height="44" style="fill-opacity:0.159"/>
 <text class="reval" x="475.0" y="189" text-anchor="middle">0.47</text>
-<rect class="recell" x="512" y="162" width="62" height="44" style="fill-opacity:0.207"/>
+<rect class="recell" x="512" y="162" width="62" height="44" style="fill-opacity:0.175"/>
 <text class="reval" x="543.0" y="189" text-anchor="middle">0.57</text>
-<rect class="recell" x="580" y="162" width="62" height="44" style="fill-opacity:0.253"/>
+<rect class="recell" x="580" y="162" width="62" height="44" style="fill-opacity:0.206"/>
 <text class="reval" x="611.0" y="189" text-anchor="middle">0.76</text>
 <text class="note" x="0" y="24">runners on</text>
 <text class="axlab" x="104" y="232">expected runs from this state to the end of the half-inning</text>
@@ -520,11 +535,10 @@ tr:last-child td{border-bottom:none;}
 </svg></div>
     <figcaption><b>Figure 2.</b> The joint distribution of home and away runs over 200,000
     simulated games between two league-average teams, from the reduced model published in the
-    repository. Darker cells are more likely. Since every contract corresponds to a region of
+    repository. Stronger shading is more likely. Since every contract corresponds to a region of
     this grid, the prices are consistent by construction: no combination of them can imply two
     different things about the same game.</figcaption>
   </figure>
-
 
   <h3>When the starter comes out, and who replaces him</h3>
   <p>Two of the layers on top of this core matter enough to describe here. The first is
@@ -658,7 +672,6 @@ tr:last-child td{border-bottom:none;}
 </svg></div>
     <figcaption><b>Figure 3.</b> How often a starting pitcher is removed before the next batter, by pitch count and by the score at the time, over 314,885 plate appearances from 16,768 starts. Two features of this surface are what make a tree model the right choice. The hazard is nearly flat to about 60 pitches and then rises more than a hundredfold, so no smooth functional form fits it without being told in advance where the bend is. And the score does not enter as a constant offset: inside the decision zone a starter trailing by three or more is pulled 3.4 times as often as one leading by three or more, while by 100 pitches the three curves have nearly converged, because he is coming out regardless.</figcaption>
   </figure>
-
 
   <p>The second is <b>which reliever comes in</b>, a choice from a menu whose contents change
   every night,
@@ -1195,7 +1208,7 @@ tr:last-child td{border-bottom:none;}
 <text class="note" x="474" y="196">runs alone. A generative</text>
 <text class="note" x="474" y="209">one gets it from every</text>
 <text class="note" x="474" y="222">ball in play.</text>
-<text class="axlab" x="64" y="398">122,510 batted balls, 2024. Darker is a higher chance of clearing the fence.</text>
+<text class="axlab" x="64" y="398">122,510 batted balls, 2024. Stronger shading is a higher chance of clearing the fence.</text>
 </svg></div>
     <figcaption><b>Figure 4.</b> The probability that a batted ball leaves the park, over exit
     velocity and launch angle, from every batted ball in the 2024 season. Cells with fewer than 25
@@ -1423,7 +1436,6 @@ tr:last-child td{border-bottom:none;}
     decomposition.</figcaption>
   </figure>
 
-
   <p>A useless forecaster can pass that test. Quoting the base rate on every game produces
   perfectly calibrated probabilities that say nothing about any particular game. The sharper
   question is whether the whole predicted distribution has the right shape, and the test for
@@ -1566,7 +1578,6 @@ tr:last-child td{border-bottom:none;}
     sample sizes the histogram is a coarse instrument, better read as an absence of gross
     misspecification than as a precise verdict.</figcaption>
   </figure>
-
 
   <p>All seven come out close to flat, which indicates that the model's uncertainty is about
   the right width rather than merely centered in the right place. The largest departures are in
