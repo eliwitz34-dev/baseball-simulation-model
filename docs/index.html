@@ -831,7 +831,8 @@ tr:last-child td{border-bottom:none;}
   rather than folded into any pitcher's rate.</p>
 
   <h3>Batted balls, and why home runs are modeled differently</h3>
-  <p>One more piece works differently from everything above. Most of
+  <p>One more piece works differently from everything above, in that it acts on the inputs to the
+  simulation rather than inside it. Most of
   the model runs on rates: a batter has some probability of a home run, estimated from how often he
   has hit one. That is fine when the outcome is common. It breaks down when the outcome is rare. A
   batter's doubles rate needs something like 1,600 plate appearances to settle down, and nobody
@@ -1378,7 +1379,7 @@ tr:last-child td{border-bottom:none;}
 <polyline class="spray lg" points="94.1,97.4 138.3,117.0 182.6,176.1 226.8,226.2 271.0,252.0 315.2,236.9 359.4,191.8 403.7,147.3 447.9,115.7"/><circle class="pt lg" cx="94.1" cy="97.4" r="2.8"/><circle class="pt lg" cx="138.3" cy="117.0" r="2.8"/><circle class="pt lg" cx="182.6" cy="176.1" r="2.8"/><circle class="pt lg" cx="226.8" cy="226.2" r="2.8"/><circle class="pt lg" cx="271.0" cy="252.0" r="2.8"/><circle class="pt lg" cx="315.2" cy="236.9" r="2.8"/><circle class="pt lg" cx="359.4" cy="191.8" r="2.8"/><circle class="pt lg" cx="403.7" cy="147.3" r="2.8"/><circle class="pt lg" cx="447.9" cy="115.7" r="2.8"/>
 <polyline class="spray p1" points="94.1,227.0 138.3,232.9 182.6,211.1 226.8,200.8 271.0,257.3 315.2,197.1 359.4,171.2 403.7,61.4 447.9,75.3"/><circle class="pt p1" cx="94.1" cy="227.0" r="2.8"/><circle class="pt p1" cx="138.3" cy="232.9" r="2.8"/><circle class="pt p1" cx="182.6" cy="211.1" r="2.8"/><circle class="pt p1" cx="226.8" cy="200.8" r="2.8"/><circle class="pt p1" cx="271.0" cy="257.3" r="2.8"/><circle class="pt p1" cx="315.2" cy="197.1" r="2.8"/><circle class="pt p1" cx="359.4" cy="171.2" r="2.8"/><circle class="pt p1" cx="403.7" cy="61.4" r="2.8"/><circle class="pt p1" cx="447.9" cy="75.3" r="2.8"/>
 <polyline class="spray p2" points="138.3,119.4 182.6,143.4 226.8,214.5 271.0,259.6 315.2,256.0 359.4,224.3 403.7,257.5 447.9,167.5"/><circle class="pt p2" cx="138.3" cy="119.4" r="2.8"/><circle class="pt p2" cx="182.6" cy="143.4" r="2.8"/><circle class="pt p2" cx="226.8" cy="214.5" r="2.8"/><circle class="pt p2" cx="271.0" cy="259.6" r="2.8"/><circle class="pt p2" cx="315.2" cy="256.0" r="2.8"/><circle class="pt p2" cx="359.4" cy="224.3" r="2.8"/><circle class="pt p2" cx="403.7" cy="257.5" r="2.8"/><circle class="pt p2" cx="447.9" cy="167.5" r="2.8"/>
-<text class="axlab" x="271" y="334" text-anchor="middle">spray angle, degrees from centre</text>
+<text class="axlab" x="271" y="334" text-anchor="middle">spray angle, degrees from center</text>
 <text class="axlab" transform="rotate(-90 20 162)" x="20" y="162" text-anchor="middle">P(home run)</text>
 <text class="note" x="78" y="352">left field</text>
 <text class="note" x="78" y="365">a right-handed batter pulls here</text>
@@ -1421,8 +1422,9 @@ tr:last-child td{border-bottom:none;}
   underneath.</p>
 
   <h3>The rest</h3>
-  <p>Eight smaller effects sit above these: times through the order, park factors, platoon
-  splits, the running game, and others.</p>
+  <p>Those three in-simulation components are part of eleven modulating layers in all. The
+  remaining eight are times through the order, park factors, platoon splits, the running game,
+  and others.</p>
 </section>
 
 <section>
@@ -1945,12 +1947,12 @@ tr:last-child td{border-bottom:none;}
   turnover. The benchmark incorporates information the model does not receive, including late
   lineup and weather news, so an unknown portion of the measured shortfall reflects an
   information gap rather than a modeling deficiency. All modeling and interpretive decisions
-  were made by one person; fixing each test's criterion before running it, as in section 6, is a
+  were made by one person; fixing each test's criterion before running it, as in section 5, is a
   partial substitute for independent review.</p>
 
 </section>
 
-<section>
+<section id="references">
   <h2><span class="num">8.</span>References</h2>
   <p>These are the sources the work was actually built on, rather than a general reading list.
   Numbered entries are cited in the text above; the remainder informed a component without a
@@ -2028,7 +2030,7 @@ tr:last-child td{border-bottom:none;}
       discrimination used in section&nbsp;4.</li>
     <li id="ref-21"><span class="refnum">[21]</span> Dawid, A. P. (1984). Statistical theory: the prequential approach. <i>Journal of the
       Royal Statistical Society A</i> 147(2), 278&ndash;292. The probability integral transform
-      in Figure&nbsp;4.</li>
+      in Figure&nbsp;7.</li>
     <li id="ref-22"><span class="refnum">[22]</span> Ranjan, R. and Gneiting, T. (2010). Combining probability forecasts. <i>Journal of the
       Royal Statistical Society B</i> 72(1), 71&ndash;91. Any non-trivial average of distinct
       calibrated forecasts is itself uncalibrated, which constrains how a model forecast and a

@@ -5,6 +5,9 @@ simulation to produce plausible numbers is the easy half. Establishing whether
 those numbers beat a benchmark already available for free is the harder one, and
 it is where most of this project's mistakes occurred.
 
+Sources for the methods named below are collected in the
+[write-up](https://eliwitz34-dev.github.io/baseball-simulation-model/#references).
+
 ---
 
 ## 1. Model structure
@@ -27,7 +30,22 @@ by cell rather than parameterizing them: 216 cells, a median of four distinct
 outcomes each. The public repository ships a parameterized reconstruction and
 measures how far short it falls.
 
-### 1.2 Layers above the core
+### 1.2 The matchup
+
+A batter's nine outcome probabilities are not a property of the batter alone. They
+depend on the pitcher he is facing and on the league he is facing him in. The
+classical solution is the log5 form, which combines a batter rate and a pitcher
+rate against a league baseline into a matchup rate, and which is the odds-ratio
+estimator for a two-way table under no interaction.
+
+The model uses a multinomial generalization of that idea. All nine outcomes are
+resolved jointly on the log-odds scale against a league baseline, so the resulting
+probabilities sum to one by construction rather than by renormalizing nine
+separately estimated binary rates. Park, platoon and environment terms enter the
+same additive log-odds structure, which keeps them commutative and keeps any one
+of them from silently rescaling the others.
+
+### 1.3 Layers above the core
 
 Eleven further effects sit on top of the core chain, each estimated separately and
 each behind a switch so that it can be turned off for testing.
@@ -40,13 +58,40 @@ each behind a switch so that it can be turned off for testing.
 - **Reliever selection.** A McFadden conditional logit over the available
   bullpen, so that the choice responds to inning, leverage, handedness and recent
   usage rather than being drawn at random from a pool.
-- **Times through the order**, park effects, umpire tendency, ball-carry
-  conditions, platoon splits, the running game, and several smaller terms.
+- **Called strikes.** Whether a taken pitch is called a strike is modeled on the
+  pitch location surface, with crossed effects for catcher, umpire, pitcher and
+  batter fitted together rather than in sequence. Fitting them jointly is what
+  keeps a catcher's estimated framing ability from absorbing the tendency of the
+  umpires he happened to work with.
+- **Times through the order**, park effects, ball-carry conditions, platoon
+  splits, the running game, intentional walks, and several smaller terms.
 
 Each of these earned its place by improving out-of-sample score. Several
 candidates did not, and those are recorded in [RESULTS.md](RESULTS.md).
 
-### 1.3 Parameter estimation
+### 1.4 Batted balls
+
+One component works on the inputs to the simulation rather than inside it. The
+nine-outcome draw needs a home run probability per batter and park, and treating
+that as a rate to be shrunk like any other discards the fact that home runs are
+produced by a physical process that is directly observed.
+
+Exit velocity and launch angle jointly determine whether a batted ball leaves the
+park, and that surface is estimated from the batted balls themselves rather than
+assumed. A batter's own distribution of exit velocity and launch angle is then
+integrated through it, which gives a home run rate driven by how he hits the ball
+rather than by how many happened to go out in a sample of a few hundred.
+
+Park geometry enters through spray angle. Outfield fences are not equidistant, so
+the same contact clears in one park and not another depending on the direction it
+was hit. The batter's spray distribution is integrated against the park's own
+distance profile, which is what allows a pull hitter and an opposite-field hitter
+with identical contact quality to carry different home run rates in the same park.
+The remaining batted-ball outcomes are resolved through the same contact geometry,
+so singles, doubles and triples come from the same description of how a player
+hits the ball rather than from four independently shrunk rates.
+
+### 1.5 Parameter estimation
 
 Every batter needs nine outcome probabilities against every pitcher, and raw
 observed rates can't supply them. A hitter with 150 plate appearances has a
@@ -110,15 +155,24 @@ is reported alongside as a second proper rule with different tail sensitivity.
 
 The Brier score decomposes as
 
-  Brier = uncertainty − resolution + reliability
+  Brier = miscalibration − discrimination + uncertainty
 
-**Reliability** is calibration: whether events assigned 30% happen 30% of the
-time. **Resolution** is discrimination: whether the forecaster separates the
-events that happen from those that do not. Splitting the score this way is what
-makes it diagnostic rather than merely comparative, since a model can be perfectly
-calibrated and useless by forecasting the base rate every time. The central
-finding in [RESULTS.md](RESULTS.md), comparable calibration with weak
-discrimination, is visible only through the decomposition.
+**Miscalibration** asks whether events assigned 30% happen 30% of the time.
+**Discrimination** asks whether the forecaster separates the events that happen
+from those that do not. **Uncertainty** is the irreducible variance of the events
+themselves, identical for both forecasters and therefore not informative about
+either. Splitting the score this way is what makes it diagnostic rather than
+merely comparative, since a model can be perfectly calibrated and useless by
+forecasting the base rate every time. The central finding in
+[RESULTS.md](RESULTS.md), comparable calibration with weaker discrimination, is
+visible only through the decomposition.
+
+The two components are estimated by isotonic regression rather than by binning
+the forecasts. Binned estimates of calibration error move with the number of bins
+and their placement, and on this sample the choice of binning moved the number
+enough to change which forecaster looked better. The isotonic form has no such
+tuning parameter, since the fit is determined by the data under a monotonicity
+constraint alone.
 
 Calibration is also checked directly, with reliability curves and with
 probability integral transform histograms. A correctly specified predictive

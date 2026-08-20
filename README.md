@@ -22,9 +22,9 @@ family is significantly worse, six are indistinguishable.
 **Short version:** a simulation model with hierarchically shrunk parameter
 estimates, validated out-of-sample over 764 games against both realized outcomes
 and a live benchmark, with per-segment analysis on game-clustered intervals and a
-direct account of what it does badly. A
-[one-page summary](https://eliwitz34-dev.github.io/baseball-simulation-model/)
-covers the same ground in less space.
+direct account of what it does badly. There is also a
+[write-up](https://eliwitz34-dev.github.io/baseball-simulation-model/) that covers
+the model and the results in one place, with figures.
 
 Repository: <https://github.com/eliwitz34-dev/baseball-simulation-model>
 
@@ -86,6 +86,7 @@ scripts/build_tables.py  builds transition tables from published advancement rat
 scripts/validate.py      the checks that must pass before any number here is quoted
 METHODOLOGY.md           how the model was validated, and why that way
 RESULTS.md               what the validation found, including everything that failed
+docs/                    the published write-up, built by scripts/build_page.py
 ```
 
 Start with `sim/core.py`. It runs the same algorithm as the production kernel over
